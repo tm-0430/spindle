@@ -196,6 +196,7 @@ export class SolanaAgentKit {
   public wallet: Keypair;
   public wallet_address: PublicKey;
   public config: Config;
+  private okxDexClient: any | null = null;
 
   /**
    * @deprecated Using openai_api_key directly in constructor is deprecated.
@@ -228,6 +229,34 @@ export class SolanaAgentKit {
     } else {
       this.config = configOrKey;
     }
+  }
+
+  getOkxDexClient(): any {
+    if (!this.okxDexClient) {
+      if (!this.config.OKX_API_KEY || !this.config.OKX_SECRET_KEY || !this.config.OKX_API_PASSPHRASE || !this.config.OKX_PROJECT_ID) {
+        return null;
+      }
+      try {
+        const OKXDexSDK = require('@okx-dex/okx-dex-sdk');
+        this.okxDexClient = new OKXDexSDK.OKXDexClient({
+          apiKey: this.config.OKX_API_KEY,
+          secretKey: this.config.OKX_SECRET_KEY,
+          apiPassphrase: this.config.OKX_API_PASSPHRASE,
+          projectId: this.config.OKX_PROJECT_ID,
+          solana: {
+            connection: {
+              rpcUrl: this.connection.rpcEndpoint,
+              confirmTransactionInitialTimeout: 60000
+            },
+            privateKey: this.wallet.secretKey.toString(),
+            walletAddress: this.wallet.publicKey.toString()
+          }
+        });
+      } catch {
+        return null;
+      }
+    }
+    return this.okxDexClient;
   }
 
   // Tool methods
