@@ -93,8 +93,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       '@okx-dex/okx-dex-sdk':
-        specifier: ^1.0.10
-        version: 1.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)(zod@3.24.1)
+        specifier: ^1.0.11
+        version: 1.0.11(bufferutil@4.0.9)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@onsol/tldparser':
         specifier: ^0.6.7
         version: 0.6.7(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bn.js@5.2.1)(borsh@2.0.0)(buffer@6.0.3)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -1210,8 +1210,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@okx-dex/okx-dex-sdk@1.0.10':
-    resolution: {integrity: sha512-WNltVh1ZL8U316hsr2hvWJ4dTxtbFx8vajBg6Qx7BHGMhFerxA42oxb6ey6rvtT1FzKrhb9VtjxftMtG/E6fGQ==}
+  '@okx-dex/okx-dex-sdk@1.0.11':
+    resolution: {integrity: sha512-xjVYHZ0rqME2pCJhq7owEKZBkAVvM+ZRY1bwp5tGkEVrqAU0bNMwEB12ZrWLgWH0A17SIfcImfRIoe/YXq+22A==}
 
   '@okxweb3/coin-base@1.1.2':
     resolution: {integrity: sha512-D1GR3oNvkDsdkrQm9uR+J+vZ9E3nw9G7nKj4rHCKHV0itjSr6jGRBXIlyEIQI4zzsLCz7FkFCnd0sx22BEp3ng==}
@@ -7315,7 +7315,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.18.0
 
-  '@okx-dex/okx-dex-sdk@1.0.10(bufferutil@4.0.9)(utf-8-validate@5.0.10)(zod@3.24.1)':
+  '@okx-dex/okx-dex-sdk@1.0.11(bufferutil@4.0.9)(utf-8-validate@5.0.10)(zod@3.24.1)':
     dependencies:
       '@mysten/sui': 1.21.2(typescript@5.7.3)
       '@okxweb3/coin-ethereum': 1.0.12

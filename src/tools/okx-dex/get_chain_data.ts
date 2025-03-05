@@ -23,8 +23,8 @@ const initDexClient = () => {
   });
 };
 
-export async function getChains(agent: SolanaAgentKit): Promise<any> {
+export async function getChainData(agent: SolanaAgentKit): Promise<any> {
   const dexClient = initDexClient();
-  const chains = await dexClient.dex.getSupportedChains('501');
+  const chains = await dexClient.dex.getChainData('501');
   return chains;
 }

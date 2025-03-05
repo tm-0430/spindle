@@ -2,10 +2,10 @@
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
 import { z } from "zod";
-import { getChains } from "../../tools/okx-dex";
+import { getChainData } from "../../tools/okx-dex";
 
-const okxDexChainsAction: Action = {
-  name: "OKX_DEX_CHAINS",
+const okxDexChainDataAction: Action = {
+  name: "OKX_DEX_CHAIN_DATA",
   similes: ["get chain data", "okx dex chain data"],
   description: "Get chain data from OKX DEX.",
   examples: [[
@@ -28,7 +28,7 @@ const okxDexChainsAction: Action = {
   ]],
   schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
-    const chains = await getChains(agent);
+    const chains = await getChainData(agent);
     return {
       status: "success",
       summary: {
@@ -38,4 +38,4 @@ const okxDexChainsAction: Action = {
   }
 };
 
-export default okxDexChainsAction;
+export default okxDexChainDataAction;

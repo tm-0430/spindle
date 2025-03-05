@@ -36,7 +36,7 @@ export class OkxDexChainsTool extends Tool {
   async _call(input: string): Promise<string> {
     try {
       const dexClient = initDexClient();
-      const chains = await dexClient.dex.getSupportedChains('501');
+      const chains = await dexClient.dex.getChainData('501');
 
       const chainList = chains.data.map((chain: any) => ({
         name: chain.name,
