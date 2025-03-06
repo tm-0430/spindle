@@ -37,20 +37,47 @@ let tokenInfoCache: Record<string, TokenInfo> = {
 };
 
 function updateTokenInfo(quote: any) {
-  if (quote?.tokens) {
-    Object.entries(quote.tokens).forEach(([address, info]: [string, any]) => {
-      if (info.decimals !== undefined) {
-        const decimals = parseInt(info.decimals);
-        // Prefer existing symbol if it's a known token
-        const existingToken = tokenInfoCache[address];
-        const symbol = existingToken?.symbol || info.symbol || address.slice(0, 8);
-        tokenInfoCache[address] = {
-          symbol,
-          address,
-          decimals
+  try {
+    // Update from quote data array
+    if (quote?.data?.[0]) {
+      const quoteData = quote.data[0];
+      if (quoteData.fromToken) {
+        tokenInfoCache[quoteData.fromToken.address] = {
+          symbol: quoteData.fromToken.tokenSymbol,
+          address: quoteData.fromToken.address,
+          decimals: parseInt(quoteData.fromToken.decimal)
         };
       }
-    });
+      if (quoteData.toToken) {
+        tokenInfoCache[quoteData.toToken.address] = {
+          symbol: quoteData.toToken.tokenSymbol,
+          address: quoteData.toToken.address,
+          decimals: parseInt(quoteData.toToken.decimal)
+        };
+      }
+    }
+
+    // Update from compare list
+    if (quote?.data?.[0]?.quoteCompareList) {
+      quote.data[0].quoteCompareList.forEach((route: any) => {
+        if (route.tokenIn) {
+          tokenInfoCache[route.tokenIn.address] = {
+            symbol: route.tokenIn.symbol,
+            address: route.tokenIn.address,
+            decimals: parseInt(route.tokenIn.decimals)
+          };
+        }
+        if (route.tokenOut) {
+          tokenInfoCache[route.tokenOut.address] = {
+            symbol: route.tokenOut.symbol,
+            address: route.tokenOut.address,
+            decimals: parseInt(route.tokenOut.decimals)
+          };
+        }
+      });
+    }
+  } catch (error) {
+    console.error("Error updating token info:", error);
   }
 }
 
@@ -350,19 +377,11 @@ export async function executeSwap(agent: SolanaAgentKit, quote: any, fromAddress
 }
 
 function formatSwapResult(result: any, fromAddress: string, toAddress: string): void {
-  const getExplorerUrl = (signature: string) => {
-    return result.explorerUrl || `https://solscan.io/tx/${signature}`;
-  };
-
-  const getOkxExplorerUrl = (address: string) => {
-    return `https://www.okx.com/web3/explorer/sol/account/${address}`;
-  };
-
   // Handle pending transactions (including block height exceeded)
   if (result?.status === "pending" && result?.signature) {
     console.log("\nTransaction submitted and pending confirmation");
     console.log("  Transaction Hash:", result.signature);
-    console.log("  Explorer URL:", getExplorerUrl(result.signature));
+    console.log("  Explorer URL:", result.explorerUrl);
     if (result?.outputAmount) {
       const toInfo = getTokenInfo(toAddress);
       const decimals = toInfo?.decimals || 6;
@@ -371,7 +390,6 @@ function formatSwapResult(result: any, fromAddress: string, toAddress: string): 
     }
     console.log("\nNote: The transaction has been submitted but confirmation timed out.");
     console.log("You can check the transaction status using the explorer URL above.");
-    console.log("View your wallet activity at:", getOkxExplorerUrl(OKX_SOLANA_WALLET_ADDRESS));
     return;
   }
 
@@ -381,11 +399,7 @@ function formatSwapResult(result: any, fromAddress: string, toAddress: string): 
     const txHash = result.signature || result.txHash;
     if (txHash) {
       console.log("  Transaction Hash:", txHash);
-      if (result.explorerUrl) {
-        console.log("  Explorer URL:", result.explorerUrl);
-      } else {
-        console.log("  Explorer URL:", getExplorerUrl(txHash));
-      }
+      console.log("  Explorer URL:", result.explorerUrl);
     }
     
     // Display additional swap details if available
@@ -406,7 +420,6 @@ function formatSwapResult(result: any, fromAddress: string, toAddress: string): 
       const amount = (parseInt(result.outputAmount) / Math.pow(10, decimals)).toFixed(6);
       console.log("  Expected to Receive:", `${amount} ${toInfo?.symbol || toAddress}`);
     }
-    console.log("\nView your wallet activity at:", getOkxExplorerUrl(OKX_SOLANA_WALLET_ADDRESS));
     return;
   }
 
@@ -426,14 +439,12 @@ function formatSwapResult(result: any, fromAddress: string, toAddress: string): 
         console.log(`  Have: ${(parseInt(current) / 1e9).toFixed(9)} SOL`);
         console.log(`  Need: ${(parseInt(needed) / 1e9).toFixed(9)} SOL`);
         console.log("  Please ensure you have enough SOL to cover transaction fees");
-        console.log("\nView your wallet activity at:", getOkxExplorerUrl(OKX_SOLANA_WALLET_ADDRESS));
         return;
       }
     }
 
     // For other errors, show the message in a cleaner format
     console.log("  Message:", errorMessage.split('\n')[0]); // Show only first line of error
-    console.log("\nView your wallet activity at:", getOkxExplorerUrl(OKX_SOLANA_WALLET_ADDRESS));
   }
 }
 
@@ -567,6 +578,41 @@ export async function getQuote(agent: SolanaAgentKit, fromAddress: string, toAdd
   }
 }
 
+async function findToken(query: string, agent: SolanaAgentKit): Promise<TokenInfo | undefined> {
+  query = query.toLowerCase();
+  
+  // Check exact matches first
+  for (const [address, info] of Object.entries(tokenInfoCache)) {
+    if (address.toLowerCase() === query || info.symbol.toLowerCase() === query) {
+      return info;
+    }
+  }
+
+  // Check partial matches
+  for (const [address, info] of Object.entries(tokenInfoCache)) {
+    if (info.symbol.toLowerCase().includes(query)) {
+      return info;
+    }
+  }
+
+  // If not found, try to get quote for this token against USDC to discover it
+  try {
+    const usdcAddress = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+    const quote = await getQuote(agent, query, usdcAddress, "1");
+    if (quote?.data?.[0]?.fromToken) {
+      return {
+        symbol: quote.data[0].fromToken.tokenSymbol,
+        address: quote.data[0].fromToken.address,
+        decimals: parseInt(quote.data[0].fromToken.decimal)
+      };
+    }
+  } catch (error) {
+    // Ignore quote errors
+  }
+
+  return undefined;
+}
+
 async function runTradingBot() {
   console.log("\nInitializing OKX DEX Trading Bot...");
   const { agent, solanaAgent } = await initializeAgent();
@@ -619,11 +665,33 @@ Available commands:
         continue;
       }
 
-      if (input.toLowerCase() === 'tokens') {
+      if (input.toLowerCase().startsWith('tokens')) {
+        const searchQuery = input.split(' ')[1]?.toLowerCase();
         console.log("\nKnown tokens:");
-        Object.entries(tokenInfoCache).forEach(([address, info]) => {
-          console.log(`${info.symbol}: ${address}`);
-        });
+        const entries = Object.entries(tokenInfoCache);
+        
+        if (searchQuery) {
+          const filtered = entries.filter(([address, info]) => 
+            info.symbol.toLowerCase().includes(searchQuery) || 
+            address.toLowerCase().includes(searchQuery)
+          );
+          filtered.forEach(([address, info]) => {
+            console.log(`${info.symbol} (${info.decimals} decimals): ${address}`);
+          });
+          if (filtered.length === 0) {
+            console.log("No matching tokens found. Attempting to discover token...");
+            const discovered = await findToken(searchQuery, solanaAgent);
+            if (discovered) {
+              console.log(`Found token: ${discovered.symbol} (${discovered.decimals} decimals): ${discovered.address}`);
+            } else {
+              console.log("Token not found. Try using the full token address.");
+            }
+          }
+        } else {
+          entries.forEach(([address, info]) => {
+            console.log(`${info.symbol} (${info.decimals} decimals): ${address}`);
+          });
+        }
         continue;
       }
 

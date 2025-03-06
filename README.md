@@ -214,7 +214,7 @@ const collection = await agent.deployCollection({
 });
 ```
 
-### Swap Tokins
+### Swap Tokens
 
 ```typescript
 import { PublicKey } from "@solana/web3.js";
@@ -680,7 +680,7 @@ The toolkit provides comprehensive integration with OKX DEX for Solana. Here's h
 ```typescript
 const tokens = await agent.getTokens();
 console.log("Supported tokens:", tokens);
-// Returns list of tokens with symbol, name, address, and decimals
+// Returns list of tokens available on OKX DEX
 ```
 
 ### Get DEX Quote
@@ -693,6 +693,7 @@ const quote = await agent.getQuote(
   "0.5" // slippage (optional, default 0.5%)
 );
 console.log("Swap quote:", quote);
+// Returns quote data with price, fees, and slippage, token symbol, decimals
 ```
 
 ### Execute Token Swap
@@ -705,6 +706,7 @@ const swapResult = await agent.executeSwap({
   autoSlippage: true, // optional, use auto slippage
   slippage: "0.1", // optional, custom slippage (0.1%)
   maxAutoSlippageBps: "100" // optional, max auto slippage in basis points
+  userAddress: "signer-public-key" // optional, user wallet address
 });
 console.log("Swap executed:", swapResult);
 ```
