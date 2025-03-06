@@ -711,21 +711,7 @@ const swapResult = await agent.executeSwap({
 console.log("Swap executed:", swapResult);
 ```
 
-### Get Liquidity Sources
-
-```typescript
-const liquidity = await agent.getLiquidity();
-console.log("Available liquidity sources:", liquidity);
-// Returns list of DEX liquidity sources on Solana
-```
-
 ### Get Chain Data
-
-```typescript
-const chain_data = await agent.getChainData();
-console.log("chain data:", chain_data);
-// Returns information for DEX router addresses
-```
 
 Note: To use OKX DEX integration, you need to set up the following environment variables: Get OKX API keys from the [OKX Developer Portal] (https://www.okx.com/web3/build/dev-portal)
 - `OKX_API_KEY`
