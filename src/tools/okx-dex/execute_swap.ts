@@ -1,26 +1,5 @@
 import { SolanaAgentKit } from "../../index";
 import { OKXDexClient } from '@okx-dex/okx-dex-sdk';
-import * as dotenv from "dotenv";
-
-dotenv.config();
-
-// Initialize the OKX DEX client
-const initDexClient = () => {
-  return new OKXDexClient({
-    apiKey: process.env.OKX_API_KEY!,
-    secretKey: process.env.OKX_SECRET_KEY!,
-    apiPassphrase: process.env.OKX_API_PASSPHRASE!,
-    projectId: process.env.OKX_PROJECT_ID!,
-    solana: {
-      connection: {
-        rpcUrl: process.env.RPC_URL!,
-        confirmTransactionInitialTimeout: 60000
-      },
-      privateKey: process.env.OKX_SOLANA_PRIVATE_KEY!,
-      walletAddress: process.env.OKX_SOLANA_WALLET_ADDRESS!
-    }
-  });
-};
 
 /**
  * Execute a token swap on OKX DEX
@@ -38,13 +17,35 @@ export async function executeSwap(
   fromTokenAddress: string,
   toTokenAddress: string,
   amount: string,
-  slippage: string = "0.005",
-  autoSlippage: boolean = true,
-  maxAutoSlippageBps: string = "100"
+  slippage: string = "0.5",
+  autoSlippage: boolean = false,
+  maxAutoSlippageBps: string = "100",
+  userWalletAddress?: string
 ): Promise<any> {
   try {
-    // Initialize a new OKX DEX client
-    const dexClient = initDexClient();
+    // Validate the required config parameters are present
+    if (!agent.config.OKX_API_KEY || 
+        !agent.config.OKX_SECRET_KEY || 
+        !agent.config.OKX_API_PASSPHRASE || 
+        !agent.config.OKX_PROJECT_ID) {
+      throw new Error("Missing required OKX DEX configuration in agent config");
+    }
+
+    // Initialize OKX DEX client using agent's config
+    const dexClient = new OKXDexClient({
+      apiKey: agent.config.OKX_API_KEY,
+      secretKey: agent.config.OKX_SECRET_KEY,
+      apiPassphrase: agent.config.OKX_API_PASSPHRASE,
+      projectId: agent.config.OKX_PROJECT_ID,
+      solana: {
+        connection: {
+          rpcUrl: agent.connection.rpcEndpoint,
+          confirmTransactionInitialTimeout: 60000
+        },
+        privateKey: Buffer.from(agent.wallet.secretKey).toString('base64'),
+        walletAddress: agent.wallet_address.toString()
+      }
+    });
 
     // First get token info for better reporting
     const quote = await dexClient.dex.getQuote({
@@ -54,11 +55,11 @@ export async function executeSwap(
       amount,
       slippage: autoSlippage ? "0" : slippage
     });
-
+    
     const quoteData = quote.data[0];
     const fromAmount = parseFloat(quoteData.fromTokenAmount) / Math.pow(10, parseInt(quoteData.fromToken.decimal));
     const toAmount = parseFloat(quoteData.toTokenAmount) / Math.pow(10, parseInt(quoteData.toToken.decimal));
-
+    
     // Execute the swap
     const swapResult = await dexClient.dex.executeSwap({
       chainId: '501',
@@ -68,9 +69,9 @@ export async function executeSwap(
       slippage,
       autoSlippage,
       maxAutoSlippage: maxAutoSlippageBps,
-      userWalletAddress: process.env.OKX_SOLANA_WALLET_ADDRESS!
+      userWalletAddress: userWalletAddress || agent.wallet_address.toString()
     });
-
+    
     return {
       status: "success",
       summary: {
