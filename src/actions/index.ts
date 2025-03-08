@@ -109,6 +109,8 @@ import getCoingeckoTokenPriceDataAction from "./coingecko/getCoingeckoTokenPrice
 import getCoingeckoTopGainersAction from "./coingecko/getCoingeckoTopGainers";
 import getCoingeckoTrendingPoolsAction from "./coingecko/getCoingeckoTrendingPools";
 import getCoingeckoTrendingTokensAction from "./coingecko/getCoingeckoTrendingTokens";
+import getWormholeSupportedChainsAction from "./wormhole/getSupportedChains";
+import cctpTransferAction from "./wormhole/cctpTransfer";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -226,6 +228,8 @@ export const ACTIONS = {
   GET_COINGECKO_TOP_GAINERS_ACTION: getCoingeckoTopGainersAction,
   GET_COINGECKO_TRENDING_POOLS_ACTION: getCoingeckoTrendingPoolsAction,
   GET_COINGECKO_TRENDING_TOKENS_ACTION: getCoingeckoTrendingTokensAction,
+  GET_WORMHOLE_SUPPORTED_CHAINS_ACTION: getWormholeSupportedChainsAction,
+  CCTP_TRANSFER_ACTION: cctpTransferAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";
