@@ -142,6 +142,7 @@ import {
   getTrendingPools,
   getTrendingTokens,
   getWormholeSupportedChains,
+  tokenTransfer,
   cctpTransfer,
 } from "../tools";
 import {
@@ -166,6 +167,7 @@ import {
   deBridgeTokensInfoResponse,
   SplAuthorityInput,
   CctpTransferInput,
+  TokenTransferInput,
 } from "../types";
 import {
   DasApiAsset,
@@ -183,7 +185,7 @@ import {
   getTrendingTokensUsingElfaAi,
   getSmartTwitterAccountStats,
 } from "../tools/elfa_ai";
-import { Chain } from "@wormhole-foundation/sdk/dist/cjs";
+import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1290,5 +1292,9 @@ export class SolanaAgentKit {
 
   async cctpTransfer(input: CctpTransferInput) {
     return await cctpTransfer(input);
+  }
+
+  async tokenTransfer(input: TokenTransferInput) {
+    return await tokenTransfer(input);
   }
 }

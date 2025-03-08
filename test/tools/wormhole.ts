@@ -8,13 +8,20 @@ const agent = new SolanaAgentKit(
 );
 
 (async () => {
-  const supportedChains = await agent.getWormholeSupportedChains();
-  console.log(supportedChains);
+  // const supportedChains = await agent.getWormholeSupportedChains();
+  // console.log(supportedChains);
 
-  const transfer = await agent.cctpTransfer({
-    destinationChain: "Base Sepolia",
-    transferAmount: "1",
+  // const transfer = await agent.cctpTransfer({
+  //   destinationChain: "Base Sepolia",
+  //   transferAmount: "1",
+  //   network: "Testnet",
+  // });
+  // console.log(transfer);
+
+  const tokenTransfer = await agent.tokenTransfer({
+    destinationChain: "BaseSepolia",
     network: "Testnet",
+    transferAmount: "0.1",
   });
-  console.log(transfer);
+  console.log(tokenTransfer);
 })();
