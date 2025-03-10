@@ -16,12 +16,12 @@ const agent = new SolanaAgentKit(
   //   transferAmount: "1",
   //   network: "Testnet",
   // });
-  // console.log(transfer);
+  // // console.log(transfer);
 
-  const tokenTransfer = await agent.tokenTransfer({
+  const createWrappedToken = await agent.createWrappedToken({
     destinationChain: "BaseSepolia",
     network: "Testnet",
-    transferAmount: "0.1",
+    tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
   });
-  console.log(tokenTransfer);
+  console.log(createWrappedToken);
 })();

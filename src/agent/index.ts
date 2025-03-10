@@ -144,6 +144,7 @@ import {
   getWormholeSupportedChains,
   tokenTransfer,
   cctpTransfer,
+  createWrappedToken,
 } from "../tools";
 import {
   Config,
@@ -168,6 +169,7 @@ import {
   SplAuthorityInput,
   CctpTransferInput,
   TokenTransferInput,
+  CreateWrappedTokenInput,
 } from "../types";
 import {
   DasApiAsset,
@@ -1296,5 +1298,9 @@ export class SolanaAgentKit {
 
   async tokenTransfer(input: TokenTransferInput) {
     return await tokenTransfer(input);
+  }
+
+  async createWrappedToken(input: CreateWrappedTokenInput) {
+    return await createWrappedToken(input);
   }
 }

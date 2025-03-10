@@ -527,3 +527,9 @@ export interface TokenTransferInput {
   transferAmount: string;
   tokenAddress?: TokenId;
 }
+
+export interface CreateWrappedTokenInput {
+  destinationChain: Chain;
+  tokenAddress: string;
+  network: "Mainnet" | "Testnet" | "Devnet";
+}

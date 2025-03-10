@@ -111,6 +111,7 @@ import getCoingeckoTrendingPoolsAction from "./coingecko/getCoingeckoTrendingPoo
 import getCoingeckoTrendingTokensAction from "./coingecko/getCoingeckoTrendingTokens";
 import getWormholeSupportedChainsAction from "./wormhole/getSupportedChains";
 import cctpTransferAction from "./wormhole/cctpTransfer";
+import createWrappedTokenAction from "./wormhole/createWrappedToken";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -230,6 +231,7 @@ export const ACTIONS = {
   GET_COINGECKO_TRENDING_TOKENS_ACTION: getCoingeckoTrendingTokensAction,
   GET_WORMHOLE_SUPPORTED_CHAINS_ACTION: getWormholeSupportedChainsAction,
   CCTP_TRANSFER_ACTION: cctpTransferAction,
+  CREATE_WRAPPED_TOKEN_ACTION: createWrappedTokenAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";
