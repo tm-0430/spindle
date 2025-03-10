@@ -6,10 +6,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const agent = new SolanaAgentKit(
-  process.env.SOLANA_PRIVATE_KEY!,
-  process.env.RPC_URL!,
+  process.env.SOLANA_PRIVATE_KEY,
+  process.env.RPC_URL,
   {
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY!,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
 );
 
