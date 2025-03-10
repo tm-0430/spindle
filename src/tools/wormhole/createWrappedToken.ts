@@ -15,6 +15,10 @@ import {
 
 /**
  * Interface for the input parameters to create a wrapped token
+ *
+ * @property {Chain} destinationChain - The target blockchain where the wrapped token will be created
+ * @property {string} tokenAddress - The address of the token on Solana to be wrapped
+ * @property {Network} network - The network to use ("Mainnet", "Testnet", or "Devnet")
  */
 export interface CreateWrappedTokenInput {
   destinationChain: Chain;
@@ -24,6 +28,13 @@ export interface CreateWrappedTokenInput {
 
 /**
  * Interface for the response from creating a wrapped token
+ *
+ * @property {boolean} success - Whether the operation was successful
+ * @property {Object} [wrappedToken] - Information about the wrapped token (if successful)
+ * @property {Chain} wrappedToken.chain - The chain where the wrapped token was created
+ * @property {string|TokenAddress<Chain>|UniversalAddress} wrappedToken.address - The address of the wrapped token
+ * @property {string} [attestationTxid] - The transaction ID of the attestation transaction
+ * @property {string} [error] - Error message if the operation failed
  */
 export interface CreateWrappedTokenResponse {
   success: boolean;
@@ -37,11 +48,15 @@ export interface CreateWrappedTokenResponse {
 
 /**
  * Checks if a token is already wrapped on the destination chain
- * @param wh Wormhole SDK instance
- * @param srcChain Source chain context
- * @param destChain Destination chain context
- * @param tokenAddress Token address on the source chain
- * @returns The wrapped token address if it exists, null otherwise
+ *
+ * This function queries the destination chain to see if a wrapped version of the
+ * source token already exists, which helps avoid creating duplicate wrapped tokens.
+ *
+ * @param {Wormhole<Network>} wh - Wormhole SDK instance
+ * @param {Chain} srcChain - Source chain identifier
+ * @param {Chain} destChain - Destination chain identifier
+ * @param {string} tokenAddress - Token address on the source chain
+ * @returns {Promise<TokenAddress<Chain>|UniversalAddress|null>} The wrapped token address if it exists, null otherwise
  */
 export const isTokenWrapped = async (
   wh: Wormhole<Network>,
@@ -66,8 +81,22 @@ export const isTokenWrapped = async (
 
 /**
  * Creates a wrapped token on the destination chain
- * @param input Parameters for creating the wrapped token
- * @returns Response with the wrapped token information
+ *
+ * This function performs the following steps:
+ * 1. Checks if the token is already wrapped on the destination chain
+ * 2. If not wrapped, creates an attestation on the source chain (Solana)
+ * 3. Waits for the attestation to be processed by Wormhole guardians
+ * 4. Submits the attestation to the destination chain to create the wrapped token
+ * 5. Polls for the wrapped token to be available on the destination chain
+ *
+ * @param {CreateWrappedTokenInput} input - Parameters for creating the wrapped token
+ * @param {Chain} input.destinationChain - The target blockchain where the wrapped token will be created
+ * @param {string} input.tokenAddress - The address of the token on Solana to be wrapped
+ * @param {Network} input.network - The network to use ("Mainnet", "Testnet", or "Devnet")
+ *
+ * @returns {Promise<CreateWrappedTokenResponse>} Response with the wrapped token information
+ *
+ * @throws Will throw an error if the wrapped token creation fails at any step
  */
 export const createWrappedToken = async (
   input: CreateWrappedTokenInput,

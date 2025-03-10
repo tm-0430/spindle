@@ -1,3 +1,7 @@
+/**
+ * USDC contract addresses for different chains across Mainnet and Testnet networks
+ * This data is used to determine which chains and networks are supported for Wormhole operations
+ */
 const usdcContracts = [
   [
     "Mainnet",
@@ -25,6 +29,18 @@ const usdcContracts = [
   ],
 ];
 
+/**
+ * Retrieves a list of chains supported by Wormhole for cross-chain operations
+ *
+ * @returns {Promise<string>} A JSON string containing an array of supported chains with their network, chain name, and USDC address
+ *
+ * Example return value:
+ * [
+ *   { "network": "Mainnet", "chain": "Ethereum", "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48" },
+ *   { "network": "Mainnet", "chain": "Solana", "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" },
+ *   ...
+ * ]
+ */
 export const getWormholeSupportedChains = async () => {
   const supportedChains = [];
   for (const [network, chains] of usdcContracts) {

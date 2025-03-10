@@ -17,6 +17,24 @@ import sui from "@wormhole-foundation/sdk/sui";
 import aptos from "@wormhole-foundation/sdk/aptos";
 import { createWrappedToken, isTokenWrapped } from "./createWrappedToken";
 
+/**
+ * Transfers tokens from Solana to another blockchain using the Wormhole protocol
+ *
+ * This function handles the cross-chain transfer of tokens, including:
+ * - Native SOL transfers
+ * - SPL token transfers
+ * - Automatic token wrapping if the token doesn't exist on the destination chain
+ *
+ * @param {TokenTransferInput} input - The input parameters for the token transfer
+ * @param {Chain} input.destinationChain - The target blockchain (e.g., "Ethereum", "BaseSepolia")
+ * @param {Network} input.network - The network to use ("Mainnet", "Testnet", or "Devnet")
+ * @param {string} input.transferAmount - The amount of tokens to transfer
+ * @param {TokenId} [input.tokenAddress] - Optional token address to transfer (if not provided, native SOL is used)
+ *
+ * @returns {Promise<any>} A response object containing the transaction status and details
+ *
+ * @throws Will throw an error if the transfer fails for any reason
+ */
 export const tokenTransfer = async (
   input: TokenTransferInput,
 ): Promise<any> => {

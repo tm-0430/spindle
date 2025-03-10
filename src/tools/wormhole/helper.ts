@@ -15,20 +15,50 @@ import aptos from "@wormhole-foundation/sdk/aptos";
 import { config } from "dotenv";
 config();
 
+/**
+ * Interface representing a signer for a specific blockchain
+ *
+ * @template N - Network type (Mainnet, Testnet, Devnet)
+ * @template C - Chain type (Solana, Ethereum, etc.)
+ *
+ * @property {ChainContext<N, C>} chain - The chain context
+ * @property {Signer<N, C>} signer - The signer for the chain
+ * @property {ChainAddress<C>} address - The address of the signer
+ */
 export interface SignerStuff<N extends Network, C extends Chain> {
   chain: ChainContext<N, C>;
   signer: Signer<N, C>;
   address: ChainAddress<C>;
 }
 
-// Function to fetch environment variables (like your private key)
+/**
+ * Retrieves an environment variable
+ *
+ * @param {string} key - The name of the environment variable
+ * @returns {string} The value of the environment variable
+ * @throws {Error} If the environment variable is not set
+ */
 function getEnv(key: string): string {
   const val = process.env[key];
   if (!val) throw new Error(`Missing environment variable: ${key}`);
   return val;
 }
 
-// Signer setup function for different blockchain platforms
+/**
+ * Creates a signer for a specific blockchain
+ *
+ * This function handles the creation of signers for different blockchain platforms
+ * (Solana, EVM, Sui, Aptos) using private keys from environment variables.
+ *
+ * @template N - Network type (Mainnet, Testnet, Devnet)
+ * @template C - Chain type (Solana, Ethereum, etc.)
+ *
+ * @param {ChainContext<N, C>} chain - The chain context
+ * @param {bigint} [gasLimit] - Optional gas limit for EVM chains
+ *
+ * @returns {Promise<SignerStuff<N, C>>} The signer, chain context, and address
+ * @throws {Error} If the platform is not supported or if required environment variables are missing
+ */
 export async function getSigner<N extends Network, C extends Chain>(
   chain: ChainContext<N, C>,
   gasLimit?: bigint,
