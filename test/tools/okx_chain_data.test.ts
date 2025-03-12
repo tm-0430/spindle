@@ -1,10 +1,11 @@
 import { SolanaAgentKit } from "../../src/agent";
+import { OKXChain, OKXResponse } from "../../src/types";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-async function testOkxDexConnection() {
-  console.log("Testing OKX DEX API Connection...");
+async function testOkxDexChainData() {
+  console.log("Testing OKX DEX Chain Data API...");
   
   // Create a configuration object with explicit defaults for optional values
   const config = {
@@ -26,23 +27,28 @@ async function testOkxDexConnection() {
   console.log("Wallet address:", agent.wallet_address.toString());
 
   try {
-    // Test chain data as a simple connection test
-    console.log("Fetching chain data to verify connection...");
-    const chainData = await agent.getOkxChainData();
+    // Test getting chain data
+    console.log("Getting chain data from OKX DEX...");
+    const chainData = await agent.getOkxChainData() as OKXResponse<OKXChain>;
     
-    if (chainData && chainData.data) {
-      console.log("Successfully connected to OKX DEX API");
-      console.log(`Found ${chainData.data.length} chains`);
-      console.log("Connection test passed!");
+    if (chainData?.data) {
+      console.log("Successfully got chain data from OKX DEX API");
+      chainData.data.forEach((chain: OKXChain) => {
+        console.log(`- ${chain.chainName} (${chain.chainId})`);
+        if (chain.dexTokenApproveAddress) {
+          console.log(`  DEX Token Approve Address: ${chain.dexTokenApproveAddress}`);
+        }
+      });
+      console.log("Chain data test passed!");
     } else {
       console.log("Failed to get chain data. Response:", chainData);
-      console.log("Connection test failed!");
+      console.log("Chain data test failed!");
     }
   } catch (error) {
-    console.error("Error connecting to OKX DEX API:", error);
-    console.log("Connection test failed!");
+    console.error("Error getting chain data from OKX DEX API:", error);
+    console.log("Chain data test failed!");
   }
 }
 
 // Run the test
-testOkxDexConnection().catch(console.error);
+testOkxDexChainData().catch(console.error);

@@ -520,3 +520,50 @@ export interface SplAuthorityInput {
   updateAuthority?: PublicKey | undefined;
   isMutable?: boolean;
 }
+
+// OKX DEX Types
+export interface OKXToken {
+  tokenSymbol: string;
+  name: string;
+  address: string;
+  decimal: string;
+  chainId: string;
+  tokenId: string;
+  icon: string;
+}
+
+export interface OKXChain {
+  chainId: string;
+  chainName: string;
+  dexTokenApproveAddress: string;
+}
+
+export interface OKXLiquiditySource {
+  id: string;
+  name: string;
+  logo: string;
+}
+
+export interface OKXQuoteData {
+  fromToken: OKXToken;
+  toToken: OKXToken;
+  fromTokenAmount: string;
+  toTokenAmount: string;
+  exchangeRate: string;
+  priceImpactPercentage: string;
+  fee: string;
+  route: string[];
+}
+
+export interface OKXResponse<T> {
+  code: string;
+  msg: string;
+  data: T[];
+}
+
+export interface OKXSwapResult {
+  transactionId: string;
+  explorerUrl?: string;
+  success: boolean;
+  details?: any;
+}

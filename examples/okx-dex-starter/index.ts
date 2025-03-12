@@ -6,6 +6,8 @@ import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 import * as dotenv from "dotenv";
 import * as readline from "readline";
+import { initDexClient } from "../../src/tools/okx-dex/utils";
+import bs58 from 'bs58';
 
 dotenv.config();
 
@@ -35,6 +37,16 @@ let tokenInfoCache: Record<string, TokenInfo> = {
     decimals: 6
   }
 };
+
+// Helper functions for base58 validation
+function isValidBase58(str: string): boolean {
+  return /^[1-9A-HJ-NP-Za-km-z]+$/.test(str);
+}
+
+function encodeBase58Safe(str: string): string {
+  // Remove any non-base58 characters and whitespace
+  return str.replace(/[^1-9A-HJ-NP-Za-km-z]/g, '');
+}
 
 function updateTokenInfo(quote: any) {
   try {
@@ -85,7 +97,7 @@ function getTokenInfo(address: string): TokenInfo | undefined {
   return tokenInfoCache[address];
 }
 
-function formatTokenAmount(amount: string, address: string, tokenInfo?: any): string {
+export function formatTokenAmount(amount: string, address: string, tokenInfo?: any): string {
   try {
     const info = tokenInfo || getTokenInfo(address);
     const decimals = info?.decimals ?? 9;
@@ -127,8 +139,13 @@ function validateAndFormatAmount(amount: string, address: string): { isValid: bo
     
     // Convert to base units with proper decimal handling
     const parts = cleanAmount.split('.');
-    const wholePart = parts[0] || '0';
+    let wholePart = parts[0] || '0';
     const fractionalPart = parts[1] || '';
+    
+    // Ensure whole part is not empty and has at least one digit
+    if (!wholePart || wholePart === '') {
+      wholePart = '0';
+    }
     
     // Pad with zeros if needed, then take correct number of decimal places
     const paddedFractional = fractionalPart.padEnd(decimals, '0').slice(0, decimals);
@@ -142,15 +159,17 @@ function validateAndFormatAmount(amount: string, address: string): { isValid: bo
     // Format human readable amount
     const humanValue = value.toLocaleString(undefined, {
       minimumFractionDigits: Math.min(6, decimals),
-      maximumFractionDigits: Math.min(6, decimals)
+      maximumFractionDigits: Math.min(6, decimals),
+      useGrouping: false // Prevent thousand separators
     });
 
     return {
       isValid: true,
-      formatted: formattedBaseUnits,
+      formatted: formattedBaseUnits, // Use base units for API calls
       humanReadable: `${humanValue} ${tokenInfo?.symbol || address.slice(0, 8)}`
     };
   } catch (err) {
+    console.error("Error formatting amount:", err);
     return { isValid: false, formatted: "0", humanReadable: "0" };
   }
 }
@@ -225,226 +244,148 @@ function formatQuoteResult(quote: any, fromAddress: string, toAddress: string): 
   }
 }
 
-export async function executeSwap(agent: SolanaAgentKit, quote: any, fromAddress: string, toAddress: string, amount: string) {
-  if (!quote || quote.status === "error") {
-    console.error("Invalid quote");
-    const result = { status: "error", message: "Invalid quote" };
-    formatSwapResult(result, fromAddress, toAddress);
-    return null;
-  }
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  const MAX_RETRIES = 3;
-
+export async function executeSwap(
+  agent: SolanaAgentKit,
+  fromTokenAddress: string,
+  toTokenAddress: string,
+  amount: string,
+  slippage: string = "0.5",
+  autoSlippage: boolean = false,
+  maxAutoSlippageBps: string = "100",
+  userWalletAddress?: string
+): Promise<any> {
   try {
-    console.log("\nExecuting swap...");
-    const { isValid, formatted: formattedAmount } = validateAndFormatAmount(amount, fromAddress);
+    // Handle various SOL address formats and convert to OKX's expected format
+    const WRAPPED_SOL_MINT = "So11111111111111111111111111111111111111112";
+    const NATIVE_SOL_MINT = "11111111111111111111111111111111";
     
-    if (!isValid) {
-      const result = { status: "error", message: "Invalid amount format" };
-      formatSwapResult(result, fromAddress, toAddress);
-      throw new Error("Invalid amount format");
-    }
-
-    let lastError;
-    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-      try {
-        if (attempt > 0) {
-          console.log(`\nRetry attempt ${attempt + 1}/${MAX_RETRIES}...`);
-          await delay(2000); // Wait 2 seconds between retries
-        }
-
-        const swapResult = await agent.executeOkxSwap(
-          fromAddress,
-          toAddress,
-          formattedAmount,
-          "0.5",
-          true,
-          "1000",
-          OKX_SOLANA_WALLET_ADDRESS
-        );
-
-        console.log("Debug - Swap result:", JSON.stringify(swapResult, null, 2));
-
-        // Check all possible locations for transaction ID and explorer URL
-        const txId = swapResult?.txId || 
-                    swapResult?.summary?.txId || 
-                    swapResult?.data?.transactionId ||
-                    swapResult?.data?.txHash ||
-                    swapResult?.data?.txId;
-
-        const explorerUrl = swapResult?.explorerUrl || 
-                          swapResult?.summary?.explorerUrl || 
-                          swapResult?.data?.explorerUrl;
-
-        if (txId || explorerUrl) {
-          const result = {
-            status: "success",
-            signature: txId,
-            explorerUrl: explorerUrl,
-            outputAmount: quote.data?.[0]?.toTokenAmount,
-            // Include additional swap details if available
-            summary: swapResult?.summary || swapResult?.data?.details || null
-          };
-          formatSwapResult(result, fromAddress, toAddress);
-          return result;
-        }
-
-        // If we still don't have a signature, but the response indicates success
-        if (swapResult?.status === "success" && swapResult?.data?.success === true) {
-          throw new Error("Transaction appears successful but no transaction ID found. Please check your OKX wallet for the transaction.");
-        }
-
-        // If we still don't have a signature, throw an error with the full response
-        throw new Error(`No transaction signature received from OKX. Response: ${JSON.stringify(swapResult)}`);
-
-      } catch (error: any) {
-        lastError = error;
-        
-        // If we got a signature, try to confirm it
-        if (error?.signature) {
-          console.log("\nTransaction submitted, attempting to confirm...");
-          
-          try {
-            const latestBlockhash = await agent.connection.getLatestBlockhash();
-            const confirmation = await agent.connection.confirmTransaction({
-              signature: error.signature,
-              blockhash: latestBlockhash.blockhash,
-              lastValidBlockHeight: latestBlockhash.lastValidBlockHeight
-            }, 'confirmed');
-            
-            if (confirmation.value.err === null) {
-              const result = {
-                status: "success",
-                signature: error.signature,
-                outputAmount: quote.data?.[0]?.toTokenAmount
-              };
-              formatSwapResult(result, fromAddress, toAddress);
-              return result;
-            }
-          } catch (confirmError) {
-            console.log("Confirmation failed, will retry transaction...");
-            continue;
-          }
-        }
-
-        // If it's a blockhash error, continue to next retry
-        if (error.message?.includes("Blockhash not found")) {
-          console.log("Blockhash expired, retrying with new blockhash...");
-          continue;
-        }
-
-        // For network errors, retry
-        if (error.message?.includes("Network error") || error.message?.includes("timeout")) {
-          console.log("Network error, retrying...");
-          continue;
-        }
-
-        // For other errors, throw immediately
-        throw error;
-      }
-    }
-
-    // If we exhausted all retries, throw the last error
-    if (lastError) {
-      throw lastError;
-    }
-
-    throw new Error("Failed to execute swap after multiple attempts");
-  } catch (err) {
-    const error = err as Error;
+    // Convert addresses to strings and normalize
+    let fromAddress = String(fromTokenAddress || '').trim();
+    let toAddress = String(toTokenAddress || '').trim();
     
-    // Check if we have a signature in the error
-    if ('signature' in error) {
-      const result = {
-        status: "pending",
-        signature: (error as any).signature,
-        message: "Transaction submitted but confirmation status unknown",
-        outputAmount: quote.data?.[0]?.toTokenAmount
+    // Convert SOL addresses to native format for the API
+    if (fromAddress === WRAPPED_SOL_MINT) {
+      console.log(`Converting from wrapped SOL to native format for API call: ${NATIVE_SOL_MINT}`);
+      fromAddress = NATIVE_SOL_MINT;
+    }
+    
+    if (toAddress === WRAPPED_SOL_MINT) {
+      console.log(`Converting to wrapped SOL to native format for API call: ${NATIVE_SOL_MINT}`);
+      toAddress = NATIVE_SOL_MINT;
+    }
+    
+    // Clean the wallet address
+    const walletAddress = String(userWalletAddress || agent.wallet_address.toString()).trim();
+    
+    console.log("\nDebug - OKX DEX Swap Execution:");
+    console.log("  From token:", fromAddress);
+    console.log("  To token:", toAddress);
+    console.log("  Amount:", amount);
+    console.log("  Amount type:", typeof amount);
+    console.log("  User wallet:", walletAddress);
+
+    // Initialize the OKX DEX client
+    const dexClient = initDexClient(agent);
+
+    // Get a quote first
+    console.log("\nDebug - Getting quote for swap...");
+    const quote = await dexClient.dex.getQuote({
+      chainId: '501',
+      fromTokenAddress: fromAddress,
+      toTokenAddress: toAddress,
+      amount: amount.toString(),
+      slippage: autoSlippage ? "0" : slippage
+    });
+
+    console.log("\nDebug - Quote response status:", quote.code, quote.msg);
+    
+    // Validate the quote
+    if (!quote.data || !quote.data[0]) {
+      throw new Error(`Failed to get valid quote for the swap: ${quote.msg || "No data"}`);
+    }
+
+    const quoteData = quote.data[0];
+    console.log("\nDebug - Quote data:", {
+      fromToken: quoteData.fromToken?.tokenSymbol || "Unknown",
+      toToken: quoteData.toToken?.tokenSymbol || "Unknown",
+      fromAmount: quoteData.fromTokenAmount,
+      toAmount: quoteData.toTokenAmount,
+    });
+
+    // Extract human-readable amounts for reporting
+    const fromDecimal = parseInt(quoteData.fromToken?.decimal || "9");
+    const toDecimal = parseInt(quoteData.toToken?.decimal || "6");
+    const humanFromAmount = parseFloat(quoteData.fromTokenAmount) / Math.pow(10, fromDecimal);
+    const humanToAmount = parseFloat(quoteData.toTokenAmount) / Math.pow(10, toDecimal);
+
+    console.log("\nDebug - Executing swap transaction...");
+    
+    try {
+      // Use the standard SDK method instead of trying to customize the request
+      const swapResult = await dexClient.dex.executeSwap({
+        chainId: '501',
+        fromTokenAddress: fromAddress,
+        toTokenAddress: toAddress,
+        amount: amount.toString(),
+        slippage,
+        autoSlippage,
+        maxAutoSlippage: maxAutoSlippageBps,
+        userWalletAddress: walletAddress
+      });
+
+      console.log("\nDebug - Swap result:", JSON.stringify(swapResult, null, 2));
+
+      return {
+        status: "success",
+        summary: {
+          fromToken: quoteData.fromToken?.tokenSymbol || fromAddress,
+          toToken: quoteData.toToken?.tokenSymbol || toAddress,
+          fromAmount: humanFromAmount,
+          toAmount: humanToAmount,
+          exchangeRate: humanToAmount / humanFromAmount,
+          txId: swapResult.transactionId || "Unknown",
+          explorerUrl: swapResult.explorerUrl || `https://www.okx.com/web3/explorer/sol/tx/${swapResult.transactionId || ""}`
+        },
+        data: swapResult
       };
-      formatSwapResult(result, fromAddress, toAddress);
-      return result;
+    } catch (swapError: any) {
+      console.error("\nSwap execution failed:", swapError);
+      
+      if (swapError.message?.includes("Non-base58")) {
+        console.log("\nAnalyzing base58 error...");
+        
+        const base58Regex = /^[1-9A-HJ-NP-Za-km-z]+$/;
+        
+        // Check if Agent's wallet keypair is valid
+        const agentPrivateKey = agent.wallet.secretKey.toString();
+        console.log("Agent private key format valid:", base58Regex.test(agentPrivateKey.slice(0, 5) + "..."));
+        
+        // Let's try direct JSON.stringify to see the exact error:
+        const errorDetails = {
+          message: swapError.message,
+          name: swapError.name,
+          stack: swapError.stack,
+          responseBody: swapError.responseBody,
+          requestDetails: swapError.requestDetails
+        };
+        
+        console.log("Detailed error:", JSON.stringify(errorDetails, null, 2));
+      }
+      
+      return {
+        status: "error",
+        message: swapError.message || "Failed to execute swap",
+        details: swapError.response?.data || swapError.responseBody || swapError.stack
+      };
     }
+  } catch (error: any) {
+    console.error("\nDetailed swap error:", error);
     
-    const result = {
+    return {
       status: "error",
-      message: error.message || "Unknown error",
-      details: error
+      message: error.message || "Failed to execute swap",
+      details: error.response?.data || error.stack
     };
-    formatSwapResult(result, fromAddress, toAddress);
-    return result;
-  }
-}
-
-function formatSwapResult(result: any, fromAddress: string, toAddress: string): void {
-  // Handle pending transactions (including block height exceeded)
-  if (result?.status === "pending" && result?.signature) {
-    console.log("\nTransaction submitted and pending confirmation");
-    console.log("  Transaction Hash:", result.signature);
-    console.log("  Explorer URL:", result.explorerUrl);
-    if (result?.outputAmount) {
-      const toInfo = getTokenInfo(toAddress);
-      const decimals = toInfo?.decimals || 6;
-      const amount = (parseInt(result.outputAmount) / Math.pow(10, decimals)).toFixed(6);
-      console.log("  Expected to Receive:", `${amount} ${toInfo?.symbol || toAddress}`);
-    }
-    console.log("\nNote: The transaction has been submitted but confirmation timed out.");
-    console.log("You can check the transaction status using the explorer URL above.");
-    return;
-  }
-
-  // Handle successful transactions
-  if (result?.status === "success" || result?.signature || result?.txHash) {
-    console.log("\nSwap Success!");
-    const txHash = result.signature || result.txHash;
-    if (txHash) {
-      console.log("  Transaction Hash:", txHash);
-      console.log("  Explorer URL:", result.explorerUrl);
-    }
-    
-    // Display additional swap details if available
-    if (result.summary) {
-      if (result.summary.fromToken && result.summary.toToken) {
-        console.log("  Swap Details:");
-        console.log(`    From: ${result.summary.fromToken} (${result.summary.fromAmount})`);
-        console.log(`    To: ${result.summary.toToken} (${result.summary.toAmount})`);
-        if (result.summary.exchangeRate) {
-          console.log(`    Rate: ${result.summary.exchangeRate}`);
-        }
-      }
-    }
-    
-    if (result.outputAmount) {
-      const toInfo = getTokenInfo(toAddress);
-      const decimals = toInfo?.decimals || 6;
-      const amount = (parseInt(result.outputAmount) / Math.pow(10, decimals)).toFixed(6);
-      console.log("  Expected to Receive:", `${amount} ${toInfo?.symbol || toAddress}`);
-    }
-    return;
-  }
-
-  // Handle error cases
-  if (result?.status === "error") {
-    console.log("\nSwap Error:");
-    
-    // Extract error message
-    let errorMessage = result?.message || "Unknown error";
-    
-    // Check for common error cases
-    if (errorMessage.includes("insufficient lamports")) {
-      const match = errorMessage.match(/insufficient lamports (\d+), need (\d+)/);
-      if (match) {
-        const [_, current, needed] = match;
-        console.log("  Not enough SOL for transaction fees:");
-        console.log(`  Have: ${(parseInt(current) / 1e9).toFixed(9)} SOL`);
-        console.log(`  Need: ${(parseInt(needed) / 1e9).toFixed(9)} SOL`);
-        console.log("  Please ensure you have enough SOL to cover transaction fees");
-        return;
-      }
-    }
-
-    // For other errors, show the message in a cleaner format
-    console.log("  Message:", errorMessage.split('\n')[0]); // Show only first line of error
   }
 }
 
@@ -453,25 +394,49 @@ async function initializeAgent() {
     throw new Error("OKX_SOLANA_PRIVATE_KEY is required");
   }
 
+
   try {
+    // Clean up and validate private key
+    const privateKey = encodeBase58Safe(process.env.OKX_SOLANA_PRIVATE_KEY);
+    if (!isValidBase58(privateKey)) {
+      throw new Error("Invalid base58 format for private key");
+    }
+    
+    // Debug logging (only show first/last 4 chars of private key for security)
+    console.log("\nDebug - Initialization:");
+    console.log("  Private key length:", privateKey.length);
+    console.log("  Private key format:", `${privateKey.slice(0, 4)}...${privateKey.slice(-4)}`);
+    
+    // Clean up and validate wallet address if provided
+    if (process.env.OKX_SOLANA_WALLET_ADDRESS) {
+      const walletAddress = encodeBase58Safe(process.env.OKX_SOLANA_WALLET_ADDRESS);
+      if (!isValidBase58(walletAddress)) {
+        throw new Error("Invalid base58 format for wallet address");
+      }
+      console.log("  Wallet address:", walletAddress);
+    }
+
     const llm = new ChatOpenAI({
       modelName: "gpt-4",
       temperature: 0.7,
     });
 
     const solanaAgent = new SolanaAgentKit(
-      process.env.OKX_SOLANA_PRIVATE_KEY,
+      privateKey,
       process.env.RPC_URL || "https://api.mainnet-beta.solana.com",
       {
-        OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",
-        OKX_API_KEY: process.env.OKX_API_KEY || "",
-        OKX_SECRET_KEY: process.env.OKX_SECRET_KEY || "",
-        OKX_API_PASSPHRASE: process.env.OKX_API_PASSPHRASE || "",
-        OKX_PROJECT_ID: process.env.OKX_PROJECT_ID || "",
-        OKX_SOLANA_WALLET_ADDRESS: process.env.OKX_SOLANA_WALLET_ADDRESS || "",
-        OKX_SOLANA_PRIVATE_KEY: process.env.OKX_SOLANA_PRIVATE_KEY || ""
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY!,
+        OKX_API_KEY: process.env.OKX_API_KEY!,
+        OKX_SECRET_KEY: process.env.OKX_SECRET_KEY!,
+        OKX_API_PASSPHRASE: process.env.OKX_API_PASSPHRASE!,
+        OKX_PROJECT_ID: process.env.OKX_PROJECT_ID!,
+        OKX_SOLANA_WALLET_ADDRESS: process.env.OKX_SOLANA_WALLET_ADDRESS!,
+        OKX_SOLANA_PRIVATE_KEY: process.env.OKX_SOLANA_PRIVATE_KEY!,
       }
     );
+
+    // Log the agent's wallet address for verification
+    console.log("  Agent wallet address:", solanaAgent.wallet_address.toString());
 
     const tools = [
       tool(
@@ -550,8 +515,11 @@ export async function getQuote(agent: SolanaAgentKit, fromAddress: string, toAdd
   console.log(`\nGetting quote for swapping ${humanReadable} to ${toInfo?.symbol || toAddress}...`);
   
   try {
-    // Log the actual amount being sent for debugging
-    console.log(`Debug - Amount in base units: ${formattedAmount}`);
+    // Debug logging for amount validation
+    console.log("\nDebug - Amount validation:");
+    console.log("  Raw amount:", amount);
+    console.log("  Formatted amount:", formattedAmount);
+    console.log("  Human readable:", humanReadable);
     
     const quote = await agent.getOkxQuote(
       fromAddress,
@@ -568,12 +536,22 @@ export async function getQuote(agent: SolanaAgentKit, fromAddress: string, toAdd
     }
 
     // Log the raw quote for debugging
-    console.log("Debug - Raw quote:", JSON.stringify(quote, null, 2));
+    console.log("\nDebug - Raw quote response:", JSON.stringify(quote, null, 2));
 
     formatQuoteResult(quote, fromAddress, toAddress);
     return quote;
   } catch (err) {
     console.error("\nError getting quote:", err);
+    if (err instanceof Error) {
+      console.log("Debug - Error details:", {
+        message: err.message,
+        stack: err.stack,
+        // @ts-ignore
+        responseBody: err.responseBody,
+        // @ts-ignore
+        requestDetails: err.requestDetails
+      });
+    }
     return { status: "error", message: "Failed to get quote" };
   }
 }
@@ -637,7 +615,7 @@ Available commands:
 `;
 
   const tokenAliases: Record<string, string> = {
-    'sol': '11111111111111111111111111111111',
+    'sol': 'So11111111111111111111111111111111111111112',
     'usdc': 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
     'usdt': 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB'
   };
@@ -704,9 +682,41 @@ Available commands:
 
       if (input.toLowerCase() === 'confirm') {
         if (currentQuote && swapParams.fromAddress && swapParams.toAddress && swapParams.amount) {
-          await executeSwap(solanaAgent, currentQuote, swapParams.fromAddress, swapParams.toAddress, swapParams.amount);
-          currentQuote = null;
-          swapParams = {};
+          console.log("\nDebug - Swap parameters:");
+          console.log("  From address:", swapParams.fromAddress);
+          console.log("  To address:", swapParams.toAddress);
+          console.log("  Amount:", swapParams.amount);
+          console.log("  Quote:", typeof currentQuote);
+          
+          try {
+            // Convert the human-readable amount to base units
+            const { formatted: formattedAmount } = validateAndFormatAmount(
+              swapParams.amount, 
+              swapParams.fromAddress
+            );
+            
+            console.log("  Formatted amount (in base units):", formattedAmount);
+            
+            // Pass the properly formatted amount in base units
+            const result = await executeSwap(
+              solanaAgent, 
+              swapParams.fromAddress, 
+              swapParams.toAddress, 
+              formattedAmount, // Use formatted amount in base units
+              "0.5", // slippage
+              false, // autoSlippage
+              "100", // maxAutoSlippageBps
+            );
+            
+            console.log("\nSwap result:", result);
+            
+            // Reset after swap attempt regardless of success
+            currentQuote = null;
+            swapParams = {};
+          } catch (error) {
+            console.error("Error executing swap:", error);
+            // Keep parameters in case the user wants to retry
+          }
         } else {
           console.log("\nNo active quote to confirm. Please get a quote first.");
         }

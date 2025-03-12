@@ -1,5 +1,5 @@
 import { SolanaAgentKit } from "../../index";
-import { OKXDexClient } from '@okx-dex/okx-dex-sdk';
+import { initDexClient } from "./utils";
 
 /**
  * Execute a token swap on OKX DEX
@@ -23,31 +23,17 @@ export async function executeSwap(
   userWalletAddress?: string
 ): Promise<any> {
   try {
-    // Validate the required config parameters are present
-    if (!agent.config.OKX_API_KEY || 
-        !agent.config.OKX_SECRET_KEY || 
-        !agent.config.OKX_API_PASSPHRASE || 
-        !agent.config.OKX_PROJECT_ID) {
-      throw new Error("Missing required OKX DEX configuration in agent config");
-    }
+    console.log("\nDebug - OKX DEX Swap Execution:");
+    console.log("  From token:", fromTokenAddress);
+    console.log("  To token:", toTokenAddress);
+    console.log("  Amount:", amount);
+    console.log("  Amount type:", typeof amount);
+    console.log("  User wallet:", userWalletAddress || agent.wallet_address.toString());
 
-    // Initialize OKX DEX client using agent's config
-    const dexClient = new OKXDexClient({
-      apiKey: agent.config.OKX_API_KEY,
-      secretKey: agent.config.OKX_SECRET_KEY,
-      apiPassphrase: agent.config.OKX_API_PASSPHRASE,
-      projectId: agent.config.OKX_PROJECT_ID,
-      solana: {
-        connection: {
-          rpcUrl: agent.connection.rpcEndpoint,
-          confirmTransactionInitialTimeout: 60000
-        },
-        privateKey: Buffer.from(agent.wallet.secretKey).toString('base64'),
-        walletAddress: agent.wallet_address.toString()
-      }
-    });
+    const dexClient = initDexClient(agent);
 
     // First get token info for better reporting
+    console.log("\nDebug - Getting quote for swap...");
     const quote = await dexClient.dex.getQuote({
       chainId: '501',
       fromTokenAddress,
@@ -55,23 +41,31 @@ export async function executeSwap(
       amount,
       slippage: autoSlippage ? "0" : slippage
     });
-    
+
+    console.log("\nDebug - Quote response:", JSON.stringify(quote, null, 2));
+
     const quoteData = quote.data[0];
     const fromAmount = parseFloat(quoteData.fromTokenAmount) / Math.pow(10, parseInt(quoteData.fromToken.decimal));
     const toAmount = parseFloat(quoteData.toTokenAmount) / Math.pow(10, parseInt(quoteData.toToken.decimal));
-    
+
+    // Ensure amount is a string
+    const swapAmount = amount.toString();
+    console.log("\nDebug - Executing swap with amount:", swapAmount);
+
     // Execute the swap
     const swapResult = await dexClient.dex.executeSwap({
       chainId: '501',
       fromTokenAddress,
       toTokenAddress,
-      amount,
+      amount: swapAmount,
       slippage,
       autoSlippage,
       maxAutoSlippage: maxAutoSlippageBps,
       userWalletAddress: userWalletAddress || agent.wallet_address.toString()
     });
-    
+
+    console.log("\nDebug - Swap result:", JSON.stringify(swapResult, null, 2));
+
     return {
       status: "success",
       summary: {
@@ -86,7 +80,18 @@ export async function executeSwap(
       data: swapResult
     };
   } catch (error: any) {
-    console.error("Detailed swap error:", error);
+    console.error("\nDetailed swap error:", error);
+    console.log("\nDebug - Error details:", {
+      message: error.message,
+      stack: error.stack,
+      response: error.response?.data,
+      request: {
+        fromToken: fromTokenAddress,
+        toToken: toTokenAddress,
+        amount: amount,
+        wallet: userWalletAddress || agent.wallet_address.toString()
+      }
+    });
     return {
       status: "error",
       message: error.message || "Failed to execute swap",
