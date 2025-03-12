@@ -15,7 +15,7 @@ export function createOKXDexGetLiquidityTool(agent: SolanaAgentKit) {
     schema: z.object({}),
     func: async () => {
       try {
-        const result = await getLiquidity(agent);
+        const result = await getLiquidity(agent, "501"); // Solana chain ID
         return JSON.stringify(result);
       } catch (error: any) {
         return JSON.stringify({
