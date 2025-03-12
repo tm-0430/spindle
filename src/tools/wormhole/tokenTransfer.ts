@@ -4,15 +4,12 @@ import evm from "@wormhole-foundation/sdk/evm";
 import { TokenTransferInput } from "../../types";
 import {
   wormhole,
-  Chain,
   TokenId,
   Wormhole,
   amount,
-  Network,
   TokenTransfer,
   isTokenId,
 } from "@wormhole-foundation/sdk";
-import { z } from "zod";
 import sui from "@wormhole-foundation/sdk/sui";
 import aptos from "@wormhole-foundation/sdk/aptos";
 import { createWrappedToken, isTokenWrapped } from "./createWrappedToken";
@@ -46,7 +43,7 @@ export const tokenTransfer = async (
 
     // Ensure chain names are valid and properly formatted
     const sourceChainName = "Solana";
-    let destChainName = destinationChain;
+    const destChainName = destinationChain;
 
     // Get chain contexts - handle potential errors
     const sendChain = wh.getChain(sourceChainName);
@@ -70,7 +67,6 @@ export const tokenTransfer = async (
       token = tokenAddress;
     } else {
       // Default to native token if the format is unrecognized
-      console.warn("Unrecognized token format, defaulting to native token");
       token = Wormhole.tokenId(sendChain.chain, "native");
     }
 
@@ -88,10 +84,6 @@ export const tokenTransfer = async (
 
       // If the token is not wrapped, create a wrapped token
       if (!isWrapped) {
-        console.log(
-          `Token ${tokenAddressStr} is not wrapped on ${destChainName}. Creating wrapped token...`,
-        );
-
         const wrappedTokenResult = await createWrappedToken({
           destinationChain: destChainName,
           tokenAddress: tokenAddressStr,
@@ -103,14 +95,6 @@ export const tokenTransfer = async (
             `Failed to create wrapped token: ${wrappedTokenResult.error}`,
           );
         }
-
-        console.log(
-          `Successfully created wrapped token on ${destChainName}: ${wrappedTokenResult.wrappedToken?.address}`,
-        );
-      } else {
-        console.log(
-          `Token ${tokenAddressStr} is already wrapped on ${destChainName}`,
-        );
       }
     }
 
@@ -141,10 +125,7 @@ export const tokenTransfer = async (
     }
 
     // Submit the transactions to the source chain
-    console.log("Starting transfer");
     const srcTxids = await xfer.initiateTransfer(source.signer);
-    console.log(`Source Transaction ID: ${srcTxids[0]}`);
-    console.log(`Wormhole Transaction ID: ${srcTxids[1] ?? srcTxids[0]}`);
 
     // If automatic, we're done
     if (automatic) {
@@ -156,7 +137,6 @@ export const tokenTransfer = async (
     }
 
     // Wait for the VAA to be signed and ready
-    console.log("Getting Attestation");
     let attestation = null;
     let attempts = 0;
     const maxAttempts = 10;
@@ -164,12 +144,8 @@ export const tokenTransfer = async (
     while (!attestation && attempts < maxAttempts) {
       try {
         attestation = await xfer.fetchAttestation(60_000);
-        console.log("Got Attestation:", attestation);
-      } catch (error) {
+      } catch (_) {
         attempts++;
-        console.log(
-          `Attestation attempt ${attempts}/${maxAttempts} failed, retrying...`,
-        );
         // Wait 30 seconds between attempts
         await new Promise((resolve) => setTimeout(resolve, 30000));
       }
@@ -180,9 +156,7 @@ export const tokenTransfer = async (
     }
 
     // Redeem the VAA on the destination chain
-    console.log("Completing Transfer");
     const destTxids = await xfer.completeTransfer(destination.signer);
-    console.log(`Completed Transfer: `, destTxids);
 
     return {
       success: true,
@@ -191,7 +165,6 @@ export const tokenTransfer = async (
       transferId: xfer.txids[0],
     };
   } catch (error) {
-    console.error("Token transfer error:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : String(error),

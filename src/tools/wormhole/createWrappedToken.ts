@@ -7,10 +7,8 @@ import { getSigner } from "./helper";
 import {
   Chain,
   Network,
-  TokenId,
   TokenAddress,
   UniversalAddress,
-  ChainContext,
 } from "@wormhole-foundation/sdk";
 
 /**
@@ -73,7 +71,7 @@ export const isTokenWrapped = async (
     // Check if the token is already wrapped
     const wrapped = await tbDest.getWrappedAsset(tokenId);
     return wrapped;
-  } catch (e) {
+  } catch (_) {
     // If an error occurs, the token is not wrapped
     return null;
   }
@@ -120,9 +118,6 @@ export const createWrappedToken = async (
       tokenAddress,
     );
     if (wrapped) {
-      console.log(
-        `Token already wrapped on ${destinationChain}. Skipping attestation.`,
-      );
       return {
         success: true,
         wrappedToken: {
@@ -131,10 +126,6 @@ export const createWrappedToken = async (
         },
       };
     }
-
-    console.log(
-      `No wrapped token found on ${destinationChain}. Proceeding with attestation.`,
-    );
 
     // Destination chain signer setup
     const { signer: destSigner } = await getSigner(destChain, gasLimit);
@@ -164,13 +155,10 @@ export const createWrappedToken = async (
 
     // Sign and send the attestation transaction
     const txids = await signSendWait(srcChain, attestTxns, origSigner);
-    console.log("Attestation transaction IDs: ", txids);
     const txid = txids[0]!.txid;
-    console.log("Created attestation: ", txid);
 
     // Retrieve the Wormhole message ID from the attestation transaction
     const msgs = await srcChain.parseTransaction(txid);
-    console.log("Parsed Messages:", msgs);
 
     if (!msgs || msgs.length === 0) {
       throw new Error("No messages found in the transaction");
@@ -185,18 +173,13 @@ export const createWrappedToken = async (
       );
     }
 
-    console.log("Token Address: ", vaa.payload.token.address);
-
     // Submit the attestation on the destination chain
-    console.log("Attesting asset on destination chain...");
-
     const subAttestation = tbDest.submitAttestation(
       vaa,
       Wormhole.parseAddress(destSigner.chain(), destSigner.address()),
     );
 
     const tsx = await signSendWait(destChain, subAttestation, destSigner);
-    console.log("Transaction hash: ", tsx);
 
     // Poll for the wrapped asset until it's available
     let wrappedAsset = null;
@@ -208,12 +191,8 @@ export const createWrappedToken = async (
         // Convert token to TokenId format
         const tokenId = Wormhole.tokenId(srcChain.chain, tokenAddress);
         wrappedAsset = await tbDest.getWrappedAsset(tokenId);
-        console.log("Wrapped asset found:", wrappedAsset);
-      } catch (e) {
+      } catch (_) {
         attempts++;
-        console.log(
-          `Wrapped asset not found yet. Attempt ${attempts}/${maxAttempts}`,
-        );
         // Wait 2 seconds between attempts
         await new Promise((r) => setTimeout(r, 2000));
       }
@@ -232,7 +211,6 @@ export const createWrappedToken = async (
       attestationTxid: txid,
     };
   } catch (e) {
-    console.error("Error creating wrapped token:", e);
     return {
       success: false,
       error: e instanceof Error ? e.message : String(e),

@@ -11,17 +11,17 @@ const agent = new SolanaAgentKit(
   // const supportedChains = await agent.getWormholeSupportedChains();
   // console.log(supportedChains);
 
-  // const transfer = await agent.cctpTransfer({
-  //   destinationChain: "Base Sepolia",
-  //   transferAmount: "1",
-  //   network: "Testnet",
-  // });
-  // // console.log(transfer);
-
-  const createWrappedToken = await agent.createWrappedToken({
+  const transfer = await agent.cctpTransfer({
     destinationChain: "BaseSepolia",
+    transferAmount: "1",
     network: "Testnet",
-    tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
   });
-  console.log(createWrappedToken);
+  console.log(transfer);
+
+  // const createWrappedToken = await agent.createWrappedToken({
+  //   destinationChain: "BaseSepolia",
+  //   network: "Testnet",
+  //   tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  // });
+  // console.log(createWrappedToken);
 })();

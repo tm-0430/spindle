@@ -1,9 +1,4 @@
-import {
-  wormhole,
-  Chain,
-  CircleTransfer,
-  amount,
-} from "@wormhole-foundation/sdk";
+import { wormhole, CircleTransfer, amount } from "@wormhole-foundation/sdk";
 import evm from "@wormhole-foundation/sdk/evm";
 import solana from "@wormhole-foundation/sdk/solana";
 import sui from "@wormhole-foundation/sdk/sui";
@@ -62,26 +57,19 @@ export const cctpTransfer = async (input: CctpTransferInput) => {
       dst.chain,
       xfer.transfer,
     );
-    console.log("USDC Transfer Quote:", quote);
 
     // Initiate the transfer on the source chain
-    console.log("Starting USDC Transfer");
     const srcTxids = await xfer.initiateTransfer(src.signer);
-    console.log("Started USDC Transfer:", srcTxids);
 
     // For automatic transfers, the relay would handle attestation and completion
     // Since we're using manual mode, we need to handle these steps ourselves
 
     // Wait for the Circle attestation (proof that the tokens were locked on source chain)
     // Timeout after 60 seconds if no attestation is received
-    console.log("Waiting for Attestation");
     const attestIds = await xfer.fetchAttestation(60_000);
-    console.log("Got Attestation:", attestIds);
 
     // Complete the transfer on the destination chain using the attestation
-    console.log("Completing Transfer");
     const dstTxids = await xfer.completeTransfer(dst.signer);
-    console.log("Completed Transfer:", dstTxids);
 
     // Return a success response with all relevant transaction details
     return {
@@ -97,7 +85,6 @@ export const cctpTransfer = async (input: CctpTransferInput) => {
     };
   } catch (error) {
     // Handle any errors that occur during the transfer process
-    console.error("USDC transfer failed:", error);
     return {
       success: false,
       error: error instanceof Error ? error.message : String(error),
