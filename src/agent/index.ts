@@ -141,6 +141,10 @@ import {
   getTopGainers,
   getTrendingPools,
   getTrendingTokens,
+  getWormholeSupportedChains,
+  tokenTransfer,
+  cctpTransfer,
+  createWrappedToken,
 } from "../tools";
 import {
   Config,
@@ -163,6 +167,9 @@ import {
   deBridgeOrderStatusResponse,
   deBridgeTokensInfoResponse,
   SplAuthorityInput,
+  CctpTransferInput,
+  TokenTransferInput,
+  CreateWrappedTokenInput,
 } from "../types";
 import {
   DasApiAsset,
@@ -180,6 +187,7 @@ import {
   getTrendingTokensUsingElfaAi,
   getSmartTwitterAccountStats,
 } from "../tools/elfa_ai";
+import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
 import { getQuote as getOkxQuote, executeSwap as executeOkxSwapTool, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
 
 /**
@@ -1277,6 +1285,24 @@ export class SolanaAgentKit {
 
   async getTrendingTokensOnCoingecko() {
     return await getTrendingTokens(this);
+  }
+
+  // wormhole
+
+  async getWormholeSupportedChains() {
+    return await getWormholeSupportedChains();
+  }
+
+  async cctpTransfer(input: CctpTransferInput) {
+    return await cctpTransfer(input);
+  }
+
+  async tokenTransfer(input: TokenTransferInput) {
+    return await tokenTransfer(input);
+  }
+
+  async createWrappedToken(input: CreateWrappedTokenInput) {
+    return await createWrappedToken(input);
   }
 
   // OKX DEX Methods

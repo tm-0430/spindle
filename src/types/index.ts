@@ -2,6 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../agent";
 import { z } from "zod";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
+import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
 import { executeSwap, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
 
 export interface Config {
@@ -566,4 +567,23 @@ export interface OKXSwapResult {
   explorerUrl?: string;
   success: boolean;
   details?: any;
+}
+
+export interface CctpTransferInput {
+  destinationChain: Chain;
+  transferAmount: string;
+  network?: "Mainnet" | "Testnet" | "Devnet";
+}
+
+export interface TokenTransferInput {
+  destinationChain: Chain;
+  network?: "Mainnet" | "Testnet" | "Devnet";
+  transferAmount: string;
+  tokenAddress?: TokenId;
+}
+
+export interface CreateWrappedTokenInput {
+  destinationChain: Chain;
+  tokenAddress: string;
+  network?: "Mainnet" | "Testnet" | "Devnet";
 }

@@ -18,6 +18,7 @@ An open-source toolkit for connecting AI agents to Solana protocols. Now, any ag
 - Send compressed airdrops
 - Execute blinks
 - Launch tokens on AMMs
+- Bridge tokens across chains
 - And more...
 
 Anyone - whether an SF-based AI researcher or a crypto-native builder - can bring their AI agents trained with any model and seamlessly integrate with Solana.
@@ -33,6 +34,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Balance checks
   - Stake SOL
   - Zk compressed Airdrop by Light Protocol and Helius
+  - Bridge tokens across chains using Wormhole
 - **NFTs on 3.Land**
   - Create your own collection
   - NFT creation and automatic listing on 3.land
@@ -58,6 +60,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Perpetuals Trading with Adrena Protocol
   - Drift Vaults, Perps, Lending and Borrowing
   - Cross-chain bridging via deBridge DLN
+  - Cross chain bridging via Wormhole
 
 - **Solana Blinks**
    - Lending by Lulo (Best APR for USDC)
@@ -147,6 +150,53 @@ const result = await agent.deployToken(
 
 console.log("Token Mint Address:", result.mint.toString());
 ```
+
+
+### Get all supported chains using Wormhole
+```typescript
+const chains = await agent.getWormholeSupportedChains();
+console.log("Supported Chains:", chains);
+```
+
+### Create a Wrapped Token using Wormhole
+
+```typescript
+
+const result = await agent.createWrappedToken({
+  destinationChain: "BaseSepolia", // Target chain
+  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+console.log("Wrapped Token Result:", result);
+```
+
+
+Note:
+ When using Wormhole for cross-chain operations:
+- Always verify the destination chain is supported before attempting transfers
+- Use the correct network parameter ("Testnet" or "Mainnet") based on your environment
+- Make sure the destination address wallet private key is presernt in the .env file as automatic transfer is not supported yet on Solana
+
+### Perform a CCTP transfer using Wormhole
+```typescript
+const transfer = await agent.cctpTransfer({
+  destinationChain: "Base Sepolia", // Target chain
+  transferAmount: "1", // Amount to transfer
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+console.log("Transfer result:", transfer);
+```
+
+### Perform Token Transfer using Wormhole
+```typescript
+const transfer = await agent.tokenTransfer({
+  destinationChain: "Base Sepolia", // Target chain
+  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address or leave it empty to treansfer Native SOL
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+```
+
+
 ### Create NFT Collection on 3Land
 ```typescript
 const isDevnet = false; // (Optional) if not present TX takes place in Mainnet
@@ -721,7 +771,6 @@ Note: To use OKX DEX integration, you need to set up the following environment v
 - `RPC_URL`
 - `SOLANA_PRIVATE_KEY`
 - `SOLANA_WALLET_ADDRESS`
-
 ## Examples
 
 ### LangGraph Multi-Agent System
@@ -781,3 +830,4 @@ Solana Network : EKHTbXpsm6YDgJzMkFxNU1LNXeWcUW7Ezf8mjUNQQ4Pa
 ## Security
 
 This toolkit handles private keys and transactions. Always ensure you're using it in a secure environment and never share your private keys.
+

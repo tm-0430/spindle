@@ -114,6 +114,10 @@ import okxDexLiquidityAction from "./okx-dex/liquidity_action";
 import okxDexSwapAction from "./okx-dex/swap_action";
 import okxDexTokensAction from "./okx-dex/tokens_action";
 import okxDexChainDataAction from "./okx-dex/chain_data_action";
+import getWormholeSupportedChainsAction from "./wormhole/getSupportedChains";
+import cctpTransferAction from "./wormhole/cctpTransfer";
+import createWrappedTokenAction from "./wormhole/createWrappedToken";
+import tokenTransferAction from "./wormhole/tokenTransfer";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -236,6 +240,10 @@ export const ACTIONS = {
   OKX_DEX_CHAIN_DATA_ACTION: okxDexChainDataAction,
   OKX_DEX_SWAP_ACTION: okxDexSwapAction,
   OKX_DEX_TOKENS_ACTION: okxDexTokensAction,
+  GET_WORMHOLE_SUPPORTED_CHAINS_ACTION: getWormholeSupportedChainsAction,
+  CCTP_TRANSFER_ACTION: cctpTransferAction,
+  CREATE_WRAPPED_TOKEN_ACTION: createWrappedTokenAction,
+  TOKEN_TRANSFER_ACTION: tokenTransferAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";
