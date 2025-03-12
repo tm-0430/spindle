@@ -180,7 +180,7 @@ import {
   getTrendingTokensUsingElfaAi,
   getSmartTwitterAccountStats,
 } from "../tools/elfa_ai";
-import { getQuote as getOkxQuote, executeSwap as executeOkxSwapTool } from "../tools/okx-dex";
+import { getQuote as getOkxQuote, executeSwap as executeOkxSwapTool, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1012,11 +1012,11 @@ export class SolanaAgentKit {
       toSymbol: string;
       slippage?: number;
     } & (
-      | {
+        | {
           toAmount: number;
         }
-      | { fromAmount: number }
-    ),
+        | { fromAmount: number }
+      ),
   ) {
     return await swapSpotToken(this, {
       fromSymbol: params.fromSymbol,
@@ -1285,7 +1285,8 @@ export class SolanaAgentKit {
    * @param fromTokenAddress Source token address
    * @param toTokenAddress Target token address 
    * @param amount Amount to swap in base units
-   * @param slippage Slippage tolerance (optional)
+   * @param slippage Slippage tolerance as a decimal (default: 0.5%)
+   * @returns Quote information
    */
   async getOkxQuote(
     fromTokenAddress: string,
@@ -1301,9 +1302,11 @@ export class SolanaAgentKit {
    * @param fromTokenAddress Source token address
    * @param toTokenAddress Target token address
    * @param amount Amount to swap in base units
-   * @param slippage Slippage tolerance (optional)
-   * @param autoSlippage Whether to use auto slippage
-   * @param maxAutoSlippageBps Max auto slippage in basis points
+   * @param slippage Slippage tolerance as a decimal (default: 0.5%)
+   * @param autoSlippage Use auto slippage (default: false)
+   * @param maxAutoSlippageBps Maximum auto slippage in basis points (default: 100 = 1%)
+   * @param userWalletAddress Optional wallet address to use (defaults to agent's wallet)
+   * @returns Swap result with transaction ID
    */
   async executeOkxSwap(
     fromTokenAddress: string,
@@ -1322,6 +1325,30 @@ export class SolanaAgentKit {
       slippage,
       autoSlippage,
       maxAutoSlippageBps,
+      userWalletAddress
     );
+  }
+  /**
+ * Get list of tokens supported by OKX DEX
+ * @returns List of supported tokens
+ */
+  async getOkxTokens() {
+    return getTokens(this);
+  }
+
+  /**
+   * Get liquidity information from OKX DEX
+   * @returns Liquidity data
+   */
+  async getOkxLiquidity() {
+    return getLiquidity(this);
+  }
+
+  /**
+   * Get chain data from OKX DEX
+   * @returns Chain data
+   */
+  async getOkxChainData() {
+    return getChainData(this);
   }
 }

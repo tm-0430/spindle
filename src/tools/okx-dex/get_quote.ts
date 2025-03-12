@@ -1,28 +1,5 @@
-// src/tools/okx-dex/get_tokens.ts
 import { SolanaAgentKit } from "../../index";
 import { OKXDexClient } from '@okx-dex/okx-dex-sdk';
-import * as dotenv from "dotenv";
-
-dotenv.config();
-
-
-// Initialize the OKX DEX client
-const initDexClient = () => {
-  return new OKXDexClient({
-    apiKey: process.env.OKX_API_KEY!,
-    secretKey: process.env.OKX_SECRET_KEY!,
-    apiPassphrase: process.env.OKX_API_PASSPHRASE!,
-    projectId: process.env.OKX_PROJECT_ID!,
-    solana: {
-      connection: {
-        rpcUrl: process.env.RPC_URL!,
-        confirmTransactionInitialTimeout: 60000
-      },
-      privateKey: process.env.OKX_SOLANA_PRIVATE_KEY!,
-      walletAddress: process.env.OKX_SOLANA_WALLET_ADDRESS!
-    }
-  });
-};
 
 /**
  * Get quote for token swap on OKX DEX
@@ -41,7 +18,30 @@ export async function getQuote(
   slippage: string = "0.5"
 ): Promise<any> {
   try {
-    const dexClient = initDexClient();
+    // Validate the required config parameters are present
+    if (!agent.config.OKX_API_KEY || 
+        !agent.config.OKX_SECRET_KEY || 
+        !agent.config.OKX_API_PASSPHRASE || 
+        !agent.config.OKX_PROJECT_ID) {
+      throw new Error("Missing required OKX DEX configuration in agent config");
+    }
+
+    // Initialize OKX DEX client using agent's config
+    const dexClient = new OKXDexClient({
+      apiKey: agent.config.OKX_API_KEY,
+      secretKey: agent.config.OKX_SECRET_KEY,
+      apiPassphrase: agent.config.OKX_API_PASSPHRASE,
+      projectId: agent.config.OKX_PROJECT_ID,
+      solana: {
+        connection: {
+          rpcUrl: agent.connection.rpcEndpoint,
+          confirmTransactionInitialTimeout: 60000
+        },
+        privateKey: Buffer.from(agent.wallet.secretKey).toString('base64'),
+        walletAddress: agent.wallet_address.toString()
+      }
+    });
+    
     const quote = await dexClient.dex.getQuote({
       chainId: '501',
       fromTokenAddress,

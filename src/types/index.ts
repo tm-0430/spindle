@@ -2,6 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../agent";
 import { z } from "zod";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
+import { executeSwap, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
 
 export interface Config {
   OPENAI_API_KEY?: string;
