@@ -37,9 +37,14 @@ export const createWrappedTokenAction: Action = {
   ],
 
   schema: z.object({
-    destinationChain: z.string(),
-    tokenAddress: z.string(),
-    network: z.string(),
+    destinationChain: z
+      .string()
+      .describe("The destination chain to create the wrapped token on"),
+    tokenAddress: z.string().describe("The address of the token to wrap"),
+    network: z
+      .string()
+      .optional()
+      .describe("The network to use for the wrapped token"),
   }),
 
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {

@@ -39,7 +39,7 @@ export const tokenTransfer = async (
     const { destinationChain, network, transferAmount, tokenAddress } = input;
 
     // Initialize the Wormhole SDK with all platforms
-    const wh = await wormhole(network || "Testnet", [evm, solana, sui, aptos]);
+    const wh = await wormhole(network || "Mainnet", [evm, solana, sui, aptos]);
 
     // Ensure chain names are valid and properly formatted
     const sourceChainName = "Solana";

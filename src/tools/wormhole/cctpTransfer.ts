@@ -15,7 +15,7 @@ import { CctpTransferInput } from "../../types";
  * @returns Object with transfer status and transaction details or error information
  */
 export const cctpTransfer = async (input: CctpTransferInput) => {
-  const { destinationChain, transferAmount, network } = input;
+  const { destinationChain, transferAmount, network = "Mainnet" } = input;
   const sourceChain = "Solana"; // Source chain is fixed to Solana
   const automatic = false; // Manual attestation mode (not using automatic relayers)
   const nativeGasAmount = 0; // No native gas provided for automatic transfers

@@ -518,12 +518,12 @@ export interface SplAuthorityInput {
 export interface CctpTransferInput {
   destinationChain: Chain;
   transferAmount: string;
-  network: "Mainnet" | "Testnet" | "Devnet";
+  network?: "Mainnet" | "Testnet" | "Devnet";
 }
 
 export interface TokenTransferInput {
   destinationChain: Chain;
-  network: "Mainnet" | "Testnet" | "Devnet";
+  network?: "Mainnet" | "Testnet" | "Devnet";
   transferAmount: string;
   tokenAddress?: TokenId;
 }
@@ -531,5 +531,5 @@ export interface TokenTransferInput {
 export interface CreateWrappedTokenInput {
   destinationChain: Chain;
   tokenAddress: string;
-  network: "Mainnet" | "Testnet" | "Devnet";
+  network?: "Mainnet" | "Testnet" | "Devnet";
 }

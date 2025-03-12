@@ -10,7 +10,7 @@ export class TokenTransferTool extends Tool {
   - destinationChain: string, eg "Ethereum" or "BaseSepolia"
   - network: string, eg "Mainnet" or "Testnet"
   - transferAmount: string, eg "1"
-  - tokenAddress: string, eg "0x0000000000000000000000000000000000000000`;
+  - tokenAddress: string, eg "0x0000000000000000000000000000000000000000 (in case of solana/sol, it is empty)`;
 
   constructor(private solanaKit: SolanaAgentKit) {
     super();

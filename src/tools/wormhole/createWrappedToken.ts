@@ -10,6 +10,7 @@ import {
   TokenAddress,
   UniversalAddress,
 } from "@wormhole-foundation/sdk";
+import { CreateWrappedTokenInput } from "../../types";
 
 /**
  * Interface for the input parameters to create a wrapped token
@@ -18,11 +19,6 @@ import {
  * @property {string} tokenAddress - The address of the token on Solana to be wrapped
  * @property {Network} network - The network to use ("Mainnet", "Testnet", or "Devnet")
  */
-export interface CreateWrappedTokenInput {
-  destinationChain: Chain;
-  tokenAddress: string;
-  network: Network;
-}
 
 /**
  * Interface for the response from creating a wrapped token
@@ -104,7 +100,7 @@ export const createWrappedToken = async (
     const gasLimit = BigInt(2_500_000);
 
     // Initialize the Wormhole SDK with all platforms
-    const wh = await wormhole(network || "Testnet", [evm, solana, sui, aptos]);
+    const wh = await wormhole(network || "Mainnet", [evm, solana, sui, aptos]);
 
     // Get chain contexts
     const srcChain = wh.getChain("Solana");

@@ -32,10 +32,20 @@ export const tokenTransferAction: Action = {
   ],
 
   schema: z.object({
-    destinationChain: z.string(),
-    network: z.string(),
-    transferAmount: z.string(),
-    tokenAddress: z.string().optional(),
+    destinationChain: z
+      .string()
+      .describe("The destination chain to transfer the token to"),
+    network: z
+      .string()
+      .optional()
+      .describe("The network to use for the transfer"),
+    transferAmount: z.string().describe("The amount of tokens to transfer"),
+    tokenAddress: z
+      .string()
+      .optional()
+      .describe(
+        "The address of the token to transfer, in case of solana, it is empty",
+      ),
   }),
 
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {

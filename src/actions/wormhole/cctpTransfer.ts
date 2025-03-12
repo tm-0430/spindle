@@ -41,9 +41,14 @@ export const cctpTransferAction: Action = {
     ],
   ],
   schema: z.object({
-    destinationChain: z.string(),
-    transferAmount: z.string(),
-    network: z.string(),
+    destinationChain: z
+      .string()
+      .describe("The destination chain to transfer the token to"),
+    transferAmount: z.string().describe("The amount of tokens to transfer"),
+    network: z
+      .string()
+      .optional()
+      .describe("The network to use for the transfer"),
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const response = await agent.cctpTransfer(input as CctpTransferInput);
