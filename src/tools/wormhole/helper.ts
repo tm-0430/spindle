@@ -78,7 +78,7 @@ export async function getSigner<N extends Network, C extends Chain>(
         await solana()
       ).getSigner(await chain.getRpc(), getEnv("SOLANA_PRIVATE_KEY"));
       break;
-    case "Evm":
+    case "Evm": {
       const evmSignerOptions = gasLimit ? { gasLimit } : {};
       signer = await (
         await evm()
@@ -88,6 +88,7 @@ export async function getSigner<N extends Network, C extends Chain>(
         evmSignerOptions,
       );
       break;
+    }
     case "Sui":
       signer = await (
         await sui()

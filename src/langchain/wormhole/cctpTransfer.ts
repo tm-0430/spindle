@@ -1,6 +1,4 @@
 import { Tool } from "@langchain/core/tools";
-import { z } from "zod";
-import { cctpTransfer } from "../../tools/wormhole";
 import { SolanaAgentKit } from "../../agent";
 import { CctpTransferInput } from "../../types";
 
