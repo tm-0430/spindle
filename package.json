@@ -79,6 +79,7 @@
     "@tensor-oss/tensorswap-sdk": "^4.5.0",
     "@tiplink/api": "^0.3.1",
     "@voltr/vault-sdk": "^0.1.1",
+    "@wormhole-foundation/sdk": "^1.13.1",
     "ai": "^4.0.22",
     "axios": "^1.7.9",
     "bn.js": "^5.2.1",

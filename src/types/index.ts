@@ -2,6 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../agent";
 import { z } from "zod";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
+import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
 
 export interface Config {
   OPENAI_API_KEY?: string;
@@ -512,4 +513,23 @@ export interface SplAuthorityInput {
   freezeAuthority?: PublicKey | undefined | null;
   updateAuthority?: PublicKey | undefined;
   isMutable?: boolean;
+}
+
+export interface CctpTransferInput {
+  destinationChain: Chain;
+  transferAmount: string;
+  network?: "Mainnet" | "Testnet" | "Devnet";
+}
+
+export interface TokenTransferInput {
+  destinationChain: Chain;
+  network?: "Mainnet" | "Testnet" | "Devnet";
+  transferAmount: string;
+  tokenAddress?: TokenId;
+}
+
+export interface CreateWrappedTokenInput {
+  destinationChain: Chain;
+  tokenAddress: string;
+  network?: "Mainnet" | "Testnet" | "Devnet";
 }
