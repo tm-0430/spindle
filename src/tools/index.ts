@@ -36,3 +36,4 @@ export * from "./elfa_ai";
 export * from "./fluxbeam";
 export * from "./coingecko";
 export * from "./wormhole";
+export * from "./okx-dex";

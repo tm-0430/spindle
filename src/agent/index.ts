@@ -188,6 +188,7 @@ import {
   getSmartTwitterAccountStats,
 } from "../tools/elfa_ai";
 import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
+import { getQuote as getOkxQuote, executeSwap as executeOkxSwapTool, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1019,11 +1020,11 @@ export class SolanaAgentKit {
       toSymbol: string;
       slippage?: number;
     } & (
-      | {
+        | {
           toAmount: number;
         }
-      | { fromAmount: number }
-    ),
+        | { fromAmount: number }
+      ),
   ) {
     return await swapSpotToken(this, {
       fromSymbol: params.fromSymbol,
@@ -1302,5 +1303,79 @@ export class SolanaAgentKit {
 
   async createWrappedToken(input: CreateWrappedTokenInput) {
     return await createWrappedToken(input);
+  }
+
+  // OKX DEX Methods
+  /**
+   * Get quote for token swap on OKX DEX
+   * @param fromTokenAddress Source token address
+   * @param toTokenAddress Target token address 
+   * @param amount Amount to swap in base units
+   * @param slippage Slippage tolerance as a decimal (default: 0.5%)
+   * @returns Quote information
+   */
+  async getOkxQuote(
+    fromTokenAddress: string,
+    toTokenAddress: string,
+    amount: string,
+    slippage: string = "0.5"
+  ) {
+    return getOkxQuote(this, fromTokenAddress, toTokenAddress, amount, slippage);
+  }
+
+  /**
+   * Execute token swap on OKX DEX
+   * @param fromTokenAddress Source token address
+   * @param toTokenAddress Target token address
+   * @param amount Amount to swap in base units
+   * @param slippage Slippage tolerance as a decimal (default: 0.5%)
+   * @param autoSlippage Use auto slippage (default: false)
+   * @param maxAutoSlippageBps Maximum auto slippage in basis points (default: 100 = 1%)
+   * @param userWalletAddress Optional wallet address to use (defaults to agent's wallet)
+   * @returns Swap result with transaction ID
+   */
+  async executeOkxSwap(
+    fromTokenAddress: string,
+    toTokenAddress: string,
+    amount: string,
+    slippage: string = "0.5",
+    autoSlippage: boolean = false,
+    maxAutoSlippageBps: string = "100",
+    userWalletAddress?: string
+  ) {
+    return executeOkxSwapTool(
+      this,
+      fromTokenAddress,
+      toTokenAddress,
+      amount,
+      slippage,
+      autoSlippage,
+      maxAutoSlippageBps,
+      userWalletAddress
+    );
+  }
+  /**
+ * Get list of tokens supported by OKX DEX
+ * @returns List of supported tokens
+ */
+  async getOkxTokens() {
+    return getTokens(this);
+  }
+
+  /**
+   * Get liquidity information from OKX DEX
+   * @param chainId Chain ID to query liquidity for
+   * @returns Liquidity data
+   */
+  async getOkxLiquidity(chainId: string) {
+    return getLiquidity(this, chainId);
+  }
+
+  /**
+   * Get chain data from OKX DEX
+   * @returns Chain data
+   */
+  async getOkxChainData() {
+    return getChainData(this);
   }
 }
