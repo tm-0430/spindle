@@ -126,8 +126,10 @@ npm install @solana-agent-kit/plugin-token @solana-agent-kit/plugin-nft @solana-
 
 ## Quick Start
 
+Initializing the wallet interface and agent with plugins:
+
 ```typescript
-import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
+import { SolanaAgentKit, createVercelAITools, KeypairWallet } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 import NFTPlugin from "@solana-agent-kit/plugin-nft";
 import DefiPlugin from "@solana-agent-kit/plugin-defi";
@@ -135,30 +137,11 @@ import MiscPlugin from "@solana-agent-kit/plugin-misc";
 import BlinksPlugin from "@solana-agent-kit/plugin-blinks";
 
 const keyPair = Keypair.fromSecretKey(bs58.decode("YOUR_SECRET_KEY"))
+const wallet = new KeypairWallet(keyPair)
 
 // Initialize with private key and optional RPC URL
 const agent = new SolanaAgentKit(
-  {
-    publicKey: keyPair.publicKey,
-    sendTransaction: async (tx) => {
-      const connection = new Connection(process.env.RPC_URL as string);
-      if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
-      else tx.sign(keyPair);
-      return await connection.sendRawTransaction(tx.serialize());
-    },
-    signTransaction: async (tx) => {
-      if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
-      else tx.sign(keyPair);
-      return tx;
-    },
-    signAllTransactions: async (txs) => {
-      txs.forEach((tx) => {
-        if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
-        else tx.sign(keyPair);
-      });
-      return txs;
-    },
-  },
+  wallet,
   "YOUR_RPC_URL",
   {
     OPENAI_API_KEY: "YOUR_OPENAI_API_KEY",
@@ -173,6 +156,8 @@ const agent = new SolanaAgentKit(
 // Create LangChain tools
 const tools = createVercelAITools(agent, agent.actions);
 ```
+
+You can also make use of the wallet interface provided by the Solana wallet adapter for embedded wallets.
 
 ## Usage Examples
 
