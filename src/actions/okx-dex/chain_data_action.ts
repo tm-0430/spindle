@@ -8,34 +8,36 @@ const okxDexChainDataAction: Action = {
   name: "OKX_DEX_CHAIN_DATA",
   similes: ["get chain data", "okx dex chain data"],
   description: "Get chain data from OKX DEX.",
-  examples: [[
-    {
-      input: {},
-      output: {
-        status: "success",
-        summary: {
-          chains: [
-            {
-              symbol: "SOL",
-              name: "Solana",
-              address: "So11111111111111111111111111111111111111112"
-            }
-          ]
-        }
+  examples: [
+    [
+      {
+        input: {},
+        output: {
+          status: "success",
+          summary: {
+            chains: [
+              {
+                symbol: "SOL",
+                name: "Solana",
+                address: "So11111111111111111111111111111111111111112",
+              },
+            ],
+          },
+        },
+        explanation: "Getting chain data from OKX DEX",
       },
-      explanation: "Getting chain data from OKX DEX"
-    }
-  ]],
+    ],
+  ],
   schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const chains = await getChainData(agent);
     return {
       status: "success",
       summary: {
-        chains: chains
-      }
+        chains: chains,
+      },
     };
-  }
+  },
 };
 
 export default okxDexChainDataAction;

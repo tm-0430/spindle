@@ -37,7 +37,7 @@ export * from "./debridge";
 export * from "./fluxbeam";
 export * from "./wormhole";
 export * from "./okx-dex";
-  
+
 import type { SolanaAgentKit } from "../agent";
 import {
   SolanaBalanceTool,

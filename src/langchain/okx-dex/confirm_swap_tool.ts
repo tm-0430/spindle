@@ -21,12 +21,20 @@ export function createOKXDexConfirmSwapTool(agent: SolanaAgentKit) {
         if (!pendingSwap) {
           return JSON.stringify({
             status: "error",
-            message: "No pending swap to confirm"
+            message: "No pending swap to confirm",
           });
         }
 
-        const { fromTokenAddress, toTokenAddress, amount, slippage, autoSlippage, maxAutoSlippageBps, userWalletAddress } = pendingSwap;
-        
+        const {
+          fromTokenAddress,
+          toTokenAddress,
+          amount,
+          slippage,
+          autoSlippage,
+          maxAutoSlippageBps,
+          userWalletAddress,
+        } = pendingSwap;
+
         const result = await executeSwap(
           agent,
           fromTokenAddress,
@@ -35,17 +43,17 @@ export function createOKXDexConfirmSwapTool(agent: SolanaAgentKit) {
           slippage,
           autoSlippage,
           maxAutoSlippageBps,
-          userWalletAddress
+          userWalletAddress,
         );
 
         // Clear the pending swap
         pendingSwap = null;
-        
+
         return JSON.stringify(result);
       } catch (error: any) {
         return JSON.stringify({
           status: "error",
-          message: error.message || "Failed to confirm swap"
+          message: error.message || "Failed to confirm swap",
         });
       }
     },

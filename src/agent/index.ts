@@ -188,7 +188,13 @@ import {
   getSmartTwitterAccountStats,
 } from "../tools/elfa_ai";
 import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
-import { getQuote as getOkxQuote, executeSwap as executeOkxSwapTool, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
+import {
+  getQuote as getOkxQuote,
+  executeSwap as executeOkxSwapTool,
+  getTokens,
+  getChainData,
+  getLiquidity,
+} from "../tools/okx-dex";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1020,11 +1026,11 @@ export class SolanaAgentKit {
       toSymbol: string;
       slippage?: number;
     } & (
-        | {
+      | {
           toAmount: number;
         }
-        | { fromAmount: number }
-      ),
+      | { fromAmount: number }
+    ),
   ) {
     return await swapSpotToken(this, {
       fromSymbol: params.fromSymbol,
@@ -1309,7 +1315,7 @@ export class SolanaAgentKit {
   /**
    * Get quote for token swap on OKX DEX
    * @param fromTokenAddress Source token address
-   * @param toTokenAddress Target token address 
+   * @param toTokenAddress Target token address
    * @param amount Amount to swap in base units
    * @param slippage Slippage tolerance as a decimal (default: 0.5%)
    * @returns Quote information
@@ -1318,9 +1324,15 @@ export class SolanaAgentKit {
     fromTokenAddress: string,
     toTokenAddress: string,
     amount: string,
-    slippage: string = "0.5"
+    slippage: string = "0.5",
   ) {
-    return getOkxQuote(this, fromTokenAddress, toTokenAddress, amount, slippage);
+    return getOkxQuote(
+      this,
+      fromTokenAddress,
+      toTokenAddress,
+      amount,
+      slippage,
+    );
   }
 
   /**
@@ -1341,7 +1353,7 @@ export class SolanaAgentKit {
     slippage: string = "0.5",
     autoSlippage: boolean = false,
     maxAutoSlippageBps: string = "100",
-    userWalletAddress?: string
+    userWalletAddress?: string,
   ) {
     return executeOkxSwapTool(
       this,
@@ -1351,13 +1363,13 @@ export class SolanaAgentKit {
       slippage,
       autoSlippage,
       maxAutoSlippageBps,
-      userWalletAddress
+      userWalletAddress,
     );
   }
   /**
- * Get list of tokens supported by OKX DEX
- * @returns List of supported tokens
- */
+   * Get list of tokens supported by OKX DEX
+   * @returns List of supported tokens
+   */
   async getOkxTokens() {
     return getTokens(this);
   }

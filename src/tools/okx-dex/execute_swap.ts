@@ -20,7 +20,7 @@ export async function executeSwap(
   slippage: string = "0.5",
   autoSlippage: boolean = false,
   maxAutoSlippageBps: string = "100",
-  userWalletAddress?: string
+  userWalletAddress?: string,
 ): Promise<any> {
   try {
     console.log("\nDebug - OKX DEX Swap Execution:");
@@ -28,25 +28,32 @@ export async function executeSwap(
     console.log("  To token:", toTokenAddress);
     console.log("  Amount:", amount);
     console.log("  Amount type:", typeof amount);
-    console.log("  User wallet:", userWalletAddress || agent.wallet_address.toString());
+    console.log(
+      "  User wallet:",
+      userWalletAddress || agent.wallet_address.toString(),
+    );
 
     const dexClient = initDexClient(agent);
 
     // First get token info for better reporting
     console.log("\nDebug - Getting quote for swap...");
     const quote = await dexClient.dex.getQuote({
-      chainId: '501',
+      chainId: "501",
       fromTokenAddress,
       toTokenAddress,
       amount,
-      slippage: autoSlippage ? "0" : slippage
+      slippage: autoSlippage ? "0" : slippage,
     });
 
     console.log("\nDebug - Quote response:", JSON.stringify(quote, null, 2));
 
     const quoteData = quote.data[0];
-    const fromAmount = parseFloat(quoteData.fromTokenAmount) / Math.pow(10, parseInt(quoteData.fromToken.decimal));
-    const toAmount = parseFloat(quoteData.toTokenAmount) / Math.pow(10, parseInt(quoteData.toToken.decimal));
+    const fromAmount =
+      parseFloat(quoteData.fromTokenAmount) /
+      Math.pow(10, parseInt(quoteData.fromToken.decimal));
+    const toAmount =
+      parseFloat(quoteData.toTokenAmount) /
+      Math.pow(10, parseInt(quoteData.toToken.decimal));
 
     // Ensure amount is a string
     const swapAmount = amount.toString();
@@ -54,14 +61,14 @@ export async function executeSwap(
 
     // Execute the swap
     const swapResult = await dexClient.dex.executeSwap({
-      chainId: '501',
+      chainId: "501",
       fromTokenAddress,
       toTokenAddress,
       amount: swapAmount,
       slippage,
       autoSlippage,
       maxAutoSlippage: maxAutoSlippageBps,
-      userWalletAddress: userWalletAddress || agent.wallet_address.toString()
+      userWalletAddress: userWalletAddress || agent.wallet_address.toString(),
     });
 
     console.log("\nDebug - Swap result:", JSON.stringify(swapResult, null, 2));
@@ -75,9 +82,11 @@ export async function executeSwap(
         toAmount,
         exchangeRate: toAmount / fromAmount,
         txId: swapResult.transactionId,
-        explorerUrl: swapResult.explorerUrl || `https://www.okx.com/web3/explorer/sol/tx/${swapResult.transactionId}`
+        explorerUrl:
+          swapResult.explorerUrl ||
+          `https://www.okx.com/web3/explorer/sol/tx/${swapResult.transactionId}`,
       },
-      data: swapResult
+      data: swapResult,
     };
   } catch (error: any) {
     console.error("\nDetailed swap error:", error);
@@ -89,13 +98,13 @@ export async function executeSwap(
         fromToken: fromTokenAddress,
         toToken: toTokenAddress,
         amount: amount,
-        wallet: userWalletAddress || agent.wallet_address.toString()
-      }
+        wallet: userWalletAddress || agent.wallet_address.toString(),
+      },
     });
     return {
       status: "error",
       message: error.message || "Failed to execute swap",
-      details: error.response?.data || error.stack
+      details: error.response?.data || error.stack,
     };
   }
 }

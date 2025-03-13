@@ -6,7 +6,6 @@ import deployCollectionAction from "./metaplex/deployCollection";
 import mintNFTAction from "./metaplex/mintNFT";
 import tradeAction from "./jupiter/trade";
 import requestFundsAction from "./solana/requestFunds";
-import resolveDomainAction from "./sns/registerDomain";
 import getTokenDataAction from "./jupiter/getTokenData";
 import getTPSAction from "./solana/getTPS";
 import fetchPriceAction from "./jupiter/fetchPrice";
@@ -130,7 +129,6 @@ export const ACTIONS = {
   MINT_NFT_ACTION: mintNFTAction,
   TRADE_ACTION: tradeAction,
   REQUEST_FUNDS_ACTION: requestFundsAction,
-  RESOLVE_DOMAIN_ACTION: resolveDomainAction,
   GET_TOKEN_DATA_ACTION: getTokenDataAction,
   GET_TPS_ACTION: getTPSAction,
   FETCH_PRICE_ACTION: fetchPriceAction,

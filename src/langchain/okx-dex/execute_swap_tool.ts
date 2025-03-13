@@ -16,19 +16,31 @@ export function createOKXDexExecuteSwapTool(agent: SolanaAgentKit) {
       fromTokenAddress: z.string().describe("Source token address"),
       toTokenAddress: z.string().describe("Target token address"),
       amount: z.string().describe("Amount to swap in base units"),
-      slippage: z.string().optional().describe("Slippage tolerance (default: 0.5%)"),
-      autoSlippage: z.boolean().optional().describe("Use auto slippage (default: false)"),
-      maxAutoSlippageBps: z.string().optional().describe("Maximum auto slippage in basis points (default: 100 = 1%)"),
-      userWalletAddress: z.string().optional().describe("User wallet address (default: agent's wallet address)"),
+      slippage: z
+        .string()
+        .optional()
+        .describe("Slippage tolerance (default: 0.5%)"),
+      autoSlippage: z
+        .boolean()
+        .optional()
+        .describe("Use auto slippage (default: false)"),
+      maxAutoSlippageBps: z
+        .string()
+        .optional()
+        .describe("Maximum auto slippage in basis points (default: 100 = 1%)"),
+      userWalletAddress: z
+        .string()
+        .optional()
+        .describe("User wallet address (default: agent's wallet address)"),
     }),
-    func: async ({ 
-      fromTokenAddress, 
-      toTokenAddress, 
-      amount, 
-      slippage = "0.5", 
-      autoSlippage = false, 
+    func: async ({
+      fromTokenAddress,
+      toTokenAddress,
+      amount,
+      slippage = "0.5",
+      autoSlippage = false,
       maxAutoSlippageBps = "100",
-      userWalletAddress
+      userWalletAddress,
     }) => {
       try {
         const result = await executeSwap(
@@ -39,13 +51,13 @@ export function createOKXDexExecuteSwapTool(agent: SolanaAgentKit) {
           slippage,
           autoSlippage,
           maxAutoSlippageBps,
-          userWalletAddress
+          userWalletAddress,
         );
         return JSON.stringify(result);
       } catch (error: any) {
         return JSON.stringify({
           status: "error",
-          message: error.message || "Failed to execute swap"
+          message: error.message || "Failed to execute swap",
         });
       }
     },

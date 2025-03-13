@@ -3,7 +3,12 @@ import { SolanaAgentKit } from "../agent";
 import { z } from "zod";
 import { AlloraInference, AlloraTopic } from "@alloralabs/allora-sdk";
 import { Chain, TokenId } from "@wormhole-foundation/sdk/dist/cjs";
-import { executeSwap, getTokens, getChainData, getLiquidity } from "../tools/okx-dex";
+import {
+  executeSwap,
+  getTokens,
+  getChainData,
+  getLiquidity,
+} from "../tools/okx-dex";
 
 export interface Config {
   OPENAI_API_KEY?: string;

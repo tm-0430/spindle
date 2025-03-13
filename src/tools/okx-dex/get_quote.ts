@@ -15,22 +15,22 @@ export async function getQuote(
   fromTokenAddress: string,
   toTokenAddress: string,
   amount: string,
-  slippage: string = "0.5"
+  slippage: string = "0.5",
 ): Promise<any> {
   try {
     const dexClient = initDexClient(agent);
     const quote = await dexClient.dex.getQuote({
-      chainId: '501',
+      chainId: "501",
       fromTokenAddress,
       toTokenAddress,
       amount,
-      slippage
+      slippage,
     });
     return quote;
   } catch (error: any) {
     return {
       status: "error",
-      message: error.message || "Failed to get quote"
+      message: error.message || "Failed to get quote",
     };
   }
 }

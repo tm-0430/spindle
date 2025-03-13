@@ -22,9 +22,12 @@ export function createMcpServer(
     version: options.version,
   });
 
+  const registeredActions: string[] = [];
+
   // Convert each action to an MCP tool
-  for (const [key, action] of Object.entries(actions)) {
-    const { result, keys } = zodToMCPShape(action.schema);
+  for (const [_key, action] of Object.entries(actions)) {
+    const { result } = zodToMCPShape(action.schema);
+
     server.tool(action.name, action.description, result, async (params) => {
       try {
         // Execute the action handler with the params directly
@@ -56,6 +59,8 @@ export function createMcpServer(
         };
       }
     });
+
+    registeredActions.push(action.name);
 
     // Add examples as prompts if they exist
     if (action.examples && action.examples.length > 0) {

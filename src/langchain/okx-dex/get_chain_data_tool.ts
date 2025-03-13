@@ -20,7 +20,7 @@ export function createOKXDexGetChainDataTool(agent: SolanaAgentKit) {
       } catch (error: any) {
         return JSON.stringify({
           status: "error",
-          message: error.message || "Failed to get chain data"
+          message: error.message || "Failed to get chain data",
         });
       }
     },

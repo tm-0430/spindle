@@ -16,22 +16,30 @@ export function createOKXDexGetQuoteTool(agent: SolanaAgentKit) {
       fromTokenAddress: z.string().describe("Source token address"),
       toTokenAddress: z.string().describe("Target token address"),
       amount: z.string().describe("Amount to swap in base units"),
-      slippage: z.string().optional().describe("Slippage tolerance (default: 0.5%)"),
+      slippage: z
+        .string()
+        .optional()
+        .describe("Slippage tolerance (default: 0.5%)"),
     }),
-    func: async ({ fromTokenAddress, toTokenAddress, amount, slippage = "0.5" }) => {
+    func: async ({
+      fromTokenAddress,
+      toTokenAddress,
+      amount,
+      slippage = "0.5",
+    }) => {
       try {
         const result = await getQuote(
           agent,
           fromTokenAddress,
           toTokenAddress,
           amount,
-          slippage
+          slippage,
         );
         return JSON.stringify(result);
       } catch (error: any) {
         return JSON.stringify({
           status: "error",
-          message: error.message || "Failed to get quote"
+          message: error.message || "Failed to get quote",
         });
       }
     },

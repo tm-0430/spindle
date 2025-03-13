@@ -20,7 +20,7 @@ export function createOKXDexGetLiquidityTool(agent: SolanaAgentKit) {
       } catch (error: any) {
         return JSON.stringify({
           status: "error",
-          message: error.message || "Failed to get liquidity information"
+          message: error.message || "Failed to get liquidity information",
         });
       }
     },

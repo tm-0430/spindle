@@ -20,7 +20,7 @@ export function createOKXDexGetTokensTool(agent: SolanaAgentKit) {
       } catch (error: any) {
         return JSON.stringify({
           status: "error",
-          message: error.message || "Failed to get tokens"
+          message: error.message || "Failed to get tokens",
         });
       }
     },
