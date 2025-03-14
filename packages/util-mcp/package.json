@@ -1,0 +1,41 @@
+{
+  "name": "@solana-agent-kit/util-mcp",
+  "version": "2.0.0-beta.1",
+  "description": "Create MCP servers with the Solana Agent Kit",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist .turbo node_modules",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "keywords": [
+    "solana",
+    "mcp",
+    "model context protocol",
+    "solana agent kit",
+    "sendai"
+  ],
+  "author": "sendaifun",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "zod": "^3.24.1",
+    "solana-agent-kit": "workspace:*"
+  },
+  "peerDependencies": {
+    "solana-agent-kit": "2.0.0-beta.1"
+  }
+}
