@@ -230,4 +230,4 @@ const MiscPlugin = {
 } satisfies Plugin;
 
 // Default export for convenience
-export = MiscPlugin;
+export default MiscPlugin;

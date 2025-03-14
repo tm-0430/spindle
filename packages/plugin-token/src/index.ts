@@ -140,4 +140,4 @@ const TokenPlugin = {
 } satisfies Plugin;
 
 // Default export for convenience
-export = TokenPlugin;
+export default TokenPlugin;

@@ -9,7 +9,7 @@
     "dev": "tsx watch index.ts"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^1.1.13",
+    "@ai-sdk/openai": "^1.2.5",
     "@solana-agent-kit/plugin-blinks": "workspace:*",
     "@solana-agent-kit/plugin-defi": "workspace:*",
     "@solana-agent-kit/plugin-misc": "workspace:*",

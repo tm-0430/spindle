@@ -98,4 +98,4 @@ const NFTPlugin = {
 } satisfies Plugin;
 
 // Default export for convenience
-export = NFTPlugin;
+export default NFTPlugin;

@@ -368,4 +368,4 @@ const DefiPlugin = {
 } satisfies Plugin;
 
 // Default export for convenience
-export = DefiPlugin;
+export default DefiPlugin;

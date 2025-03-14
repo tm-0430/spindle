@@ -10,3 +10,4 @@ node_modules
 .husky
 .turbo
 .turbo/
+tsconfig.tsbuildinfo

@@ -1,4 +1,4 @@
-import { Plugin, SolanaAgentKit } from "solana-agent-kit";
+import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 import { rock_paper_scissor } from "./sendarcade/tools/rock_paper_scissor";
 import rockPaperScissorAction from "./sendarcade/actions/rockPaperScissors";
 
@@ -34,5 +34,4 @@ const BlinksPlugin = {
   },
 } satisfies Plugin;
 
-// Default export for convenience
-export = BlinksPlugin;
+export default BlinksPlugin;
