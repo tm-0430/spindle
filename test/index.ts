@@ -1,11 +1,11 @@
-import { SolanaAgentKit } from "solana-agent-kit";
+import { SolanaAgentKit, KeypairWallet } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 import NFTPlugin from "@solana-agent-kit/plugin-nft";
 import DefiPlugin from "@solana-agent-kit/plugin-defi";
 import MiscPlugin from "@solana-agent-kit/plugin-misc";
 import BlinksPlugin from "@solana-agent-kit/plugin-blinks";
 import dotenv from "dotenv";
-import { Connection, Keypair, VersionedTransaction } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
 import { chooseMode, rl } from "utils";
 import aiTests from "agentTests";
@@ -39,35 +39,12 @@ async function main() {
   const keyPair = Keypair.fromSecretKey(
     bs58.decode(process.env.SOLANA_PRIVATE_KEY as string),
   );
+  const wallet = new KeypairWallet(keyPair);
 
   // Initialize agent with your test wallet
-  const agent = new SolanaAgentKit(
-    {
-      publicKey: keyPair.publicKey,
-      sendTransaction: async (tx) => {
-        const connection = new Connection(process.env.RPC_URL as string);
-        if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
-        else tx.sign(keyPair);
-        return await connection.sendRawTransaction(tx.serialize());
-      },
-      signTransaction: async (tx) => {
-        if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
-        else tx.sign(keyPair);
-        return tx;
-      },
-      signAllTransactions: async (txs) => {
-        txs.forEach((tx) => {
-          if (tx instanceof VersionedTransaction) tx.sign([keyPair]);
-          else tx.sign(keyPair);
-        });
-        return txs;
-      },
-    },
-    process.env.RPC_URL!,
-    {
-      OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    },
-  )
+  const agent = new SolanaAgentKit(wallet, process.env.RPC_URL!, {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  })
     // Load all plugins
     .use(TokenPlugin)
     .use(NFTPlugin)

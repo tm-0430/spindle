@@ -101,7 +101,7 @@ export async function signOrSendTX(
     instructionsOrTransaction instanceof VersionedTransaction
   ) {
     if (agent.config.signOnly) {
-      return instructionsOrTransaction;
+      return await agent.wallet.signTransaction(instructionsOrTransaction);
     }
 
     return await agent.wallet.sendTransaction(instructionsOrTransaction);

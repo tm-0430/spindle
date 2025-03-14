@@ -8,3 +8,4 @@ export * from "./types";
 export * from "./types/wallet";
 export * from "./utils/actionExecutor";
 export * from "./utils/send_tx";
+export * from "./utils/keypairWallet";
