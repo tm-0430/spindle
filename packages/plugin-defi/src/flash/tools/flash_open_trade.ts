@@ -7,7 +7,7 @@ import {
   CustodyAccount,
   Custody,
 } from "flash-sdk";
-import { BN } from "@coral-xyz/anchor";
+import BN from "bn.js";
 import type { SolanaAgentKit } from "solana-agent-kit";
 import {
   ALL_TOKENS,

@@ -1,6 +1,7 @@
 import { HermesClient } from "@pythnetwork/hermes-client";
 import { OraclePrice } from "flash-sdk";
-import { AnchorProvider, BN } from "@coral-xyz/anchor";
+import { BN } from "bn.js";
+import { AnchorProvider } from "@coral-xyz/anchor";
 import {
   PoolConfig,
   Token,

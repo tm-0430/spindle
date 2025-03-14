@@ -1,6 +1,6 @@
 import { ComputeBudgetProgram } from "@solana/web3.js";
 import { PoolConfig, Side } from "flash-sdk";
-import { BN } from "@coral-xyz/anchor";
+import { BN } from "bn.js";
 import type { SolanaAgentKit } from "solana-agent-kit";
 import {
   CLOSE_POSITION_CU,

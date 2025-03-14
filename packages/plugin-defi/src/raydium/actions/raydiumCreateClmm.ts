@@ -1,7 +1,7 @@
 import type { Action } from "solana-agent-kit";
 import { z } from "zod";
 import { PublicKey } from "@solana/web3.js";
-import { BN } from "@coral-xyz/anchor";
+import { BN } from "bn.js";
 import Decimal from "decimal.js";
 import { raydiumCreateClmm } from "../raydium_create_clmm";
 

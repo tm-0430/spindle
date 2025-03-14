@@ -5,7 +5,7 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import type { SolanaAgentKit } from "solana-agent-kit";
-import { BN } from "@coral-xyz/anchor";
+import { BN } from "bn.js";
 import { Decimal } from "decimal.js";
 import {
   PDAUtil,

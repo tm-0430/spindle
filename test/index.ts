@@ -4,11 +4,11 @@ import NFTPlugin from "@solana-agent-kit/plugin-nft";
 import DefiPlugin from "@solana-agent-kit/plugin-defi";
 import MiscPlugin from "@solana-agent-kit/plugin-misc";
 import BlinksPlugin from "@solana-agent-kit/plugin-blinks";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
-import { chooseMode, rl } from "utils";
-import aiTests from "agentTests";
+import { chooseMode, rl } from "./utils";
+import aiTests from "./agentTests";
 
 dotenv.config();
 

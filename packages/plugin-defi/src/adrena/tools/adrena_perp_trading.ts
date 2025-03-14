@@ -6,7 +6,7 @@ import {
 import type { SolanaAgentKit } from "solana-agent-kit";
 import { TOKENS, DEFAULT_OPTIONS } from "./utils/constants";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { BN } from "@coral-xyz/anchor";
+import BN from "bn.js";
 
 import AdrenaClient from "./utils/anchor/AdrenaClient";
 import { signOrSendTX } from "solana-agent-kit";

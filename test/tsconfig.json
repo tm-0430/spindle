@@ -1,17 +1,13 @@
 {
-    "compilerOptions": {
-      "target": "es2022",
-      "module": "es2022",
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "strict": true,
-      "outDir": "./dist",
-      "baseUrl": ".",
-      "paths": {
-        "solana-agent-kit": ["../packages/core/src"],
-        "@solana-agent-kit/*": ["../packages/*/src"]
-      }
-    },
-    "include": ["./**/*"],
-    "exclude": ["node_modules", "dist"]
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "solana-agent-kit": ["../packages/core/src"],
+      "@solana-agent-kit/*": ["../packages/*/src"]
+    }
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", "dist"]
 }

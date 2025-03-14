@@ -1,6 +1,7 @@
 {
   "name": "@solana-agent-kit/plugin-defi",
   "version": "2.0.0",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },

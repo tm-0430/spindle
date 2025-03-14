@@ -3,7 +3,7 @@ import { type Message, streamText } from "ai";
 import { randomUUID } from "node:crypto";
 import { createVercelAITools } from "solana-agent-kit";
 import type { SolanaAgentKit } from "solana-agent-kit";
-import { question, rl } from "utils";
+import { question, rl } from "../utils";
 
 export default async function (agent: SolanaAgentKit) {
   const tools = createVercelAITools(agent, agent.actions);
