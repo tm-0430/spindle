@@ -201,7 +201,9 @@ const result = await agent.create3LandCollection(
 ```
 
 ### Create NFT on 3Land
+
 When creating an NFT using 3Land's tool, it automatically goes for sale on 3.land website
+
 ```typescript
 const isDevnet = true; // (Optional) if not present TX takes place in Mainnet
 const withPool = true; // (Optional) only present if NFT will be created with a Liquidity Pool for a specific SPL token
@@ -229,9 +231,7 @@ const result = await agent.methods.create3LandSingle(
   withPool
   priorityFeeParam, //(Optional)
 );
-
 ```
-
 
 ### Create NFT Collection
 
