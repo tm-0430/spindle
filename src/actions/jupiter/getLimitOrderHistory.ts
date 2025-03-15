@@ -36,7 +36,7 @@ const getLimitOrderHistoryAction: Action = {
                 updatedAt: "2023-10-02T00:00:00Z",
                 status: "Open",
                 openTx:
-                  "https://solscan.io/tx/2431GhdNNd3bZ1pH1anFFwWgPuBrt3k9h6Wgezcjn9mpYAbwRfTeyHNmb77BBCSk34SW2iFH8AXzrPwu17zQARjr",
+                  "https://solscan.io/tx/2431GhdanFFwWg...77BBCSk34SW2iFHwu17zQARjr",
                 closeTx: "",
                 programVersion: "1.0",
                 trades: [

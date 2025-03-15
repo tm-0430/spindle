@@ -6,8 +6,7 @@ export async function getLimitOrderHistory(agent: SolanaAgentKit) {
     const history = await getOrderHistoryApi(agent.wallet.publicKey.toString());
     return { history, success: true };
   } catch (error) {
-    const errorMessage = `Error fetching order history: ${error}`;
-    console.error(errorMessage);
-    return { history: null, success: false, error: errorMessage };
+    console.error(error);
+    throw new Error(`Error fetching order history: ${error}`);
   }
 }

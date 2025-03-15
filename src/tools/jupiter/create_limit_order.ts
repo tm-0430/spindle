@@ -27,12 +27,7 @@ export async function createLimitOrder(
       success: true,
     };
   } catch (error) {
-    const errorMessage = `Error creating and sending limit order: ${error}`;
-    console.error(errorMessage);
-    return {
-      order: null,
-      success: false,
-      error: errorMessage,
-    };
+    console.error(error);
+    throw new Error(`Error creating limit order: ${error}`);
   }
 }

@@ -6,8 +6,7 @@ export async function getOpenLimitOrders(agent: SolanaAgentKit) {
     const orders = await getOpenOrdersApi(agent.wallet.publicKey.toString());
     return { orders, success: true };
   } catch (error) {
-    const errorMessage = `Error fetching open orders: ${error}`;
-    console.error(errorMessage);
-    return { orders: [], success: false, error: errorMessage };
+    console.error(error);
+    throw new Error(`Error fetching open orders: ${error}`);
   }
 }

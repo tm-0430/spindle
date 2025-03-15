@@ -27,12 +27,7 @@ export async function cancelLimitOrders(
       success: true,
     };
   } catch (error) {
-    const errorMessage = `Error canceling limit orders: ${error}`;
-    console.error(errorMessage);
-    return {
-      signatures: [],
-      success: false,
-      error: errorMessage,
-    };
+    console.error(error);
+    throw new Error(`Error canceling limit orders: ${error}`);
   }
 }
