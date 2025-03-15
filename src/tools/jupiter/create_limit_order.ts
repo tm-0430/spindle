@@ -1,14 +1,13 @@
-import { SolanaAgentKit } from "../../index";
+import { CreateJupiterOrderRequest, SolanaAgentKit } from "../../index";
 import { createOrderApi } from "./common/jupiterLimitApi";
 import {
   deserializeTransaction,
   signAndSendTransaction,
 } from "./common/transactions";
-import { CreateOrderRequest } from "./common/types";
 
 export async function createLimitOrder(
   agent: SolanaAgentKit,
-  params: CreateOrderRequest,
+  params: CreateJupiterOrderRequest,
 ) {
   const wallet = agent.wallet.publicKey.toString();
   params.maker = params.payer = wallet;

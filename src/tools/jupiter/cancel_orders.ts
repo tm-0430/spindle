@@ -1,14 +1,13 @@
-import { SolanaAgentKit } from "../../index";
+import { CancelJupiterOrderRequest, SolanaAgentKit } from "../../index";
 import { cancelOrdersApi } from "./common/jupiterLimitApi";
 import {
   deserializeTransaction,
   signAndSendTransactions,
 } from "./common/transactions";
-import { CancelOrderRequest } from "./common/types";
 
 export async function cancelOrders(
   agent: SolanaAgentKit,
-  params: CancelOrderRequest,
+  params: CancelJupiterOrderRequest,
 ) {
   params.maker = agent.wallet.publicKey.toString();
   try {

@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import {
-  CancelOrderRequest,
-  CancelOrderResponse,
-  CreateOrderRequest,
-  CreateOrderResponse,
-  OpenOrderResponse,
-  OrderHistoryResponse,
-} from "./types";
+  CancelJupiterOrderRequest,
+  CancelJupiterOrderResponse,
+  CreateJupiterOrderRequest,
+  CreateJupiterOrderResponse,
+  OpenJupiterOrderResponse,
+  JupiterOrderHistoryResponse,
+} from "../../../types";
 
 const jupiterApi = axios.create({
   baseURL: "https://api.jup.ag/limit/v2",
@@ -36,37 +36,37 @@ async function handleApiRequest<T>(
 }
 
 export async function createOrderApi(
-  data: CreateOrderRequest,
-): Promise<CreateOrderResponse> {
+  data: CreateJupiterOrderRequest,
+): Promise<CreateJupiterOrderResponse> {
   return handleApiRequest(async () =>
-    jupiterApi.post<CreateOrderResponse>("/createOrder", data),
+    jupiterApi.post<CreateJupiterOrderResponse>("/createOrder", data),
   );
 }
 
 export async function getOpenOrdersApi(
   walletAddress: string,
-): Promise<OpenOrderResponse[]> {
+): Promise<OpenJupiterOrderResponse[]> {
   return handleApiRequest(async () =>
-    jupiterApi.get<OpenOrderResponse[]>("/openOrders", {
+    jupiterApi.get<OpenJupiterOrderResponse[]>("/openOrders", {
       params: { wallet: walletAddress },
     }),
   );
 }
 
 export async function cancelOrdersApi(
-  data: CancelOrderRequest,
-): Promise<CancelOrderResponse> {
+  data: CancelJupiterOrderRequest,
+): Promise<CancelJupiterOrderResponse> {
   return handleApiRequest(async () =>
-    jupiterApi.post<CancelOrderResponse>("/cancelOrders", data),
+    jupiterApi.post<CancelJupiterOrderResponse>("/cancelOrders", data),
   );
 }
 
 export async function getOrderHistoryApi(
   walletAddress: string,
   page: number = 1,
-): Promise<OrderHistoryResponse> {
+): Promise<JupiterOrderHistoryResponse> {
   return handleApiRequest(async () =>
-    jupiterApi.get<OrderHistoryResponse>("/orderHistory", {
+    jupiterApi.get<JupiterOrderHistoryResponse>("/orderHistory", {
       params: {
         wallet: walletAddress,
         page,
