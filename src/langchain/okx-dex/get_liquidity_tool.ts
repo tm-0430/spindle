@@ -12,6 +12,7 @@ export function createOKXDexGetLiquidityTool(agent: SolanaAgentKit) {
   return new DynamicStructuredTool({
     name: "get_okx_dex_liquidity",
     description: "Gets liquidity information from OKX DEX",
+    schema: z.object({}),
     func: async () => {
       try {
         const result = await getLiquidity(agent, "501"); // Solana chain ID

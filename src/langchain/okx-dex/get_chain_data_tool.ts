@@ -12,6 +12,7 @@ export function createOKXDexGetChainDataTool(agent: SolanaAgentKit) {
   return new DynamicStructuredTool({
     name: "get_okx_dex_chain_data",
     description: "Gets chain data from OKX DEX",
+    schema: z.object({}),
     func: async () => {
       try {
         const result = await getChainData(agent);
