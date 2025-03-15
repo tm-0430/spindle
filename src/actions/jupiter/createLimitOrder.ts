@@ -69,3 +69,5 @@ export const createLimitOrderAction: Action = {
     }
   },
 };
+
+export default createLimitOrderAction;

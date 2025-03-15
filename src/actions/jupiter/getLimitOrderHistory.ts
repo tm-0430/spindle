@@ -1,10 +1,10 @@
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
 import { z } from "zod";
-import { getOrderHistory } from "../../tools/jupiter/get_order_history";
+import { getLimitOrderHistory } from "../../tools/jupiter/get_limit_order_history";
 
-export const getOrderHistoryAction: Action = {
-  name: "GET_ORDER_HISTORY",
+const getLimitOrderHistoryAction: Action = {
+  name: "GET_LIMIT_ORDER_HISTORY",
   similes: [
     "fetch order history",
     "get limit order history",
@@ -60,7 +60,7 @@ export const getOrderHistoryAction: Action = {
   schema: z.object({}),
   handler: async (agent: SolanaAgentKit) => {
     try {
-      const history = await getOrderHistory(agent);
+      const history = await getLimitOrderHistory(agent);
       return {
         status: "success",
         result: { history, success: true },
@@ -77,3 +77,5 @@ export const getOrderHistoryAction: Action = {
     }
   },
 };
+
+export default getLimitOrderHistoryAction;

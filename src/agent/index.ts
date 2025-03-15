@@ -197,9 +197,9 @@ import {
   getLiquidity,
 } from "../tools/okx-dex";
 import { createLimitOrder } from "../tools/jupiter/create_limit_order";
-import { cancelOrders } from "../tools/jupiter/cancel_orders";
-import { getOpenOrders } from "../tools/jupiter/get_open_orders";
-import { getOrderHistory } from "../tools/jupiter/get_order_history";
+import { cancelLimitOrders } from "../tools/jupiter/cancel_limit_orders";
+import { getOpenLimitOrders } from "../tools/jupiter/get_open_limit_orders";
+import { getLimitOrderHistory } from "../tools/jupiter/get_limit_order_history";
 
 /**
  * Main class for interacting with Solana blockchain
@@ -1411,7 +1411,7 @@ export class SolanaAgentKit {
    * @returns Result of the order cancellation
    */
   async cancelJupiterLimitOrders(params: CancelJupiterOrderRequest) {
-    return cancelOrders(this, params);
+    return cancelLimitOrders(this, params);
   }
 
   /**
@@ -1419,7 +1419,7 @@ export class SolanaAgentKit {
    * @returns List of open limit orders
    */
   async getOpenJupiterLimitOrders() {
-    return getOpenOrders(this);
+    return getOpenLimitOrders(this);
   }
 
   /**
@@ -1427,6 +1427,6 @@ export class SolanaAgentKit {
    * @returns Limit order history
    */
   async getJupiterLimitOrderHistory() {
-    return getOrderHistory(this);
+    return getLimitOrderHistory(this);
   }
 }

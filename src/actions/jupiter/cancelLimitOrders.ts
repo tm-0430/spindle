@@ -1,14 +1,14 @@
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
 import { z } from "zod";
-import { cancelOrders } from "../../tools/jupiter/cancel_orders";
+import { cancelLimitOrders } from "../../tools/jupiter/cancel_limit_orders";
 
 const cancelOrdersSchema = z.object({
   orders: z.array(z.string()).describe("The order public keys to cancel"),
 });
 
-export const cancelOrdersAction: Action = {
-  name: "CANCEL_ORDERS",
+const cancelOrdersAction: Action = {
+  name: "CANCEL_LIMIT_ORDERS",
   similes: [
     "abort orders",
     "cancel limit order",
@@ -48,7 +48,7 @@ export const cancelOrdersAction: Action = {
     const params = cancelOrdersSchema.parse(input);
 
     try {
-      const result = await cancelOrders(agent, params);
+      const result = await cancelLimitOrders(agent, params);
 
       return {
         status: "success",
@@ -65,3 +65,5 @@ export const cancelOrdersAction: Action = {
     }
   },
 };
+
+export default cancelOrdersAction;

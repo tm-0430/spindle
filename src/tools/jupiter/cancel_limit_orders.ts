@@ -5,7 +5,7 @@ import {
   signAndSendTransactions,
 } from "./common/transactions";
 
-export async function cancelOrders(
+export async function cancelLimitOrders(
   agent: SolanaAgentKit,
   params: CancelJupiterOrderRequest,
 ) {
@@ -27,7 +27,7 @@ export async function cancelOrders(
       success: true,
     };
   } catch (error) {
-    const errorMessage = `Error canceling orders: ${error}`;
+    const errorMessage = `Error canceling limit orders: ${error}`;
     console.error(errorMessage);
     return {
       signatures: [],

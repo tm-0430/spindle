@@ -1,6 +1,7 @@
 import { SolanaAgentKit } from "../../index";
 import { getOrderHistoryApi } from "./common/jupiterLimitApi";
-export async function getOrderHistory(agent: SolanaAgentKit) {
+
+export async function getLimitOrderHistory(agent: SolanaAgentKit) {
   try {
     const history = await getOrderHistoryApi(agent.wallet.publicKey.toString());
     return { history, success: true };

@@ -1,10 +1,10 @@
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
-import { getOpenOrders } from "../../tools/jupiter/get_open_orders";
+import { getOpenLimitOrders } from "../../tools/jupiter/get_open_limit_orders";
 import { z } from "zod";
 
-export const getOpenOrdersAction: Action = {
-  name: "GET_OPEN_ORDERS",
+const getOpenLimitOrdersAction: Action = {
+  name: "GET_OPEN_LIMIT_ORDERS",
   similes: ["fetch open orders", "get limit orders", "retrieve open orders"],
   description: "Fetches the open limit orders for a given wallet.",
   examples: [
@@ -50,7 +50,7 @@ export const getOpenOrdersAction: Action = {
   schema: z.object({}),
   handler: async (agent: SolanaAgentKit) => {
     try {
-      const orders = await getOpenOrders(agent);
+      const orders = await getOpenLimitOrders(agent);
       return {
         status: "success",
         result: { orders, success: true },
@@ -67,3 +67,5 @@ export const getOpenOrdersAction: Action = {
     }
   },
 };
+
+export default getOpenLimitOrdersAction;
