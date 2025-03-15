@@ -1424,10 +1424,9 @@ export class SolanaAgentKit {
 
   /**
    * Get limit order history on Jupiter
-   * @param page Page number for pagination (default: 1)
    * @returns Limit order history
    */
-  async getJupiterLimitOrderHistory(page: number = 1) {
-    return getOrderHistory(this, page);
+  async getJupiterLimitOrderHistory() {
+    return getOrderHistory(this);
   }
 }

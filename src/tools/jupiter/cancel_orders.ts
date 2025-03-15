@@ -25,7 +25,6 @@ export async function cancelOrders(
     return {
       signatures,
       success: true,
-      explanation: "Orders canceled successfully.",
     };
   } catch (error) {
     const errorMessage = `Error canceling orders: ${error}`;
@@ -34,7 +33,6 @@ export async function cancelOrders(
       signatures: [],
       success: false,
       error: errorMessage,
-      explanation: "Failed to cancel orders.",
     };
   }
 }

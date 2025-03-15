@@ -588,14 +588,14 @@ export interface CreateWrappedTokenInput {
 }
 
 export interface CreateJupiterOrderRequest {
-  maker: string;
-  payer: string;
+  maker?: string;
+  payer?: string;
   inputMint: string;
   outputMint: string;
   params: {
     makingAmount: string;
     takingAmount: string;
-    expiredAt?: string;
+    expiredAt?: string | undefined;
     feeBps?: string;
   };
   computeUnitPrice?: string | "auto";
@@ -635,7 +635,7 @@ export interface OpenJupiterOrderResponse {
 }
 
 export interface CancelJupiterOrderRequest {
-  maker: string;
+  maker?: string;
   computeUnitPrice?: string | "auto";
   orders?: string[];
 }

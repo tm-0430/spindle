@@ -25,7 +25,6 @@ export async function createLimitOrder(
       signature,
       order: data.order,
       success: true,
-      explanation: "Order created and sent successfully.",
     };
   } catch (error) {
     const errorMessage = `Error creating and sending limit order: ${error}`;
@@ -34,7 +33,6 @@ export async function createLimitOrder(
       order: null,
       success: false,
       error: errorMessage,
-      explanation: "Failed to create and send the order.",
     };
   }
 }

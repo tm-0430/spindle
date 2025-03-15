@@ -1,11 +1,8 @@
 import { SolanaAgentKit } from "../../index";
 import { getOrderHistoryApi } from "./common/jupiterLimitApi";
-export async function getOrderHistory(agent: SolanaAgentKit, page: number = 1) {
+export async function getOrderHistory(agent: SolanaAgentKit) {
   try {
-    const history = await getOrderHistoryApi(
-      agent.wallet.publicKey.toString(),
-      page,
-    );
+    const history = await getOrderHistoryApi(agent.wallet.publicKey.toString());
     return { history, success: true };
   } catch (error) {
     const errorMessage = `Error fetching order history: ${error}`;
