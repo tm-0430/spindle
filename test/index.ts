@@ -9,6 +9,7 @@ import { Keypair } from "@solana/web3.js";
 import bs58 from "bs58";
 import { chooseMode, rl } from "./utils";
 import aiTests from "./agentTests";
+import programmaticTests from "./programmaticTests";
 
 dotenv.config();
 
@@ -55,6 +56,7 @@ async function main() {
   if (mode === "agent") {
     await aiTests(agent);
   } else {
+    await programmaticTests(agent);
   }
 
   rl.close();
