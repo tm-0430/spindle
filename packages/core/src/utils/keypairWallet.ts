@@ -1,11 +1,11 @@
-import { TransactionOrVersionedTransaction } from "../types";
+import type { TransactionOrVersionedTransaction } from "../types";
 import type { BaseWallet } from "../types/wallet";
 import {
-  ConfirmOptions,
+  type ConfirmOptions,
   Connection,
-  Keypair,
-  PublicKey,
-  Transaction,
+  type Keypair,
+  type PublicKey,
+  type Transaction,
   VersionedTransaction,
 } from "@solana/web3.js";
 
@@ -27,14 +27,16 @@ export const isVersionedTransaction = (
 export class KeypairWallet implements BaseWallet {
   publicKey: PublicKey;
   private payer: Keypair;
+  rpcUrl: string;
 
   /**
    * Constructs a KeypairWallet with a given Keypair
    * @param keypair - The Keypair to use for signing transactions
    */
-  constructor(keypair: Keypair) {
+  constructor(keypair: Keypair, rpcUrl: string) {
     this.publicKey = keypair.publicKey;
     this.payer = keypair;
+    this.rpcUrl = rpcUrl;
   }
 
   defaultOptions: ConfirmOptions = {
@@ -79,11 +81,13 @@ export class KeypairWallet implements BaseWallet {
       | VersionedTransaction
       | TransactionOrVersionedTransaction,
   >(transaction: T): Promise<string> {
-    const connection = new Connection(process.env.RPC_URL as string);
+    const connection = new Connection(this.rpcUrl);
 
-    if (transaction instanceof VersionedTransaction)
+    if (transaction instanceof VersionedTransaction) {
       transaction.sign([this.payer]);
-    else transaction.partialSign(this.payer);
+    } else {
+      transaction.partialSign(this.payer);
+    }
 
     return await connection.sendRawTransaction(transaction.serialize());
   }
