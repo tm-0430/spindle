@@ -23,25 +23,36 @@ Watch our implementation demo: [YouTube Video](https://www.youtube.com/watch?v=q
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd <repository-name>/examples/para-plugin-example
 ```
 
 2. Install dependencies:
-```bash
+In order to install this dependency:
+
+```
+"@getpara/plugin-para-server": "file:../../../solana-plugin-para/packages/plugin-para-server",
+"@getpara/plugin-para-web": "file:../../../solana-plugin-para/packages/plugin-para-web",
+```
+
+```
+git clone https://github.com/uratmangun/solana-plugin-para/
+cd solana-plugin-para
 pnpm install
-# or
-bun install
+pnpm build
+cd ..
+cd <this-repository-folder>/examples/para-plugin-example
+pnpm install
 ```
 
 3. Copy the environment variables:
 ```bash
+
 cp .env.example .env
 ```
 
 4. Update the `.env` file with your credentials:
 ```env
 LANGCHAIN_CALLBACKS_BACKGROUND=false
-OPENAI_API_KEY=
+OPENAI_API_KEY=#optional
 RPC_URL=
 SOLANA_PRIVATE_KEY=
 PARA_API_KEY=
@@ -56,8 +67,6 @@ NEXT_PUBLIC_PARA_API_KEY=
 1. Start the development server:
 ```bash
 pnpm dev
-# or
-bun dev
 ```
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser
