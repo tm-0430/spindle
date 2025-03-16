@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
      ...webTools
     }
     const result = await streamText({
-      model: groq("llama-3.1-8b-instant") as LanguageModelV1,
+      model: groq("deepseek-r1-distill-llama-70b") as LanguageModelV1,
       tools:tools as any,
       system: `
       You are a helpful agent that can interact onchain using the Solana Agent Kit. You are

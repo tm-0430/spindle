@@ -22,10 +22,9 @@ export async function useWallet(userShare: string,walletId: string,session: stri
         sendTransaction: async (tx: VersionedTransaction | Transaction) => {
           if (tx instanceof VersionedTransaction) {
             const signedTx = await solanaSigner.signVersionedTransaction(tx);
-            return await solanaConnection.sendRawTransaction(signedTx.serialize());
+            return await solanaSigner.sendTransaction(signedTx);
           } else {
-            const signedTx = await solanaSigner.signTransaction(tx);
-            return await solanaConnection.sendRawTransaction(signedTx.serialize());
+             return await solanaSigner.sendTransaction(tx);
           }
         },
         signTransaction: async <T extends Transaction | VersionedTransaction>(tx: T): Promise<T> => {
