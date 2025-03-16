@@ -114,6 +114,7 @@ export const ChatWindow: FC<ChatWindowProps> = ({
 
       // Handle async tool invocations separately
       if (message.toolInvocations?.length > 0) {
+ 
         const processedInvocations = await Promise.all(
           message.toolInvocations.map(async (invocation: ToolInvocation) => {
             if (invocation.toolName === 'GET_ALL_WALLETS') {
@@ -156,7 +157,7 @@ export const ChatWindow: FC<ChatWindowProps> = ({
                 // Pass empty object cast to SolanaAgentKit as first parameter since it will be replaced by the bound agent
                 const response = await useWalletWeb(invocation.args?.walletId as string);
                 
-                // console.log(response);
+               
                 return {
                   ...invocation,
                   result: { status: 'success', ...response }
@@ -189,7 +190,7 @@ export const ChatWindow: FC<ChatWindowProps> = ({
           return updatedMessages;
         });
       }
-      console.log(message.toolInvocations);
+    
     }
   });
 

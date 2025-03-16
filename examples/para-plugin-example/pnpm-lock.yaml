@@ -15,11 +15,11 @@ importers:
         specifier: ^1.2.5
         version: 1.2.5(zod@3.24.1)
       '@getpara/plugin-para-server':
-        specifier: npm:@uratmangun/plugin-para-server@^2.0.1
-        version: '@uratmangun/plugin-para-server@2.0.1(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)'
+        specifier: file:../../../solana-plugin-para/packages/plugin-para-server
+        version: file:../../../solana-plugin-para/packages/plugin-para-server(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)
       '@getpara/plugin-para-web':
-        specifier: npm:@uratmangun/plugin-para-web@^2.0.2
-        version: '@uratmangun/plugin-para-web@2.0.2(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)'
+        specifier: file:../../../solana-plugin-para/packages/plugin-para-web
+        version: file:../../../solana-plugin-para/packages/plugin-para-web(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)
       '@getpara/react-sdk':
         specifier: ^1.5.0
         version: 1.5.0(@emotion/is-prop-valid@1.2.2)(@types/react@18.3.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -48,8 +48,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react@18.3.2)(react@19.0.0)
       '@solana-agent-kit/plugin-token':
-        specifier: npm:@uratmangun/plugin-token@^2.0.2
-        version: '@uratmangun/plugin-token@2.0.2(@noble/hashes@1.6.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.1.6)(utf-8-validate@5.0.10)'
+        specifier: ^2.0.0
+        version: 2.0.0(@noble/hashes@1.6.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(solana-agent-kit@2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10))(typescript@5.1.6)(utf-8-validate@5.0.10)
       '@solana/web3.js':
         specifier: ^1.98.0
         version: 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -126,8 +126,8 @@ importers:
         specifier: ^9.1.3
         version: 9.1.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       solana-agent-kit:
-        specifier: npm:@uratmangun/solana-agent-kit@^2.0.2
-        version: '@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)'
+        specifier: 2.0.0-beta.2
+        version: 2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)
       sonner:
         specifier: ^2.0.1
         version: 2.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -479,6 +479,16 @@ packages:
   '@getpara/core-sdk@1.5.1':
     resolution: {integrity: sha512-PsuCZOMailJ3L7R7So7J5DYa+AmoNqfA6Ib8LhW1/NNinZ/e/+nObKbDg4qHtlZOKQGHpBIV4jqmopzkL1WHWg==}
 
+  '@getpara/plugin-para-server@file:../../../solana-plugin-para/packages/plugin-para-server':
+    resolution: {directory: ../../../solana-plugin-para/packages/plugin-para-server, type: directory}
+    peerDependencies:
+      '@solana/web3.js': ^1.98.0
+
+  '@getpara/plugin-para-web@file:../../../solana-plugin-para/packages/plugin-para-web':
+    resolution: {directory: ../../../solana-plugin-para/packages/plugin-para-web, type: directory}
+    peerDependencies:
+      '@solana/web3.js': ^1.98.0
+
   '@getpara/react-common@1.5.0':
     resolution: {integrity: sha512-Rg8KgRinWutCQjlQQYXkIVxjVAZ8sAfzoAJWTYaR03EO2+ZXACsPGTyBdsFDHKJD/KaHNIOYfDdxyVlN1Bh/Sw==}
     peerDependencies:
@@ -508,6 +518,9 @@ packages:
 
   '@getpara/web-sdk@1.5.0':
     resolution: {integrity: sha512-8/QNaHiCxQ+ZxLHVP7DjgZk/6fUUtAnNHR1NeWGoF2W/25ty9QUw3QYmm23ULvshqgN/EoIhGQQUFRVOhiRa5g==}
+
+  '@getpara/web-sdk@1.5.1':
+    resolution: {integrity: sha512-BE9yWqnory1LB9SzJPVqDU/0Fu5bxatqd2ufF0sMW/eIiUvS1u0/CZdfHO7sa2VkYC/35Wx3Dtmz7Oeyce8UtQ==}
 
   '@gql.tada/cli-utils@1.6.3':
     resolution: {integrity: sha512-jFFSY8OxYeBxdKi58UzeMXG1tdm4FVjXa8WHIi66Gzu9JWtCE6mqom3a8xkmSw+mVaybFW5EN2WXf1WztJVNyQ==}
@@ -680,9 +693,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@jup-ag/api@6.0.40':
-    resolution: {integrity: sha512-iHDOY5YiCnt+XvqCoiPTKcYWIpAY7nmeo3Rsr1Cx2sdjgqTRjqNsYtLLvjTOO33pemVz5h+U0GaU2vc9zeyjew==}
 
   '@langchain/community@0.3.20':
     resolution: {integrity: sha512-5XmguFWVrfYJ8s9kHPAmC1bTGfdVOKqzWVCoTolSXMVMDaVn+LVvCJxEedO01kU1y2AS4pUl5MDI9wssKS1Ehg==}
@@ -1653,6 +1663,12 @@ packages:
       '@opentelemetry/sdk-trace-base': ^1.30.1
       '@opentelemetry/semantic-conventions': ^1.28.0
 
+  '@solana-agent-kit/plugin-token@2.0.0':
+    resolution: {integrity: sha512-x4094r/AKET4jNIS5FMHJD3kxfd83qCyIy303yLLqh7wHpoMtvDlwweW3nQCakMBOYxsmLV+02Sc7AZSPyKYSA==}
+    peerDependencies:
+      '@solana/web3.js': ^1.98.0
+      solana-agent-kit: 2.0.0-beta.1
+
   '@solana/buffer-layout-utils@0.2.0':
     resolution: {integrity: sha512-szG4sxgJGktbuZYDg2FfNmkMi0DYQoVjN2h7ta1W1hPrwzarcFLBq9UpX1UjNXsNpT9dn+chgprtWGioUAr4/g==}
     engines: {node: '>= 10'}
@@ -1718,9 +1734,6 @@ packages:
 
   '@solana/web3.js@1.98.0':
     resolution: {integrity: sha512-nz3Q5OeyGFpFCR+erX2f6JPt3sKhzhYcSycBCSPkWjzSVDh/Rr1FqTVMRe58FKO16/ivTUcuJjeS5MyBvpkbzA==}
-
-  '@solutiofi/sdk@1.0.2':
-    resolution: {integrity: sha512-iatce/OVEtLz+HqytMsXpvhwWNU8C5AUpPLheLFBBuN0xtF9dxvKsddy3H7fex/03/zRL3tNwbzz97pfn325Uw==}
 
   '@stencil/core@4.27.2':
     resolution: {integrity: sha512-phsgSxWYumdjVhNHZ0pPTXhrM8CgajWidRuoxBfVl76+sVLu3+O2gTuIKd+bZEjixGFb1bHvQeMmlNuwKgxf8Q==}
@@ -1942,26 +1955,6 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
-
-  '@uratmangun/plugin-para-server@2.0.1':
-    resolution: {integrity: sha512-EbQLwViL9hyb6rraYSCUvVBsuSQReRuL22DXdV+F+VlX303j0yhmF2FRGul/ODSgThfqt9RegQev3COaZAhLdQ==}
-    peerDependencies:
-      '@solana/web3.js': ^1.98.0
-
-  '@uratmangun/plugin-para-web@2.0.2':
-    resolution: {integrity: sha512-gEi7UCLTsZgoLKjJ22PWRJMNckPPvA6zpIEZUCqj2YCOthE+4SFeOdED8f/r4jeFTSxJMxR01JXSaZioZ12ABQ==}
-    peerDependencies:
-      '@solana/web3.js': ^1.98.0
-
-  '@uratmangun/plugin-token@2.0.2':
-    resolution: {integrity: sha512-Lzeh2XbNnANz2ACFbah2mc0DCB79tFr+xRdiG/RSGw0rxhUbURSyvTH1mI5AhcFiNnz5t7IWUPJK3/j/iBNlWw==}
-    peerDependencies:
-      '@solana/web3.js': ^1.98.0
-      solana-agent-kit: 2.0.0-beta.1
-
-  '@uratmangun/solana-agent-kit@2.0.2':
-    resolution: {integrity: sha512-iAlmNiRGlSppkFW5McmEGTg36dDLJ5raaN8OGSOtvnzKmLjmcbW7CoOAQgvP1H0vQLu8Eg7g2JapG+BBIWd/3A==}
-    engines: {node: '>=22.0.0', pnpm: '>=8.0.0'}
 
   '@vue/compiler-core@3.5.13':
     resolution: {integrity: sha512-oOdAkwqUfW1WqpwSYJce06wvt6HljgY3fGeM9NcVA1HaYOij3mZG9Rkysn0OHuyUAGMbEbARIpsG+LPVlBJ5/Q==}
@@ -4402,6 +4395,10 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
 
+  solana-agent-kit@2.0.0-beta.2:
+    resolution: {integrity: sha512-YtdLwReCO2HLh9ffXK/ku+af5QxI/GXChlWiaVgTPISDTNH+6zdv3FcmC1ivIppHbGcPUjF/fgBPUIclWgnCeA==}
+    engines: {node: '>=22.0.0', pnpm: '>=8.0.0'}
+
   sonner@2.0.1:
     resolution: {integrity: sha512-FRBphaehZ5tLdLcQ8g2WOIRE+Y7BCfWi5Zyd8bCvBjiW8TxxAyoWZIxS661Yz6TGPqFQ4VLzOF89WEYhfynSFQ==}
     peerDependencies:
@@ -4699,11 +4696,6 @@ packages:
 
   typescript@5.1.6:
     resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
-  typescript@5.8.2:
-    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -5493,6 +5485,36 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  '@getpara/plugin-para-server@file:../../../solana-plugin-para/packages/plugin-para-server(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@getpara/server-sdk': 1.5.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      bs58: 6.0.0
+      solana-agent-kit: 2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - react
+      - supports-color
+      - utf-8-validate
+
+  '@getpara/plugin-para-web@file:../../../solana-plugin-para/packages/plugin-para-web(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@getpara/solana-web3.js-v1-integration': 1.5.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@getpara/web-sdk': 1.5.1
+      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      bs58: 6.0.0
+      solana-agent-kit: 2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - react
+      - utf-8-validate
+
   '@getpara/react-common@1.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@getpara/react-components': 1.5.0
@@ -5578,6 +5600,21 @@ snapshots:
     dependencies:
       '@getpara/core-sdk': 1.5.0
       '@getpara/user-management-client': 1.5.0
+      '@sentry/browser': 9.5.0
+      assert: 2.1.0
+      base64url: 3.0.1
+      buffer: 6.0.3
+      cbor-web: 8.1.0
+      node-forge: 1.3.1
+      ua-parser-js: 2.0.2
+    transitivePeerDependencies:
+      - debug
+      - encoding
+
+  '@getpara/web-sdk@1.5.1':
+    dependencies:
+      '@getpara/core-sdk': 1.5.1
+      '@getpara/user-management-client': 1.5.1
       '@sentry/browser': 9.5.0
       assert: 2.1.0
       base64url: 3.0.1
@@ -5732,8 +5769,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
     optional: true
-
-  '@jup-ag/api@6.0.40': {}
 
   '@langchain/community@0.3.20(@browserbasehq/sdk@2.3.0)(@browserbasehq/stagehand@1.8.0(@playwright/test@1.49.1)(bufferutil@4.0.8)(deepmerge@4.3.1)(dotenv@16.4.7)(openai@4.86.2(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))(zod@3.24.1))(utf-8-validate@5.0.10)(zod@3.24.1))(@ibm-cloud/watsonx-ai@1.3.0)(@langchain/core@0.3.26(openai@4.86.2(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))(zod@3.24.1)))(@langchain/groq@0.1.2(@langchain/core@0.3.26(openai@4.86.2(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))(zod@3.24.1)))(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(@supabase/supabase-js@2.47.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))(axios@1.7.4)(crypto-js@4.2.0)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(jsdom@25.0.1(bufferutil@4.0.8)(utf-8-validate@5.0.10))(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.86.2(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))(zod@3.24.1))(playwright@1.49.1)(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))':
     dependencies:
@@ -6515,6 +6550,36 @@ snapshots:
       '@opentelemetry/semantic-conventions': 1.30.0
       '@sentry/core': 9.5.0
 
+  '@solana-agent-kit/plugin-token@2.0.0(@noble/hashes@1.6.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(solana-agent-kit@2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10))(typescript@5.1.6)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@lightprotocol/compressed-token': 0.20.9(@lightprotocol/stateless.js@0.20.9(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(@solana/spl-token@0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.1.6)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@lightprotocol/stateless.js': 0.20.9(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@mayanfinance/swap-sdk': 10.4.0(bufferutil@4.0.8)(typescript@5.1.6)(utf-8-validate@5.0.10)
+      '@metaplex-foundation/digital-asset-standard-api': 1.0.6(@metaplex-foundation/umi@1.1.1)
+      '@metaplex-foundation/mpl-core': 1.2.0(@metaplex-foundation/umi@1.1.1)(@noble/hashes@1.6.1)
+      '@metaplex-foundation/mpl-token-metadata': 3.4.0(@metaplex-foundation/umi@1.1.1)
+      '@metaplex-foundation/mpl-toolbox': 0.9.4(@metaplex-foundation/umi@1.1.1)
+      '@metaplex-foundation/umi': 1.1.1
+      '@metaplex-foundation/umi-bundle-defaults': 1.1.1(@metaplex-foundation/umi@1.1.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@metaplex-foundation/umi-web3js-adapters': 1.1.1(@metaplex-foundation/umi@1.1.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
+      '@openzeppelin/contracts': 5.2.0
+      '@solana/spl-token': 0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.1.6)(utf-8-validate@5.0.10)
+      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@types/bn.js': 5.1.6
+      bn.js: 5.2.1
+      ethers: 6.13.5(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      solana-agent-kit: 2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - '@gql.tada/svelte-support'
+      - '@gql.tada/vue-support'
+      - '@noble/hashes'
+      - bufferutil
+      - encoding
+      - fastestsmallesttextencoderdecoder
+      - typescript
+      - utf-8-validate
+
   '@solana/buffer-layout-utils@0.2.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@solana/buffer-layout': 4.0.1
@@ -6634,18 +6699,6 @@ snapshots:
       superstruct: 2.0.2
     transitivePeerDependencies:
       - bufferutil
-      - encoding
-      - utf-8-validate
-
-  '@solutiofi/sdk@1.0.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@jup-ag/api': 6.0.40
-      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      axios: 1.8.2
-      typescript: 5.8.2
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
       - encoding
       - utf-8-validate
 
@@ -6898,80 +6951,6 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.3.0': {}
-
-  '@uratmangun/plugin-para-server@2.0.1(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@getpara/server-sdk': 1.5.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      bs58: 6.0.0
-      solana-agent-kit: '@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)'
-      zod: 3.24.2
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - encoding
-      - react
-      - supports-color
-      - utf-8-validate
-
-  '@uratmangun/plugin-para-web@2.0.2(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@getpara/solana-web3.js-v1-integration': 1.5.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@getpara/web-sdk': 1.5.0
-      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      bs58: 6.0.0
-      solana-agent-kit: '@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)'
-      zod: 3.24.2
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - encoding
-      - react
-      - utf-8-validate
-
-  '@uratmangun/plugin-token@2.0.2(@noble/hashes@1.6.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.1.6)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@lightprotocol/compressed-token': 0.20.9(@lightprotocol/stateless.js@0.20.9(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)))(@solana/spl-token@0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.1.6)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      '@lightprotocol/stateless.js': 0.20.9(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      '@mayanfinance/swap-sdk': 10.4.0(bufferutil@4.0.8)(typescript@5.1.6)(utf-8-validate@5.0.10)
-      '@metaplex-foundation/digital-asset-standard-api': 1.0.6(@metaplex-foundation/umi@1.1.1)
-      '@metaplex-foundation/mpl-core': 1.2.0(@metaplex-foundation/umi@1.1.1)(@noble/hashes@1.6.1)
-      '@metaplex-foundation/mpl-token-metadata': 3.4.0(@metaplex-foundation/umi@1.1.1)
-      '@metaplex-foundation/mpl-toolbox': 0.9.4(@metaplex-foundation/umi@1.1.1)
-      '@metaplex-foundation/umi': 1.1.1
-      '@metaplex-foundation/umi-bundle-defaults': 1.1.1(@metaplex-foundation/umi@1.1.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      '@metaplex-foundation/umi-web3js-adapters': 1.1.1(@metaplex-foundation/umi@1.1.1)(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
-      '@openzeppelin/contracts': 5.2.0
-      '@solana/spl-token': 0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.1.6)(utf-8-validate@5.0.10)
-      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@solutiofi/sdk': 1.0.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      '@types/bn.js': 5.1.6
-      bn.js: 5.2.1
-      ethers: 6.13.5(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      solana-agent-kit: '@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)'
-      zod: 3.24.2
-    transitivePeerDependencies:
-      - '@gql.tada/svelte-support'
-      - '@gql.tada/vue-support'
-      - '@noble/hashes'
-      - bufferutil
-      - debug
-      - encoding
-      - fastestsmallesttextencoderdecoder
-      - typescript
-      - utf-8-validate
-
-  '@uratmangun/solana-agent-kit@2.0.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      ai: 4.1.54(react@19.0.0)(zod@3.24.2)
-      bs58: 6.0.0
-      zod: 3.24.2
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - react
-      - utf-8-validate
 
   '@vue/compiler-core@3.5.13':
     dependencies:
@@ -8423,7 +8402,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.2
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.7.4(debug@4.4.0))
+      retry-axios: 2.6.0(axios@1.7.4)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -9693,7 +9672,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  retry-axios@2.6.0(axios@1.7.4(debug@4.4.0)):
+  retry-axios@2.6.0(axios@1.7.4):
     dependencies:
       axios: 1.7.4(debug@4.4.0)
 
@@ -9875,6 +9854,18 @@ snapshots:
       totalist: 1.1.0
 
   slash@3.0.0: {}
+
+  solana-agent-kit@2.0.0-beta.2(bufferutil@4.0.8)(react@19.0.0)(utf-8-validate@5.0.10):
+    dependencies:
+      '@solana/web3.js': 1.98.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      ai: 4.1.54(react@19.0.0)(zod@3.24.2)
+      bs58: 6.0.0
+      zod: 3.24.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - react
+      - utf-8-validate
 
   sonner@2.0.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
@@ -10236,8 +10227,6 @@ snapshots:
       reflect.getprototypeof: 1.0.9
 
   typescript@5.1.6: {}
-
-  typescript@5.8.2: {}
 
   ua-is-frozen@0.1.2: {}
 
