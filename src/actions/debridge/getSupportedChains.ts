@@ -38,6 +38,7 @@ const getDebridgeSupportedChainsAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (_agent: SolanaAgentKit, _input: Record<string, any>) => {
     try {
       const response = await getDebridgeSupportedChains();

@@ -16,6 +16,7 @@ export const elfaPingAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const data = await agent.pingElfaAiApi();
     return {
@@ -72,6 +73,7 @@ export const elfaApiKeyStatusAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     const data = await agent.getElfaAiApiKeyStatus();
     return {
@@ -465,6 +467,7 @@ export const elfaTrendingTokensAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent: SolanaAgentKit, input) => {
     const data = await agent.getTrendingTokens();
     return {

@@ -19,6 +19,7 @@ const getWalletAddressAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent: SolanaAgentKit) => ({
     status: "success",
     address: get_wallet_address(agent),

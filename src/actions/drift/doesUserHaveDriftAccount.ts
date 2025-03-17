@@ -23,6 +23,7 @@ export const doesUserHaveDriftAccountAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent) => {
     try {
       const res = await doesUserHaveDriftAccount(agent);

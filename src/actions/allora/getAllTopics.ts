@@ -28,6 +28,7 @@ const getAllTopicsAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent: SolanaAgentKit) => {
     const topics = await getAllTopics(agent);
     return {

@@ -18,6 +18,7 @@ const driftUserAccountInfoAction: Action = {
       },
     ],
   ],
+  schema: z.object({}),
   handler: async (agent) => {
     try {
       const accountInfo = await driftUserAccountInfo(agent);
