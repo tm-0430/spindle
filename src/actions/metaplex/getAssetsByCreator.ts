@@ -2,7 +2,6 @@ import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
 import { z } from "zod";
 import { get_assets_by_creator } from "../../tools/metaplex";
-import { GetAssetsByCreatorRpcInput } from "@metaplex-foundation/digital-asset-standard-api";
 
 const getAssetsByCreatorAction: Action = {
   name: "GET_ASSETS_BY_CREATOR",
@@ -89,7 +88,10 @@ const getAssetsByCreatorAction: Action = {
     before: z.string().optional(),
     after: z.string().optional(),
   }),
-  handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
+  handler: async (
+    agent: SolanaAgentKit,
+    input: z.infer<typeof getAssetsByCreatorAction.schema>,
+  ) => {
     // @ts-expect-error - unnecessary type mismatch
     const result = await get_assets_by_creator(agent, input);
 
