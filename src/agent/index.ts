@@ -210,7 +210,7 @@ export class SolanaAgentKit {
   public connection: Connection;
   public wallet: Keypair;
   public wallet_address: PublicKey;
-  public config: Config;
+  public config?: Config;
 
   /**
    * @deprecated Using openai_api_key directly in constructor is deprecated.
