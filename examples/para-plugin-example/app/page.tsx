@@ -72,7 +72,7 @@ export default function ChatbotPage() {
         <li className="text-l">
           💡
           <span className="ml-2">
-            Try asking e.g. <code>create pregen wallet with this email  dev@test.getpara.com</code> or <code>claim pregen wallet</code>
+            Try asking e.g. <code>create pregen wallet with this email  dev@test.getpara.com</code> or <code>claim pregen wallet with email dev@test.getpara.com</code>
           </span>
         </li>
       </ul>

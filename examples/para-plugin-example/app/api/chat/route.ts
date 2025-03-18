@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { Message,LanguageModelV1,streamText,tool } from "ai";
 import { createGroq } from "@ai-sdk/groq";
+// import { createOpenAI } from "@ai-sdk/openai";
 import { createVercelAITools } from "solana-agent-kit";
 import { solanaAgentWithPara } from "@/utils/init_server";
 import {listParaToolsWeb} from "@/utils/get_all_tools"
@@ -9,7 +10,10 @@ const groq = createGroq({
   baseURL: "https://api.groq.com/openai/v1",
   apiKey: process.env.GROQ_API_KEY,
 });
-
+// const openai = createOpenAI({
+//   baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json() as { messages: Message[] };
@@ -22,7 +26,7 @@ export async function POST(req: NextRequest) {
      ...webTools
     }
     const result = await streamText({
-      model: groq("qwen-qwq-32b") as LanguageModelV1,
+      model: groq("deepseek-r1-distill-llama-70b") as LanguageModelV1,
       tools:tools as any,
       system: `
       You are a helpful agent that can interact onchain using the Solana Agent Kit. You are
