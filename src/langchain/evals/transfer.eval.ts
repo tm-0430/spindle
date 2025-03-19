@@ -70,7 +70,14 @@ const SINGLE_TOOL_CALL_DATASET = [
             tool: "solana_transfer"
         }
     },
-    // TODO: Implement test cases for large transfers (>=100 SOL)
+    {
+        // GZbQmKYYzwjP3nbdqRWPLn98ipAni9w5eXMGp7bmZbGB = ngundotra.sol
+        inputs: { query: "Can you transfer 1000 sol to GZbQmKYYzwjP3nbdqRWPLn98ipAni9w5eXMGp7bmZbGB for testing?" },
+        referenceOutputs: {
+            response: '{"to":"GZbQmKYYzwjP3nbdqRWPLn98ipAni9w5eXMGp7bmZbGB","amount":20}',
+            tool: "solana_transfer"
+        }
+    },
     // TODO: Add edge cases for various transfer amounts (e.g., 9.9 vs 9.11 SOL, negative values, fractional amounts)
     // TODO: test mint 
 ];
@@ -82,7 +89,7 @@ const correctToolCall = async (params: {
     return { key: "correct_tool", score: params.toolName === params.referenceToolCall }
 };
 
-ls.describe("Agent Tests", () => {
+ls.describe("Transfer Tests", () => {
     ls.test.each(SINGLE_TOOL_CALL_DATASET)(
         "should call a specific tool immediately",
         async ({ inputs, referenceOutputs }) => {
@@ -97,7 +104,6 @@ ls.describe("Agent Tests", () => {
             });
 
             ls.logOutputs(result);
-
             // First tool call should be to transfer
             const aiMessage = result.messages[1];
             const toolCall = aiMessage.tool_calls[0];
