@@ -1,5 +1,11 @@
 # solana-agent-kit
 
+## 2.0.0-beta.3
+
+### Major Changes
+
+- Fixes rpc url requirment for KeypairWallet
+
 ## 2.0.0-beta.1
 
 ### Major Changes
