@@ -48,6 +48,18 @@ importers:
         specifier: ^5.3.3
         version: 5.7.2
 
+  packages/adapter-mcp:
+    dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.7.0
+        version: 1.7.0
+      solana-agent-kit:
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+
   packages/core:
     dependencies:
       '@solana/web3.js':
@@ -321,18 +333,6 @@ importers:
       ethers:
         specifier: ^6.13.5
         version: 6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      solana-agent-kit:
-        specifier: workspace:*
-        version: link:../core
-      zod:
-        specifier: ^3.24.1
-        version: 3.24.1
-
-  packages/util-mcp:
-    dependencies:
-      '@modelcontextprotocol/sdk':
-        specifier: ^1.7.0
-        version: 1.7.0
       solana-agent-kit:
         specifier: workspace:*
         version: link:../core

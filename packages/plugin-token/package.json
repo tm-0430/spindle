@@ -1,15 +1,16 @@
 {
   "name": "@solana-agent-kit/plugin-token",
   "version": "2.0.0-beta.2",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "module": "./dist/esm/index.js",
   "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "clean": "rm -rf dist .turbo node_modules",
-    "build": "tsc",
+    "build": "tsc && tsc -p tsconfig.cjs.json",
     "test": "jest"
   },
   "repository": {
@@ -19,9 +20,9 @@
   "homepage": "https://github.com/sendaifun/solana-agent-kit/tree/v2/packages/plugin-token",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     }
   },
   "dependencies": {

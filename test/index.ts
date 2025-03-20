@@ -40,7 +40,7 @@ async function main() {
   const keyPair = Keypair.fromSecretKey(
     bs58.decode(process.env.SOLANA_PRIVATE_KEY as string),
   );
-  const wallet = new KeypairWallet(keyPair);
+  const wallet = new KeypairWallet(keyPair, process.env.RPC_URL as string);
 
   // Initialize agent with your test wallet
   const agent = new SolanaAgentKit(wallet, process.env.RPC_URL!, {
