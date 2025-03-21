@@ -100,6 +100,10 @@ export async function runEvals<T>(
     ls.test.each(dataset)(
       "should call the correct tool with valid arguments",
       async ({ inputs, referenceOutputs }) => {
+        if (!referenceOutputs) {
+          console.warn("Invalid referenceOutputs: ", referenceOutputs);
+          return;
+        }
         const result = await agent.invoke(
           {
             messages: [{ role: "user", content: inputs.query }],
@@ -122,8 +126,8 @@ export async function runEvals<T>(
             result.messages[1].content,
           );
 
-        const llmAnswer = {
-          tool: toolCall?.name || "",
+        const llmAnswer: { tool: string; response: string } = {
+          tool: toolCall?.name || ("" as String),
           response: typeof llmResponse === "string" ? llmResponse : "{}",
         };
 
