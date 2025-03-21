@@ -1,6 +1,6 @@
 {
   "name": "@solana-agent-kit/plugin-blinks",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.5",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -34,6 +34,6 @@
     "zod": "^3.24.1"
   },
   "peerDependencies": {
-    "solana-agent-kit": "2.0.0-beta.4"
+    "solana-agent-kit": "2.0.0-beta.5"
   }
 }
