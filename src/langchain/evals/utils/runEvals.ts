@@ -21,7 +21,7 @@ const solanaAgent = new SolanaAgentKit(
   },
 );
 
-const tools = createSolanaTools(solanaAgent);
+const tools = createSolanaTools(solanaAgent).slice(0, 128);
 
 const memory = new MemorySaver();
 
