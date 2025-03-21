@@ -2,8 +2,11 @@
   "name": "@solana-agent-kit/plugin-token",
   "version": "2.0.0-beta.2",
   "main": "./dist/cjs/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "types": "./dist/cjs/index.d.ts",
   "module": "./dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -20,7 +23,7 @@
   "homepage": "https://github.com/sendaifun/solana-agent-kit/tree/v2/packages/plugin-token",
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
+      "types": "./dist/cjs/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     }

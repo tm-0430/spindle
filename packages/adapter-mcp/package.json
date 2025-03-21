@@ -4,11 +4,14 @@
   "type": "module",
   "description": "Create MCP servers with the Solana Agent Kit",
   "main": "./dist/cjs/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "types": "./dist/cjs/index.d.ts",
   "module": "./dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
-      "types": "./dist/esm/index.d.ts",
+      "types": "./dist/cjs/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     }
