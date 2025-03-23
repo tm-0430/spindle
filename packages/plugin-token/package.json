@@ -1,21 +1,21 @@
 {
   "name": "@solana-agent-kit/plugin-token",
   "version": "2.0.0-beta.2",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.js",
-  "types": "dist/cjs/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     }
   },
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist .turbo node_modules",
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "rollup -c",
     "test": "jest"
   },
   "repository": {
@@ -45,11 +45,13 @@
     "@metaplex-foundation/umi-bundle-defaults": "^1.0.0",
     "@metaplex-foundation/umi-web3js-adapters": "^1.0.0",
     "@openzeppelin/contracts": "^5.2.0",
+    "@solana/codecs": "^2.1.0",
     "@solana/spl-token": "^0.4.9",
     "@solutiofi/sdk": "^1.0.2",
     "@types/bn.js": "^5.1.6",
     "bn.js": "^5.2.1",
     "ethers": "^6.13.5",
+    "rpc-websockets": "^10.0.0",
     "solana-agent-kit": "workspace:*",
     "zod": "^3.24.1"
   },
