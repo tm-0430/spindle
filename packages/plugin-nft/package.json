@@ -2,21 +2,21 @@
   "name": "@solana-agent-kit/plugin-nft",
   "version": "2.0.0-beta.2",
   "type": "module",
-  "main": "dist/cjs/index.cjs",
-  "module": "dist/esm/index.js",
-  "types": "dist/cjs/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/index.d.ts",
-        "default": "./dist/esm/index.js"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/cjs/index.d.ts",
-        "default": "./dist/cjs/index.js"
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     }
   },
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist .turbo node_modules",
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "rollup -c",
     "test": "jest"
   },
   "repository": {
@@ -35,6 +35,7 @@
   "homepage": "https://github.com/sendaifun/solana-agent-kit/tree/v2/packages/plugin-nft",
   "dependencies": {
     "@3land/listings-sdk": "^0.0.7",
+    "@aptos-labs/aptos-client": "^1.1.0",
     "@coral-xyz/anchor": "^0.30.1",
     "@metaplex-foundation/digital-asset-standard-api": "^1.0.4",
     "@metaplex-foundation/mpl-core": "^1.2.0",
@@ -43,10 +44,12 @@
     "@metaplex-foundation/umi": "^1.0.0",
     "@metaplex-foundation/umi-bundle-defaults": "^1.0.0",
     "@metaplex-foundation/umi-web3js-adapters": "^1.0.0",
+    "@solana/codecs": "^2.1.0",
     "@solana/spl-token": "^0.4.9",
     "@tensor-oss/tensorswap-sdk": "^4.5.0",
     "@types/bn.js": "^5.1.6",
     "bn.js": "^5.2.1",
+    "rpc-websockets": "^10.0.0",
     "solana-agent-kit": "workspace:*",
     "zod": "^3.24.1"
   },
