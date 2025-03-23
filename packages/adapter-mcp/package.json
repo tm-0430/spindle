@@ -3,22 +3,27 @@
   "version": "2.0.0-beta.2",
   "type": "module",
   "description": "Create MCP servers with the Solana Agent Kit",
-  "main": "dist/cjs/index.cjs",
-  "types": "dist/cjs/index.d.ts",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "exports": {
     ".": {
-      "types": "./dist/cjs/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "scripts": {
     "clean": "rm -rf dist .turbo node_modules",
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "rollup -c",
     "test": "jest"
   },
   "repository": {
