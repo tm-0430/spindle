@@ -63,17 +63,19 @@ const config = [
     input: "src/index.ts",
     output: [
       {
-        file: "dist/index.cjs",
+        dir: "dist",
+        entryFileNames: "index.cjs",
         format: "cjs",
         sourcemap: true,
       },
       {
-        file: "dist/index.mjs",
+        dir: "dist",
+        entryFileNames: "index.mjs",
         format: "esm",
         sourcemap: true,
       },
     ],
-    plugins: [
+    plugins: [  
       nodeResolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
