@@ -189,78 +189,82 @@ export async function runComplexEval(
         tool_calls?: any;
       }> = [];
       let foundCorrectToolCall = true;
+      try {
+        for (let i = 0; i < scenario.turns.length; i++) {
+          const turn = scenario.turns[i];
+          conversation.push({ role: "user", content: turn.input });
 
-      for (let i = 0; i < scenario.turns.length; i++) {
-        const turn = scenario.turns[i];
-        conversation.push({ role: "user", content: turn.input });
-
-        const result = await agent.invoke(
-          { messages: conversation },
-          {
-            configurable: {
-              thread_id: `${testName}-${new Date().toISOString()}`, // Need unique thread-id to keep context seperate betweet tests
+          const result = await agent.invoke(
+            { messages: conversation },
+            {
+              configurable: {
+                thread_id: `${testName}-${new Date().toISOString()}`, // Need unique thread-id to keep context seperate betweet tests
+              },
             },
-          },
-        );
+          );
 
-        ls.logOutputs(result);
-        const assistantMessage = result.messages[result.messages.length - 1];
-        conversation.push(assistantMessage);
-        // conversation.forEach((message) => console.log(message.content));
-        if (
-          turn.expectedToolCall &&
-          !(
+          ls.logOutputs(result);
+          const assistantMessage = result.messages[result.messages.length - 1];
+          conversation.push(assistantMessage);
+          if (
+            turn.expectedToolCall &&
+            !(
+              assistantMessage.tool_calls &&
+              assistantMessage.tool_calls.length > 0
+            )
+          ) {
+            foundCorrectToolCall = false;
+            continue;
+          }
+          if (
             assistantMessage.tool_calls &&
-            assistantMessage.tool_calls.length > 0
-          )
-        ) {
-          foundCorrectToolCall = false;
-          continue;
-        }
-        if (
-          assistantMessage.tool_calls &&
-          assistantMessage.tool_calls.length > 0 &&
-          turn.expectedToolCall
-        ) {
-          const toolCall = assistantMessage.tool_calls[0];
+            assistantMessage.tool_calls.length > 0 &&
+            turn.expectedToolCall
+          ) {
+            const toolCall = assistantMessage.tool_calls[0];
 
-          const toolName = toolCall?.name || "";
-          const llmArgs = toolCall.args.input;
-          const toolArgs: string = typeof llmArgs === "string" ? llmArgs : "{}";
-          const params = turn.expectedToolCall.params;
+            const toolName = toolCall?.name || "";
+            const llmArgs = toolCall.args.input;
+            const toolArgs: string =
+              typeof llmArgs === "string" ? llmArgs : "{}";
+            const params = turn.expectedToolCall.params;
 
-          if (toolName === turn.expectedToolCall.tool) {
-            const referenceOutputs = {
-              tool: turn.expectedToolCall.tool,
-              response:
-                typeof params === "string"
-                  ? params
-                  : JSON.stringify(turn.expectedToolCall.params),
-            };
-            const llmAnswer: { tool: string; response: string } = {
-              tool: toolName,
-              response: toolArgs,
-            };
+            if (toolName === turn.expectedToolCall.tool) {
+              const referenceOutputs = {
+                tool: turn.expectedToolCall.tool,
+                response:
+                  typeof params === "string"
+                    ? params
+                    : JSON.stringify(turn.expectedToolCall.params),
+              };
+              const llmAnswer: { tool: string; response: string } = {
+                tool: toolName,
+                response: toolArgs,
+              };
 
-            const argsMatch = compareArgs(referenceOutputs, llmAnswer);
-            const toolMatches = compareTools(referenceOutputs, llmAnswer);
+              const argsMatch = compareArgs(referenceOutputs, llmAnswer);
+              const toolMatches = compareTools(referenceOutputs, llmAnswer);
 
-            foundCorrectToolCall =
-              foundCorrectToolCall && argsMatch && toolMatches; // && so if it fails on one tool the whole test fails
+              foundCorrectToolCall =
+                foundCorrectToolCall && argsMatch && toolMatches; // && so if it fails on one tool the whole test fails
 
-            const wrappedToolEvaluator = ls.wrapEvaluator(toolEvaluator);
-            await wrappedToolEvaluator({
-              referenceOutputs,
-              llmAnswer,
-            });
+              const wrappedToolEvaluator = ls.wrapEvaluator(toolEvaluator);
+              await wrappedToolEvaluator({
+                referenceOutputs,
+                llmAnswer,
+              });
 
-            const wrappedArgsEvaluator = ls.wrapEvaluator(argsEvaluator);
-            await wrappedArgsEvaluator({
-              referenceOutputs,
-              llmAnswer,
-            });
+              const wrappedArgsEvaluator = ls.wrapEvaluator(argsEvaluator);
+              await wrappedArgsEvaluator({
+                referenceOutputs,
+                llmAnswer,
+              });
+            }
           }
         }
+      } catch (err) {
+        console.error(err);
+        conversation.forEach((message) => console.log(message.content));
       }
       expect(foundCorrectToolCall).toBe(true);
     });
