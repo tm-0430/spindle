@@ -2,23 +2,28 @@
   "name": "solana-agent-kit",
   "version": "2.0.0-beta.5",
   "type": "module",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "types": "./dist/cjs/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/cjs/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "description": "connect any ai agents to solana protocols",
   "scripts": {
     "clean": "rm -rf dist .turbo node_modules",
-    "build": "tsc && tsc -p tsconfig.cjs.json",
+    "build": "rollup -c",
     "test": "jest"
   },
   "repository": {
@@ -58,6 +63,7 @@
     "@solana/web3.js": "^1.98.0",
     "ai": "^4.1.5",
     "bs58": "^6.0.0",
+    "rpc-websockets": "^10.0.0",
     "zod": "^3.24.1"
   }
 }
