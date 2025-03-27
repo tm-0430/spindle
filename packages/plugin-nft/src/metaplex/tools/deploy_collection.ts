@@ -7,6 +7,7 @@ import {
 } from "@metaplex-foundation/mpl-core";
 import type { CollectionOptions } from "../types";
 import {
+  fromWeb3JsPublicKey,
   toWeb3JsLegacyTransaction,
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
@@ -25,6 +26,11 @@ export async function deploy_collection(
   try {
     // Initialize Umi
     const umi = createUmi(agent.connection.rpcEndpoint).use(mplCore());
+    umi.identity = {
+      publicKey: fromWeb3JsPublicKey(agent.wallet.publicKey),
+      // @ts-expect-error Umi types are not compatible with SolanaAgentKit
+      signTransaction: agent.wallet.signTransaction,
+    };
     // umi.use(keypairIdentity(fromWeb3JsKeypair(agent.wallet)));
 
     // Generate collection signer

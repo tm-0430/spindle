@@ -66,16 +66,26 @@ const config = [
         file: "dist/index.cjs",
         format: "cjs",
         sourcemap: true,
+        inlineDynamicImports: true,
       },
       {
         file: "dist/index.mjs",
         format: "esm",
         sourcemap: true,
+        preserveModules: false,
+        esModule: true,
+        inlineDynamicImports: true,
       },
     ],
     plugins: [
       nodeResolve(),
-      commonjs(),
+      commonjs({
+        transformMixedEsModules: true,
+        // This is important for handling default exports correctly in ESM
+        requireReturnsDefault: "preferred",
+        // Ensure named exports are preserved
+        esmExternals: true,
+      }),
       typescript({ tsconfig: "./tsconfig.json" }),
       json(),
       replaceWorkspaceImportsPlugin(),

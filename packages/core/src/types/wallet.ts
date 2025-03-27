@@ -6,6 +6,8 @@ import {
   Signer,
   Keypair,
   TransactionInstruction,
+  SendOptions,
+  TransactionSignature,
 } from "@solana/web3.js";
 import { TransactionOrVersionedTransaction } from ".";
 import { SolanaAgentKit } from "../agent";
@@ -73,7 +75,6 @@ export interface BaseWallet {
     transaction: T,
   ): Promise<string>;
 
-  // TODO: Implement signAndSendTransaction method to handle transaction signing and sending according to send options
   /**
    * Signs and sends a transaction to the network
    * @template T - Transaction type (Transaction or VersionedTransaction)
@@ -81,10 +82,21 @@ export interface BaseWallet {
    * @param {SendOptions} [options] - Optional transaction send configuration
    * @returns {Promise<{signature: TransactionSignature}>} Promise resolving to the transaction signature
    */
-  // signAndSendTransaction<T extends Transaction | VersionedTransaction>(
-  //     transaction: T,
-  //     options?: SendOptions
-  // ): Promise<{ signature: TransactionSignature }>;
+  signAndSendTransaction<
+    T extends
+      | Transaction
+      | VersionedTransaction
+      | TransactionOrVersionedTransaction,
+  >(
+    transaction: T,
+    options?: SendOptions,
+  ): Promise<{ signature: TransactionSignature }>;
+
+  /**
+   * Signs a message
+   * @param message - The message to be signed
+   */
+  signMessage(message: Uint8Array): Promise<Uint8Array>;
 }
 
 export async function signOrSendTX(

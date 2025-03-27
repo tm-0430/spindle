@@ -5,9 +5,13 @@ import {
   Connection,
   type Keypair,
   type PublicKey,
+  SendOptions,
   type Transaction,
+  TransactionSignature,
   VersionedTransaction,
 } from "@solana/web3.js";
+import nacl from "tweetnacl";
+import bs58 from "bs58";
 
 /**
  * Check if a transaction object is a VersionedTransaction or not
@@ -90,5 +94,34 @@ export class KeypairWallet implements BaseWallet {
     }
 
     return await connection.sendRawTransaction(transaction.serialize());
+  }
+
+  async signMessage(message: Uint8Array): Promise<Uint8Array> {
+    const signature = nacl.sign.detached(message, this.payer.secretKey);
+    return signature;
+  }
+
+  async signAndSendTransaction<
+    T extends
+      | Transaction
+      | VersionedTransaction
+      | TransactionOrVersionedTransaction,
+  >(
+    transaction: T,
+    options?: SendOptions,
+  ): Promise<{ signature: TransactionSignature }> {
+    const connection = new Connection(this.rpcUrl);
+    if (transaction instanceof VersionedTransaction) {
+      transaction.sign([this.payer]);
+    } else {
+      transaction.partialSign(this.payer);
+    }
+
+    const signature = await connection.sendRawTransaction(
+      transaction.serialize(),
+      options,
+    );
+
+    return { signature };
   }
 }

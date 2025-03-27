@@ -95,6 +95,9 @@ importers:
       rpc-websockets:
         specifier: ^10.0.0
         version: 10.0.0
+      tweetnacl:
+        specifier: ^1.0.3
+        version: 1.0.3
       zod:
         specifier: ^3.24.1
         version: 3.24.1
