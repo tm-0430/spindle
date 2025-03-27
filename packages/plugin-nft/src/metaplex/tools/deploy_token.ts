@@ -144,7 +144,6 @@ export async function deploy_token(
       mint: toWeb3JsPublicKey(mint.publicKey),
     };
   } catch (error: any) {
-    console.log(error);
     throw new Error(`Token deployment failed: ${error.message}`);
   }
 }
