@@ -1,12 +1,7 @@
-import {
-  SolanaAgentKit,
-  PriorityFeeResponse,
-  signOrSendTX,
-} from "solana-agent-kit";
+import { SolanaAgentKit, PriorityFeeResponse } from "solana-agent-kit";
 import {
   SystemProgram,
   Transaction,
-  sendAndConfirmTransaction,
   ComputeBudgetProgram,
   PublicKey,
   LAMPORTS_PER_SOL,
@@ -87,12 +82,17 @@ export async function sendTransactionWithPriorityFee(
       if (agent.config.signOnly) {
         throw new Error("Sign only mode is enabled. Transaction not sent.");
       }
+      if (!agent.wallet.signAndSendTransaction) {
+        throw new Error(
+          "Wallet does not support signAndSendTransaction please implement it manually or use the signOnly option",
+        );
+      }
 
       const txSignature =
         await agent.wallet.signAndSendTransaction(transaction);
 
       return {
-        transactionId: txSignature,
+        transactionId: txSignature.signature,
         fee: feeEstimate,
       };
     } else {
@@ -164,12 +164,17 @@ export async function sendTransactionWithPriorityFee(
       if (agent.config.signOnly) {
         throw new Error("Sign only mode is enabled. Transaction not sent.");
       }
+      if (!agent.wallet.signAndSendTransaction) {
+        throw new Error(
+          "Wallet does not support signAndSendTransaction please implement it manually or use the signOnly option",
+        );
+      }
 
       const txSignature =
         await agent.wallet.signAndSendTransaction(transaction);
 
       return {
-        transactionId: txSignature,
+        transactionId: txSignature.signature,
         fee: feeEstimate,
       };
     }

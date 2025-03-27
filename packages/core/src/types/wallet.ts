@@ -82,7 +82,7 @@ export interface BaseWallet {
    * @param {SendOptions} [options] - Optional transaction send configuration
    * @returns {Promise<{signature: TransactionSignature}>} Promise resolving to the transaction signature
    */
-  signAndSendTransaction<
+  signAndSendTransaction?: <
     T extends
       | Transaction
       | VersionedTransaction
@@ -90,7 +90,7 @@ export interface BaseWallet {
   >(
     transaction: T,
     options?: SendOptions,
-  ): Promise<{ signature: TransactionSignature }>;
+  ) => Promise<{ signature: TransactionSignature }>;
 
   /**
    * Signs a message
@@ -114,6 +114,12 @@ export async function signOrSendTX(
   ) {
     if (agent.config.signOnly) {
       return await agent.wallet.signTransaction(instructionsOrTransaction);
+    }
+
+    if (!agent.wallet.signAndSendTransaction) {
+      throw new Error(
+        "Wallet does not support signAndSendTransaction please implement it manually or use the signOnly option",
+      );
     }
 
     return (
