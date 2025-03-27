@@ -86,6 +86,13 @@ export class KeypairWallet implements BaseWallet {
       | TransactionOrVersionedTransaction,
   >(transaction: T): Promise<string> {
     const connection = new Connection(this.rpcUrl);
+
+    if (transaction instanceof VersionedTransaction) {
+      transaction.sign([this.payer]);
+    } else {
+      transaction.partialSign(this.payer);
+    }
+
     return await connection.sendRawTransaction(transaction.serialize());
   }
 
@@ -114,7 +121,6 @@ export class KeypairWallet implements BaseWallet {
       transaction.serialize(),
       options,
     );
-
     return { signature };
   }
 }

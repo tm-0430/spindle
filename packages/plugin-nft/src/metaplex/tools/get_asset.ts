@@ -1,10 +1,10 @@
 import { SolanaAgentKit } from "solana-agent-kit";
 import { publicKey } from "@metaplex-foundation/umi";
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import {
   dasApi,
   DasApiAsset,
 } from "@metaplex-foundation/digital-asset-standard-api";
+import { initUmi } from "../../utils";
 
 /**
  * Fetch asset details using the Metaplex DAS API
@@ -17,8 +17,7 @@ export async function get_asset(
   assetId: string,
 ): Promise<DasApiAsset> {
   try {
-    const endpoint = agent.connection.rpcEndpoint;
-    const umi = createUmi(endpoint).use(dasApi());
+    const umi = initUmi(agent).use(dasApi());
 
     return await umi.rpc.getAsset(publicKey(assetId));
   } catch (error: any) {

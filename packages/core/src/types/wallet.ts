@@ -116,7 +116,9 @@ export async function signOrSendTX(
       return await agent.wallet.signTransaction(instructionsOrTransaction);
     }
 
-    return await agent.wallet.sendTransaction(instructionsOrTransaction);
+    return (
+      await agent.wallet.signAndSendTransaction(instructionsOrTransaction)
+    ).signature;
   }
 
   const ixComputeBudget = await getComputeBudgetInstructions(
