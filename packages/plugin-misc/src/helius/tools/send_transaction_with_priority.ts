@@ -88,7 +88,8 @@ export async function sendTransactionWithPriorityFee(
         throw new Error("Sign only mode is enabled. Transaction not sent.");
       }
 
-      const txSignature = await agent.wallet.sendTransaction(transaction);
+      const txSignature =
+        await agent.wallet.signAndSendTransaction(transaction);
 
       return {
         transactionId: txSignature,
@@ -164,7 +165,8 @@ export async function sendTransactionWithPriorityFee(
         throw new Error("Sign only mode is enabled. Transaction not sent.");
       }
 
-      const txSignature = await agent.wallet.sendTransaction(transaction);
+      const txSignature =
+        await agent.wallet.signAndSendTransaction(transaction);
 
       return {
         transactionId: txSignature,

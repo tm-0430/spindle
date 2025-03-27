@@ -74,7 +74,7 @@ export async function deploy_collection(
 
     return {
       collectionAddress: toWeb3JsPublicKey(collectionSigner.publicKey),
-      signature: await agent.wallet.sendTransaction(compatibleTx),
+      signature: await agent.wallet.signAndSendTransaction(compatibleTx),
     };
   } catch (error: any) {
     throw new Error(`Collection deployment failed: ${error.message}`);
