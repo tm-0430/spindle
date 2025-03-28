@@ -2,7 +2,7 @@
   "name": "@solana-agent-kit/plugin-token",
   "version": "2.0.0-beta.7",
   "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -11,7 +11,7 @@
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
+        "default": "./dist/index.js"
       },
       "require": {
         "types": "./dist/index.d.cts",
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist .turbo node_modules",
-    "build": "rollup -c",
+    "build": "tsup src/index.ts --dts --clean --format cjs,esm --out-dir dist",
     "test": "jest"
   },
   "repository": {
@@ -58,5 +58,8 @@
   "peerDependencies": {
     "@solana/web3.js": "^1.98.0",
     "solana-agent-kit": "2.0.0-beta.7"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0"
   }
 }
