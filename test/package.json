@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Integration tests for all Solana Agent Kit packages",
   "main": "index.ts",
-  "type": "module",
   "scripts": {
     "test": "tsx index.ts",
     "dev": "tsx watch index.ts"

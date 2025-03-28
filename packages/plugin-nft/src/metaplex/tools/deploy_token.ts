@@ -1,24 +1,20 @@
 import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import { generateSigner, none } from "@metaplex-foundation/umi";
 import {
   createFungible,
   mintV1,
   TokenStandard,
-  updateV1,
 } from "@metaplex-foundation/mpl-token-metadata";
 import {
   fromWeb3JsPublicKey,
-  toWeb3JsLegacyTransaction,
+  toWeb3JsInstruction,
+  toWeb3JsKeypair,
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
-import {
-  AuthorityType,
-  mplToolbox,
-  setAuthority,
-} from "@metaplex-foundation/mpl-toolbox";
+import { AuthorityType, setAuthority } from "@metaplex-foundation/mpl-toolbox";
 import { SPLAuthorityInput } from "../types";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
+import { initUmi } from "../../utils";
 
 /**
  * Deploy a new SPL token
@@ -41,7 +37,7 @@ export async function deploy_token(
 ) {
   try {
     // Create UMI instance from agent
-    const umi = createUmi(agent.connection.rpcEndpoint).use(mplToolbox());
+    const umi = initUmi(agent);
 
     // Create new token mint
     const mint = generateSigner(umi);
@@ -71,7 +67,7 @@ export async function deploy_token(
     }
 
     // Set default token authority
-    let defaultAuthority: SPLAuthorityInput = {
+    const defaultAuthority: SPLAuthorityInput = {
       mintAuthority: agent.wallet.publicKey,
       freezeAuthority: agent.wallet.publicKey,
       updateAuthority: agent.wallet.publicKey,
@@ -131,15 +127,17 @@ export async function deploy_token(
       );
     }
 
-    const tx = toWeb3JsLegacyTransaction(builder.build(umi));
+    const ixs = builder.getInstructions().map((ix) => toWeb3JsInstruction(ix));
+    const tx = new Transaction().add(...ixs);
+
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
     tx.feePayer = agent.wallet.publicKey;
+    tx.partialSign(toWeb3JsKeypair(mint));
 
     if (agent.config.signOnly) {
       return await agent.wallet.signTransaction(tx);
     }
-
-    const { blockhash } = await agent.connection.getLatestBlockhash();
-    tx.recentBlockhash = blockhash;
 
     await signOrSendTX(agent, tx);
     return {

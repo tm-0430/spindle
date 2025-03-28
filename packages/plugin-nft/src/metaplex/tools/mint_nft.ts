@@ -2,14 +2,13 @@ import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 import { generateSigner } from "@metaplex-foundation/umi";
 import { create, mplCore } from "@metaplex-foundation/mpl-core";
 import { fetchCollection } from "@metaplex-foundation/mpl-core";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import {
   fromWeb3JsPublicKey,
-  toWeb3JsLegacyTransaction,
+  toWeb3JsInstruction,
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
-import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
+import { initUmi } from "../../utils";
 
 /**
  * Mint a new NFT as part of an existing collection
@@ -35,7 +34,7 @@ export async function mintCollectionNFT(
 ) {
   try {
     // Create UMI instance from agent
-    const umi = createUmi(agent.connection.rpcEndpoint).use(mplCore());
+    const umi = initUmi(agent).use(mplCore());
     // umi.use(keypairIdentity(fromWeb3JsKeypair(agent.wallet)));
 
     // Convert collection mint to UMI format
@@ -47,36 +46,38 @@ export async function mintCollectionNFT(
     // Generate a new signer for the NFT
     const assetSigner = generateSigner(umi);
 
-    const tx = create(umi, {
+    const ixs = create(umi, {
       asset: assetSigner,
       collection: collection,
       name: metadata.name,
       uri: metadata.uri,
       owner: fromWeb3JsPublicKey(recipient ?? agent.wallet.publicKey),
-    }).build(umi);
+    })
+      .getInstructions()
+      .map((i) => toWeb3JsInstruction(i));
+    const tx = new Transaction().add(...ixs);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = agent.wallet.publicKey;
 
-    const compatibleTx = toWeb3JsLegacyTransaction(tx);
-    compatibleTx.feePayer = agent.wallet.publicKey;
+    const sigOrTx = await signOrSendTX(agent, tx);
 
-    if (agent.config.signOnly) {
+    if (typeof sigOrTx !== "string") {
       return {
         mint: toWeb3JsPublicKey(assetSigner.publicKey),
         // Note: Token account is now handled automatically by the create instruction
         metadata: toWeb3JsPublicKey(assetSigner.publicKey),
-        signedTransaction: await agent.wallet.signTransaction(compatibleTx),
+        signedTransaction: sigOrTx,
       };
     }
 
-    const { blockhash } = await agent.connection.getLatestBlockhash();
-    compatibleTx.recentBlockhash = blockhash;
-
-    await signOrSendTX(agent, compatibleTx);
+    await signOrSendTX(agent, tx);
 
     return {
       mint: toWeb3JsPublicKey(assetSigner.publicKey),
       // Note: Token account is now handled automatically by the create instruction
       metadata: toWeb3JsPublicKey(assetSigner.publicKey),
-      signature: bs58.encode(compatibleTx.signature!),
+      signature: sigOrTx,
     };
   } catch (error: any) {
     throw new Error(`Collection NFT minting failed: ${error.message}`);

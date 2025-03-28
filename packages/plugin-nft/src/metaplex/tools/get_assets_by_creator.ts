@@ -1,9 +1,9 @@
 import { SolanaAgentKit } from "solana-agent-kit";
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import {
   dasApi,
   GetAssetsByCreatorRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
+import { initUmi } from "../../utils";
 
 /**
  * Fetch assets by creator using the Metaplex DAS API
@@ -15,6 +15,6 @@ export async function get_assets_by_creator(
   agent: SolanaAgentKit,
   params: GetAssetsByCreatorRpcInput,
 ) {
-  const umi = createUmi(agent.connection.rpcEndpoint).use(dasApi());
+  const umi = initUmi(agent).use(dasApi());
   return await umi.rpc.getAssetsByCreator(params);
 }

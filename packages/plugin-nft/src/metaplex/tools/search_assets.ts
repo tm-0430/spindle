@@ -1,9 +1,9 @@
 import { SolanaAgentKit } from "solana-agent-kit";
-import { createUmi } from "@metaplex-foundation/umi-bundle-defaults";
 import {
   dasApi,
   SearchAssetsRpcInput,
 } from "@metaplex-foundation/digital-asset-standard-api";
+import { initUmi } from "../../utils";
 
 /**
  * Search for assets using the Metaplex DAS API
@@ -15,6 +15,6 @@ export async function search_assets(
   agent: SolanaAgentKit,
   params: SearchAssetsRpcInput,
 ) {
-  const umi = createUmi(agent.connection.rpcEndpoint).use(dasApi());
+  const umi = initUmi(agent).use(dasApi());
   return await umi.rpc.searchAssets(params);
 }
