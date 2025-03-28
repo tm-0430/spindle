@@ -1,6 +1,6 @@
 {
   "name": "@solana-agent-kit/adapter-mcp",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "type": "module",
   "description": "Create MCP servers with the Solana Agent Kit",
   "main": "dist/index.cjs",
@@ -50,6 +50,6 @@
     "solana-agent-kit": "workspace:*"
   },
   "peerDependencies": {
-    "solana-agent-kit": "2.0.0-beta.5"
+    "solana-agent-kit": "2.0.0-beta.6"
   }
 }
