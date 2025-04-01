@@ -20,6 +20,7 @@ import getTPSAction from "./solana/actions/getTPS";
 import closeEmptyTokenAccountsAction from "./solana/actions/closeEmptyTokenAccounts";
 import requestFundsAction from "./solana/actions/requestFunds";
 import transferAction from "./solana/actions/transfer";
+import walletAddressAction from "./solana/actions/walletAddress";
 
 // mayan
 import mayanSwapAction from "./mayan/actions/swap";
@@ -55,6 +56,7 @@ import {
   get_token_balance,
   request_faucet_funds,
   transfer,
+  getWalletAddress,
 } from "./solana/tools";
 import { swap } from "./mayan/tools";
 import { launchPumpFunToken } from "./pumpfun/tools";
@@ -83,6 +85,7 @@ const TokenPlugin = {
     closeEmptyTokenAccounts,
     getTPS,
     get_balance,
+    getWalletAddress,
     get_balance_other,
     get_token_balance,
     request_faucet_funds,
@@ -121,6 +124,7 @@ const TokenPlugin = {
     spreadTokenUsingSolutiofiAction,
     closeAccountsUsingSolutiofiAction,
     mergeTokensUsingSolutiofiAction,
+    walletAddressAction,
   ],
 
   // Initialize function
