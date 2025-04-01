@@ -25,6 +25,7 @@ This plugin provides a set of tools and actions to interact with, create and tra
 - `get_token_balance` - Get detailed token balances including metadata
 - `request_faucet_funds` - Request tokens from a faucet (devnet/testnet)
 - `transfer` - Transfer SOL or tokens to another address
+- `getWalletAddress` - Get the wallet address of the current user
 
 ### Mayan
 - `swap` - Cross-chain token swaps using Mayan DEX
