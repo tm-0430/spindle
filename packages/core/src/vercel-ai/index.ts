@@ -1,7 +1,7 @@
 import { tool, type CoreTool } from "ai";
-import { SolanaAgentKit } from "../agent";
+import type { SolanaAgentKit } from "../agent";
 import { executeAction } from "../utils/actionExecutor";
-import { Action } from "../types/action";
+import type { Action } from "../types/action";
 
 export function createSolanaTools(
   solanaAgentKit: SolanaAgentKit,
@@ -18,6 +18,14 @@ export function createSolanaTools(
       Similes: ${action.similes.map(
         (simile) => `
         ${simile}
+      `,
+      )}
+
+      Examples: ${action.examples.map(
+        (example) => `
+        Input: ${JSON.stringify(example[0].input)}
+        Output: ${JSON.stringify(example[0].output)}
+        Explanation: ${example[0].explanation}
       `,
       )}
       `.slice(0, 1023),
