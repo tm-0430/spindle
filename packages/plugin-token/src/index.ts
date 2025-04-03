@@ -1,4 +1,4 @@
-import { Plugin, SolanaAgentKit } from "solana-agent-kit";
+import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import all actions
 // dexscreener
@@ -9,6 +9,10 @@ import tokenDataByTickerAction from "./dexscreener/actions/getTokenDataByTicker"
 import fetchPriceAction from "./jupiter/actions/fetchPrice";
 import stakeWithJupAction from "./jupiter/actions/stakeWithJup";
 import tradeAction from "./jupiter/actions/trade";
+import cancelLimitOrdersAction from "./jupiter/actions/cancelLimitOrders";
+import getOpenLimitOrdersAction from "./jupiter/actions/getOpenLimitOrders";
+import getLimitOrderHistoryAction from "./jupiter/actions/getLimitOrderHistory";
+import createLimitOrderAction from "./jupiter/actions/createLimitOrder";
 
 // lightprotocol
 import compressedAirdropAction from "./lightprotocol/actions/compressedAirdrop";
@@ -45,7 +49,15 @@ import {
   getTokenAddressFromTicker,
   getTokenDataByTicker,
 } from "./dexscreener/tools";
-import { fetchPrice, stakeWithJup, trade } from "./jupiter/tools";
+import {
+  fetchPrice,
+  stakeWithJup,
+  trade,
+  createLimitOrder as createJupiterLimitOrder,
+  cancelLimitOrders as cancelJupiterLimitOrders,
+  getOpenLimitOrders as getOpenJupiterLimitOrders,
+  getLimitOrderHistory as getJupiterLimitOrderHistory,
+} from "./jupiter/tools";
 import { sendCompressedAirdrop } from "./lightprotocol/tools";
 import {
   closeEmptyTokenAccounts,
@@ -79,6 +91,10 @@ const TokenPlugin = {
     fetchPrice,
     stakeWithJup,
     trade,
+    getJupiterLimitOrderHistory,
+    createJupiterLimitOrder,
+    cancelJupiterLimitOrders,
+    getOpenJupiterLimitOrders,
     sendCompressedAirdrop,
     closeEmptyTokenAccounts,
     getTPS,
@@ -106,6 +122,10 @@ const TokenPlugin = {
     fetchPriceAction,
     stakeWithJupAction,
     tradeAction,
+    createLimitOrderAction,
+    cancelLimitOrdersAction,
+    getOpenLimitOrdersAction,
+    getLimitOrderHistoryAction,
     compressedAirdropAction,
     balanceAction,
     tokenBalancesAction,

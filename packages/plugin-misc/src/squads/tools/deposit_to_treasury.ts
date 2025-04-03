@@ -1,9 +1,5 @@
-import {
-  signOrSendTX,
-  SolanaAgentKit,
-  TransactionOrVersionedTransaction,
-} from "solana-agent-kit";
-import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
+import { type PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import {
   getAssociatedTokenAddress,
@@ -28,7 +24,7 @@ export async function multisig_deposit_to_treasury(
   mint?: PublicKey,
 ) {
   try {
-    let tx: string | TransactionOrVersionedTransaction;
+    let tx: Awaited<ReturnType<typeof signOrSendTX>>;
     if (!vaultIndex) {
       vaultIndex = 0;
     }

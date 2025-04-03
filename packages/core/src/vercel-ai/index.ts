@@ -1,7 +1,7 @@
 import { tool, type CoreTool } from "ai";
-import { SolanaAgentKit } from "../agent";
+import type { SolanaAgentKit } from "../agent";
 import { executeAction } from "../utils/actionExecutor";
-import { Action } from "../types/action";
+import type { Action } from "../types/action";
 
 export function createSolanaTools(
   solanaAgentKit: SolanaAgentKit,

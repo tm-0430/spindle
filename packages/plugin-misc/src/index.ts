@@ -1,4 +1,4 @@
-import { Plugin, SolanaAgentKit } from "solana-agent-kit";
+import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import all actions
 // alldomains
@@ -63,6 +63,10 @@ import {
   elfaTrendingTokensAction,
 } from "./elfaai/actions";
 
+// solanafm
+import parseAccountAction from "./solanafm/actions/parseAccount";
+import parseInstructionAction from "./solanafm/actions/parseInstruction";
+
 // Import all tools
 import {
   getAllDomainsTLDs,
@@ -119,6 +123,10 @@ import {
   pingElfaAiApi,
   searchMentionsByKeywords,
 } from "./elfaai/tools/elfa_ai_api";
+import {
+  parse_account as parseAccountUsingSolanaFM,
+  parse_instruction as parseInstructionUsingSolanaFM,
+} from "./solanafm/tools";
 
 // Define and export the plugin
 const MiscPlugin = {
@@ -167,6 +175,8 @@ const MiscPlugin = {
     getTrendingTokensUsingElfaAi,
     pingElfaAiApi,
     searchMentionsByKeywordsUsingElfaAi: searchMentionsByKeywords,
+    parseAccountUsingSolanaFM,
+    parseInstructionUsingSolanaFM,
   },
 
   // Combine all actions
@@ -211,6 +221,8 @@ const MiscPlugin = {
     elfaSearchMentionsByKeywordsAction,
     elfaSmartTwitterAccountStats,
     elfaTrendingTokensAction,
+    parseAccountAction,
+    parseInstructionAction,
   ],
 
   // Initialize function

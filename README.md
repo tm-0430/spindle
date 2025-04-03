@@ -2,7 +2,7 @@
 
 # Solana Agent Kit
 
-![Solana Agent Kit Cover 1 (3)](https://github.com/user-attachments/assets/cfa380f6-79d9-474d-9852-3e1976c6de70)
+![SAKCover2](https://github.com/user-attachments/assets/a6072421-8958-4cee-934a-a10ea32ae75e)
 
 ![NPM Downloads](https://img.shields.io/npm/dm/solana-agent-kit?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/sendaifun/solana-agent-kit?style=for-the-badge)
@@ -18,6 +18,7 @@ An open-source toolkit for connecting AI agents to Solana protocols. Now, any ag
 - Send compressed airdrops
 - Execute blinks
 - Launch tokens on AMMs
+- Bridge tokens across chains
 - And more...
 
 Anyone - whether an SF-based AI researcher or a crypto-native builder - can bring their AI agents trained with any model and seamlessly integrate with Solana.
@@ -33,6 +34,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Balance checks
   - Stake SOL
   - Zk compressed Airdrop by Light Protocol and Helius
+  - Bridge tokens across chains using Wormhole
 - **NFTs on 3.Land**
   - Create your own collection
   - NFT creation and automatic listing on 3.land
@@ -58,6 +60,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Perpetuals Trading with Adrena Protocol
   - Drift Vaults, Perps, Lending and Borrowing
   - Cross-chain bridging via deBridge DLN
+  - Cross chain bridging via Wormhole
 
 - **Solana Blinks**
    - Lending by Lulo (Best APR for USDC)
@@ -181,6 +184,74 @@ const result = await agent.methods.deployToken(
 
 console.log("Token Mint Address:", result.mint.toString());
 ```
+
+### Deploy a New Token2022
+
+```typescript
+const result = await agent.methods.delpoyToken2022(
+  "my ai token 2022", // name
+  "uri", // uri
+  "token2022", // symbol
+  9, // decimals
+  {
+    mintAuthority: null, // by default, deployer account
+    freezeAuthority: null, // by default, deployer account
+    updateAuthority: undefined, // by default, deployer account
+    isMutable: false // by default, true
+  },
+  1000000 // initial supply
+);
+
+console.log("Token2022 Mint Address:", result.mint.toString());
+```
+
+
+
+### Get all supported chains using Wormhole
+```typescript
+const chains = await agent.methods.getWormholeSupportedChains();
+console.log("Supported Chains:", chains);
+```
+
+### Create a Wrapped Token using Wormhole
+
+```typescript
+
+const result = await agent.methods.createWrappedToken({
+  destinationChain: "BaseSepolia", // Target chain
+  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+console.log("Wrapped Token Result:", result);
+```
+
+
+Note:
+ When using Wormhole for cross-chain operations:
+- Always verify the destination chain is supported before attempting transfers
+- Use the correct network parameter ("Testnet" or "Mainnet") based on your environment
+- Make sure the destination address wallet private key is presernt in the .env file as automatic transfer is not supported yet on Solana
+
+### Perform a CCTP transfer using Wormhole
+```typescript
+const transfer = await agent.methods.cctpTransfer({
+  destinationChain: "Base Sepolia", // Target chain
+  transferAmount: "1", // Amount to transfer
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+console.log("Transfer result:", transfer);
+```
+
+### Perform Token Transfer using Wormhole
+```typescript
+const transfer = await agent.methods.tokenTransfer({
+  destinationChain: "Base Sepolia", // Target chain
+  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address or leave it empty to treansfer Native SOL
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+```
+
+
 ### Create NFT Collection on 3Land
 ```typescript
 const isDevnet = false; // (Optional) if not present TX takes place in Mainnet
@@ -720,6 +791,80 @@ const trendingPools = await agent.getTrendingPools("24h");
 console.log("Trending pools:", trendingPools);
 ```
 
+## DEX API Tools
+
+### OKX DEX Integration
+
+The toolkit provides comprehensive integration with OKX DEX for Solana. Here's how to use the DEX API tools:
+
+### Get Supported Tokens
+
+```typescript
+const tokens = await agent.methods.getTokens();
+console.log("Supported tokens:", tokens);
+// Returns list of tokens available on OKX DEX
+```
+
+### Get DEX Quote
+
+```typescript
+const quote = await agent.methods.getQuote(
+  "So11111111111111111111111111111111111111112", // fromTokenAddress (SOL)
+  "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // toTokenAddress (USDC)
+  "1000000000", // amount in base units
+  "0.5" // slippage (optional, default 0.5%)
+);
+console.log("Swap quote:", quote);
+// Returns quote data with price, fees, and slippage, token symbol, decimals
+```
+
+### Execute Token Swap
+
+```typescript
+const swapResult = await agent.methods.executeSwap({
+  fromTokenAddress: "So11111111111111111111111111111111111111112", // SOL
+  toTokenAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC
+  amount: "1000000000", // amount in base units
+  autoSlippage: true, // optional, use auto slippage
+  slippage: "0.1", // optional, custom slippage (0.1%)
+  maxAutoSlippageBps: "100" // optional, max auto slippage in basis points
+  userAddress: "signer-public-key" // optional, user wallet address
+});
+console.log("Swap executed:", swapResult);
+```
+
+### Parse Instruction Data
+
+```typescript
+const parsedData = await agent.methods.parseInstruction(
+  "<programId>",
+  "<instructionData>" // base64
+)
+
+console.log("parsed data:", parsedData)
+```
+
+### Parse Instruction Data
+
+```typescript
+const parsedData = await agent.methods.parseAccount(
+  "<programId>",
+  "<accountData>" // base64
+)
+
+console.log("parsed data:", parsedData)
+```
+
+### Get Chain Data
+
+Note: To use OKX DEX integration, you need to set up the following environment variables: Get OKX API keys from the [OKX Developer Portal] (https://www.okx.com/web3/build/dev-portal)
+- `OKX_API_KEY`
+- `OKX_SECRET_KEY`
+- `OKX_API_PASSPHRASE`
+- `OKX_PROJECT_ID`
+- `RPC_URL`
+- `SOLANA_PRIVATE_KEY`
+- `SOLANA_WALLET_ADDRESS`
 ## Examples
 
 ### LangGraph Multi-Agent System

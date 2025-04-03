@@ -11,7 +11,7 @@ export async function create_HeliusWebhook(
 ): Promise<HeliusWebhookResponse> {
   try {
     const response = await fetch(
-      `https://api.helius.xyz/v0/webhooks?api-key=${agent.config.HELIUS_API_KEY}`,
+      `https://api.helius.xyz/v0/webhooks?api-key=${agent.config?.HELIUS_API_KEY}`,
       {
         method: "POST",
         headers: {
@@ -50,7 +50,7 @@ export async function getHeliusWebhook(
   webhookID: string,
 ): Promise<HeliusWebhookIdResponse> {
   try {
-    const apiKey = agent.config.HELIUS_API_KEY;
+    const apiKey = agent.config?.HELIUS_API_KEY;
     if (!apiKey) {
       throw new Error("HELIUS_API_KEY is missing in agent.config");
     }
@@ -99,9 +99,9 @@ export async function deleteHeliusWebhook(
   webhookID: string,
 ): Promise<any> {
   try {
-    const apiKey = agent.config.HELIUS_API_KEY;
+    const apiKey = agent.config?.HELIUS_API_KEY;
     if (!apiKey) {
-      throw new Error("Missing Helius API key in agent.config.HELIUS_API_KEY");
+      throw new Error("Missing Helius API key in agent.config?.HELIUS_API_KEY");
     }
 
     const url = `https://api.helius.xyz/v0/webhooks/${webhookID}?api-key=${apiKey}`;

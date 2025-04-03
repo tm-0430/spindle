@@ -1,5 +1,5 @@
-import { Action } from "../types/action";
-import { SolanaAgentKit } from "../agent";
+import type { Action } from "../types";
+import type { SolanaAgentKit } from "../agent";
 
 /**
  * Execute an action with the given input

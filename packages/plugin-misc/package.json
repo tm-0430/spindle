@@ -39,6 +39,8 @@
     "@onsol/tldparser": "^0.6.7",
     "@solana/codecs": "^2.1.0",
     "@solana/spl-token": "^0.4.9",
+    "@solanafm/explorer-kit": "^1.2.0",
+    "@solanafm/explorer-kit-idls": "^1.1.4",
     "@sqds/multisig": "^2.1.3",
     "@switchboard-xyz/common": "^2.5.17",
     "@tiplink/api": "^0.3.1",
