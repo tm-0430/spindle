@@ -9,7 +9,7 @@ export function createSolanaTools(
 ): Record<string, CoreTool> {
   const tools: Record<string, CoreTool> = {};
 
-  for (const [index, action] of actions.entries()) {
+  for (const [index, action] of actions.slice(0, 127).entries()) {
     tools[index.toString()] = tool({
       id: action.name as `${string}.${string}`,
       description: `
