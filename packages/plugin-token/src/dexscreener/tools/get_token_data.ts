@@ -1,5 +1,5 @@
 import { PublicKey } from "@solana/web3.js";
-import { JupiterTokenData } from "../../jupiter/types";
+import type { JupiterTokenData } from "../../jupiter/types";
 
 export async function getTokenDataByAddress(
   mint: PublicKey,

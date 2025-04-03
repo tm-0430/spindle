@@ -1,9 +1,9 @@
 import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
+import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import all actions
 // dexscreener
 import getTokenDataAction from "./dexscreener/actions/getTokenData";
-import tokenDataByTickerAction from "./dexscreener/actions/getTokenDataByTicker";
 
 // jupiter
 import fetchPriceAction from "./jupiter/actions/fetchPrice";
@@ -13,6 +13,7 @@ import cancelLimitOrdersAction from "./jupiter/actions/cancelLimitOrders";
 import getOpenLimitOrdersAction from "./jupiter/actions/getOpenLimitOrders";
 import getLimitOrderHistoryAction from "./jupiter/actions/getLimitOrderHistory";
 import createLimitOrderAction from "./jupiter/actions/createLimitOrder";
+import tokenDataByTickerAction from "./jupiter/actions/getTokenDataByTicker";
 
 // lightprotocol
 import compressedAirdropAction from "./lightprotocol/actions/compressedAirdrop";
@@ -24,6 +25,7 @@ import getTPSAction from "./solana/actions/getTPS";
 import closeEmptyTokenAccountsAction from "./solana/actions/closeEmptyTokenAccounts";
 import requestFundsAction from "./solana/actions/requestFunds";
 import transferAction from "./solana/actions/transfer";
+import walletAddressAction from "./solana/actions/walletAddress";
 
 // mayan
 import mayanSwapAction from "./mayan/actions/swap";
@@ -47,7 +49,6 @@ import mergeTokensUsingSolutiofiAction from "./solutiofi/actions/mergeTokens";
 import {
   getTokenDataByAddress,
   getTokenAddressFromTicker,
-  getTokenDataByTicker,
 } from "./dexscreener/tools";
 import {
   fetchPrice,
@@ -67,6 +68,7 @@ import {
   get_token_balance,
   request_faucet_funds,
   transfer,
+  getWalletAddress,
 } from "./solana/tools";
 import { swap } from "./mayan/tools";
 import { launchPumpFunToken } from "./pumpfun/tools";
@@ -87,7 +89,7 @@ const TokenPlugin = {
   methods: {
     getTokenDataByAddress,
     getTokenAddressFromTicker,
-    getTokenDataByTicker,
+    getTokenByTicker,
     fetchPrice,
     stakeWithJup,
     trade,
@@ -99,6 +101,7 @@ const TokenPlugin = {
     closeEmptyTokenAccounts,
     getTPS,
     get_balance,
+    getWalletAddress,
     get_balance_other,
     get_token_balance,
     request_faucet_funds,
@@ -141,16 +144,17 @@ const TokenPlugin = {
     spreadTokenUsingSolutiofiAction,
     closeAccountsUsingSolutiofiAction,
     mergeTokensUsingSolutiofiAction,
+    walletAddressAction,
   ],
 
   // Initialize function
   initialize: function (agent: SolanaAgentKit): void {
     // Initialize all methods with the agent instance
-    Object.entries(this.methods).forEach(([methodName, method]) => {
+    for (const [methodName, method] of Object.entries(this.methods)) {
       if (typeof method === "function") {
         this.methods[methodName] = method.bind(null, agent);
       }
-    });
+    }
 
     // Any necessary initialization logic
     if (!agent.config.OPENAI_API_KEY) {

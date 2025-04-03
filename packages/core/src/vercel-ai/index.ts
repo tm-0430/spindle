@@ -26,6 +26,14 @@ export function createSolanaTools(
         ${simile}
       `,
       )}
+
+      Examples: ${action.examples.map(
+        (example) => `
+        Input: ${JSON.stringify(example[0].input)}
+        Output: ${JSON.stringify(example[0].output)}
+        Explanation: ${example[0].explanation}
+      `,
+      )}
       `.slice(0, 1023),
       parameters: action.schema,
       execute: async (params: Record<string, unknown>) =>
