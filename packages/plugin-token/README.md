@@ -7,12 +7,12 @@ This plugin provides a set of tools and actions to interact with, create and tra
 ### Dexscreener
 - `getTokenDataByAddress` - Get token data using a token's mint address
 - `getTokenAddressFromTicker` - Get a token's mint address using its ticker symbol
-- `getTokenDataByTicker` - Get token data using a token's ticker symbol
 
 ### Jupiter
 - `fetchPrice` - Get the current price of a token in USDC
 - `stakeWithJup` - Stake SOL to receive jupSOL
 - `trade` - Swap tokens using Jupiter's aggregator
+- `getTokenByTicker` - Get token data using a token's ticker symbol
 
 ### Light Protocol
 - `sendCompressedAirdrop` - Send compressed token airdrops to multiple addresses efficiently

@@ -1,14 +1,14 @@
-import { Plugin, SolanaAgentKit } from "solana-agent-kit";
+import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import all actions
 // dexscreener
 import getTokenDataAction from "./dexscreener/actions/getTokenData";
-import tokenDataByTickerAction from "./dexscreener/actions/getTokenDataByTicker";
 
 // jupiter
 import fetchPriceAction from "./jupiter/actions/fetchPrice";
 import stakeWithJupAction from "./jupiter/actions/stakeWithJup";
 import tradeAction from "./jupiter/actions/trade";
+import tokenDataByTickerAction from "./jupiter/actions/getTokenDataByTicker";
 
 // lightprotocol
 import compressedAirdropAction from "./lightprotocol/actions/compressedAirdrop";
@@ -43,9 +43,13 @@ import mergeTokensUsingSolutiofiAction from "./solutiofi/actions/mergeTokens";
 import {
   getTokenDataByAddress,
   getTokenAddressFromTicker,
-  getTokenDataByTicker,
 } from "./dexscreener/tools";
-import { fetchPrice, stakeWithJup, trade } from "./jupiter/tools";
+import {
+  fetchPrice,
+  stakeWithJup,
+  trade,
+  getTokenByTicker,
+} from "./jupiter/tools";
 import { sendCompressedAirdrop } from "./lightprotocol/tools";
 import {
   closeEmptyTokenAccounts,
@@ -75,7 +79,7 @@ const TokenPlugin = {
   methods: {
     getTokenDataByAddress,
     getTokenAddressFromTicker,
-    getTokenDataByTicker,
+    getTokenByTicker,
     fetchPrice,
     stakeWithJup,
     trade,
@@ -126,11 +130,11 @@ const TokenPlugin = {
   // Initialize function
   initialize: function (agent: SolanaAgentKit): void {
     // Initialize all methods with the agent instance
-    Object.entries(this.methods).forEach(([methodName, method]) => {
+    for (const [methodName, method] of Object.entries(this.methods)) {
       if (typeof method === "function") {
         this.methods[methodName] = method.bind(null, agent);
       }
-    });
+    }
 
     // Any necessary initialization logic
     if (!agent.config.OPENAI_API_KEY) {

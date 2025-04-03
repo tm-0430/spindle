@@ -1,4 +1,4 @@
-import { PublicKey } from "@solana/web3.js";
+import type { PublicKey } from "@solana/web3.js";
 
 /**
  * Fetch the price of a given token quoted in USDC using Jupiter API
@@ -7,7 +7,9 @@ import { PublicKey } from "@solana/web3.js";
  */
 export async function fetchPrice(tokenId: PublicKey): Promise<string> {
   try {
-    const response = await fetch(`https://api.jup.ag/price/v2?ids=${tokenId}`);
+    const response = await fetch(
+      `https://api.jup.ag/price/v2?ids=${tokenId.toBase58()}`,
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to fetch price: ${response.statusText}`);
