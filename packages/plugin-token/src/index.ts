@@ -1,5 +1,4 @@
 import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
-import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import all actions
 // dexscreener
@@ -89,7 +88,6 @@ const TokenPlugin = {
   methods: {
     getTokenDataByAddress,
     getTokenAddressFromTicker,
-    getTokenByTicker,
     fetchPrice,
     stakeWithJup,
     trade,
