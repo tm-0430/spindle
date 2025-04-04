@@ -9,7 +9,13 @@ export function createSolanaTools(
 ): Record<string, CoreTool> {
   const tools: Record<string, CoreTool> = {};
 
-  for (const [index, action] of actions.entries()) {
+  if (actions.length > 128) {
+    console.warn(
+      `Too many actions provided. Only a maximum of 128 actions allowed. You provided ${actions.length}, the last ${actions.length - 128} will be ignored.`,
+    );
+  }
+
+  for (const [index, action] of actions.slice(0, 127).entries()) {
     tools[index.toString()] = tool({
       id: action.name as `${string}.${string}`,
       description: `

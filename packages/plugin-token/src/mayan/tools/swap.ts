@@ -1,26 +1,25 @@
 import {
   addresses,
-  ChainName,
-  Erc20Permit,
+  type ChainName,
+  type Erc20Permit,
   fetchQuote,
   fetchTokenList,
-  Quote,
+  type Quote,
   swapFromEvm,
   swapFromSolana,
 } from "@mayanfinance/swap-sdk";
-import { SolanaAgentKit } from "solana-agent-kit";
+import type { SolanaAgentKit } from "solana-agent-kit";
 import {
   Contract,
   getDefaultProvider,
   parseUnits,
   Signature,
-  Signer,
-  TransactionResponse,
+  type Signer,
+  type TransactionResponse,
   TypedDataEncoder,
   Wallet,
 } from "ethers";
 import { abi as ERC20Permit_ABI } from "@openzeppelin/contracts/build/contracts/ERC20Permit.json";
-import { VersionedTransaction, Transaction } from "@solana/web3.js";
 import MayanForwarderArtifact from "./MayanForwarderArtifact";
 
 async function findTokenContract(
@@ -151,8 +150,8 @@ async function swapEVM(
   dstAddr: string,
 ): Promise<string> {
   if (!evmWallet) {
-    if (agent.config.ETHEREUM_PRIVATE_KEY) {
-      evmWallet = new Wallet(agent.config.ETHEREUM_PRIVATE_KEY);
+    if (agent.config?.ETHEREUM_PRIVATE_KEY) {
+      evmWallet = new Wallet(agent.config?.ETHEREUM_PRIVATE_KEY);
     } else {
       throw new Error("You haven't provided EVM wallet private key.");
     }

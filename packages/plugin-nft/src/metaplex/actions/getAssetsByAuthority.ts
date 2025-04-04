@@ -1,4 +1,4 @@
-import { Action } from "solana-agent-kit";
+import type { Action } from "solana-agent-kit";
 import { z } from "zod";
 import { get_assets_by_authority } from "../tools";
 
@@ -10,7 +10,8 @@ const getAssetsByAuthorityAction: Action = {
     "get assets by authority address",
     "fetch authority assets",
   ],
-  description: `Fetch a list of assets owned by a specific address using the Metaplex DAS API.`,
+  description:
+    "Fetch a list of assets owned by a specific address using the Metaplex DAS API.",
   examples: [
     [
       {

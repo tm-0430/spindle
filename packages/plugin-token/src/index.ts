@@ -8,6 +8,10 @@ import getTokenDataAction from "./dexscreener/actions/getTokenData";
 import fetchPriceAction from "./jupiter/actions/fetchPrice";
 import stakeWithJupAction from "./jupiter/actions/stakeWithJup";
 import tradeAction from "./jupiter/actions/trade";
+import cancelLimitOrdersAction from "./jupiter/actions/cancelLimitOrders";
+import getOpenLimitOrdersAction from "./jupiter/actions/getOpenLimitOrders";
+import getLimitOrderHistoryAction from "./jupiter/actions/getLimitOrderHistory";
+import createLimitOrderAction from "./jupiter/actions/createLimitOrder";
 import tokenDataByTickerAction from "./jupiter/actions/getTokenDataByTicker";
 
 // lightprotocol
@@ -49,7 +53,10 @@ import {
   fetchPrice,
   stakeWithJup,
   trade,
-  getTokenByTicker,
+  createLimitOrder as createJupiterLimitOrder,
+  cancelLimitOrders as cancelJupiterLimitOrders,
+  getOpenLimitOrders as getOpenJupiterLimitOrders,
+  getLimitOrderHistory as getJupiterLimitOrderHistory,
 } from "./jupiter/tools";
 import { sendCompressedAirdrop } from "./lightprotocol/tools";
 import {
@@ -81,10 +88,13 @@ const TokenPlugin = {
   methods: {
     getTokenDataByAddress,
     getTokenAddressFromTicker,
-    getTokenByTicker,
     fetchPrice,
     stakeWithJup,
     trade,
+    getJupiterLimitOrderHistory,
+    createJupiterLimitOrder,
+    cancelJupiterLimitOrders,
+    getOpenJupiterLimitOrders,
     sendCompressedAirdrop,
     closeEmptyTokenAccounts,
     getTPS,
@@ -113,6 +123,10 @@ const TokenPlugin = {
     fetchPriceAction,
     stakeWithJupAction,
     tradeAction,
+    createLimitOrderAction,
+    cancelLimitOrdersAction,
+    getOpenLimitOrdersAction,
+    getLimitOrderHistoryAction,
     compressedAirdropAction,
     balanceAction,
     tokenBalancesAction,

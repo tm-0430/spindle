@@ -1,19 +1,19 @@
 import {
   Transaction,
-  PublicKey,
+  type PublicKey,
   VersionedTransaction,
   TransactionMessage,
-  Signer,
-  Keypair,
-  TransactionInstruction,
-  SendOptions,
-  TransactionSignature,
+  type Signer,
+  type Keypair,
+  type TransactionInstruction,
+  type SendOptions,
+  type TransactionSignature,
 } from "@solana/web3.js";
-import { TransactionOrVersionedTransaction } from ".";
-import { SolanaAgentKit } from "../agent";
+import type { TransactionOrVersionedTransaction } from ".";
+import type { SolanaAgentKit } from "../agent";
 import {
   sendTx,
-  feeTiers,
+  type feeTiers,
   getComputeBudgetInstructions,
 } from "../utils/send_tx";
 
@@ -104,10 +104,40 @@ export async function signOrSendTX(
   instructionsOrTransaction:
     | TransactionInstruction[]
     | Transaction
-    | VersionedTransaction,
+    | VersionedTransaction
+    | Transaction[]
+    | VersionedTransaction[],
   otherKeypairs?: Keypair[],
   feeTier?: keyof typeof feeTiers,
-): Promise<string | TransactionOrVersionedTransaction> {
+): Promise<
+  | string
+  | TransactionOrVersionedTransaction
+  | TransactionOrVersionedTransaction[]
+> {
+  if (
+    Array.isArray(instructionsOrTransaction) &&
+    (instructionsOrTransaction[0] instanceof Transaction ||
+      instructionsOrTransaction[0] instanceof VersionedTransaction)
+  ) {
+    if (agent.config.signOnly) {
+      return await agent.wallet.signAllTransactions(
+        instructionsOrTransaction as Transaction[],
+      );
+    }
+
+    for (const tx of instructionsOrTransaction) {
+      if (agent.wallet.signAndSendTransaction) {
+        const { signature } = await agent.wallet.signAndSendTransaction(
+          tx as Transaction,
+        );
+        return signature;
+      }
+      throw new Error(
+        "Wallet does not support signAndSendTransaction please implement it manually or use the signOnly option",
+      );
+    }
+  }
+
   if (
     instructionsOrTransaction instanceof Transaction ||
     instructionsOrTransaction instanceof VersionedTransaction
@@ -129,7 +159,7 @@ export async function signOrSendTX(
 
   const ixComputeBudget = await getComputeBudgetInstructions(
     agent,
-    instructionsOrTransaction,
+    instructionsOrTransaction as TransactionInstruction[],
     feeTier ?? "mid",
   );
   const allInstructions = [
@@ -141,7 +171,7 @@ export async function signOrSendTX(
   const messageV0 = new TransactionMessage({
     payerKey: agent.wallet.publicKey,
     recentBlockhash: blockhash,
-    instructions: allInstructions,
+    instructions: allInstructions as TransactionInstruction[],
   }).compileToV0Message();
 
   const transaction = new VersionedTransaction(messageV0);
@@ -152,5 +182,10 @@ export async function signOrSendTX(
     return signedTransaction;
   }
 
-  return sendTx(agent, instructionsOrTransaction, otherKeypairs, feeTier);
+  return sendTx(
+    agent,
+    instructionsOrTransaction as TransactionInstruction[],
+    otherKeypairs,
+    feeTier,
+  );
 }

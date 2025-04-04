@@ -1,9 +1,9 @@
 import {
-  PublicKey,
+  type PublicKey,
   Transaction,
-  TransactionInstruction,
+  type TransactionInstruction,
 } from "@solana/web3.js";
-import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 import {
   AccountLayout,
   createCloseAccountInstruction,
@@ -27,13 +27,13 @@ export async function closeEmptyTokenAccounts(agent: SolanaAgentKit) {
 
     const MAX_INSTRUCTIONS = 40; // 40 instructions can be processed in a single transaction without failing
 
-    spl_token
-      .slice(0, Math.min(MAX_INSTRUCTIONS, spl_token.length))
-      .forEach((instruction) => transaction.add(instruction));
+    for (let i = 0; i < Math.min(MAX_INSTRUCTIONS, spl_token.length); i++) {
+      transaction.add(spl_token[i]);
+    }
 
-    token_2022
-      .slice(0, Math.max(0, MAX_INSTRUCTIONS - spl_token.length))
-      .forEach((instruction) => transaction.add(instruction));
+    for (let i = 0; i < Math.max(0, MAX_INSTRUCTIONS - spl_token.length); i++) {
+      transaction.add(token_2022[i]);
+    }
 
     const size = spl_token.length + token_2022.length;
 

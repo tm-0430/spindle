@@ -2,7 +2,7 @@
 
 # Solana Agent Kit
 
-![Solana Agent Kit Cover 1 (3)](https://github.com/user-attachments/assets/cfa380f6-79d9-474d-9852-3e1976c6de70)
+![SAKCover2](https://github.com/user-attachments/assets/a6072421-8958-4cee-934a-a10ea32ae75e)
 
 ![NPM Downloads](https://img.shields.io/npm/dm/solana-agent-kit?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/sendaifun/solana-agent-kit?style=for-the-badge)
@@ -18,6 +18,7 @@ An open-source toolkit for connecting AI agents to Solana protocols. Now, any ag
 - Send compressed airdrops
 - Execute blinks
 - Launch tokens on AMMs
+- Bridge tokens across chains
 - And more...
 
 Anyone - whether an SF-based AI researcher or a crypto-native builder - can bring their AI agents trained with any model and seamlessly integrate with Solana.
@@ -33,6 +34,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Balance checks
   - Stake SOL
   - Zk compressed Airdrop by Light Protocol and Helius
+  - Bridge tokens across chains using Wormhole
 - **NFTs on 3.Land**
   - Create your own collection
   - NFT creation and automatic listing on 3.land
@@ -58,6 +60,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Perpetuals Trading with Adrena Protocol
   - Drift Vaults, Perps, Lending and Borrowing
   - Cross-chain bridging via deBridge DLN
+  - Cross chain bridging via Wormhole
 
 - **Solana Blinks**
    - Lending by Lulo (Best APR for USDC)
@@ -181,6 +184,74 @@ const result = await agent.methods.deployToken(
 
 console.log("Token Mint Address:", result.mint.toString());
 ```
+
+### Deploy a New Token2022
+
+```typescript
+const result = await agent.methods.delpoyToken2022(
+  "my ai token 2022", // name
+  "uri", // uri
+  "token2022", // symbol
+  9, // decimals
+  {
+    mintAuthority: null, // by default, deployer account
+    freezeAuthority: null, // by default, deployer account
+    updateAuthority: undefined, // by default, deployer account
+    isMutable: false // by default, true
+  },
+  1000000 // initial supply
+);
+
+console.log("Token2022 Mint Address:", result.mint.toString());
+```
+
+
+
+### Get all supported chains using Wormhole
+```typescript
+const chains = await agent.methods.getWormholeSupportedChains();
+console.log("Supported Chains:", chains);
+```
+
+### Create a Wrapped Token using Wormhole
+
+```typescript
+
+const result = await agent.methods.createWrappedToken({
+  destinationChain: "BaseSepolia", // Target chain
+  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+console.log("Wrapped Token Result:", result);
+```
+
+
+Note:
+ When using Wormhole for cross-chain operations:
+- Always verify the destination chain is supported before attempting transfers
+- Use the correct network parameter ("Testnet" or "Mainnet") based on your environment
+- Make sure the destination address wallet private key is presernt in the .env file as automatic transfer is not supported yet on Solana
+
+### Perform a CCTP transfer using Wormhole
+```typescript
+const transfer = await agent.methods.cctpTransfer({
+  destinationChain: "Base Sepolia", // Target chain
+  transferAmount: "1", // Amount to transfer
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+console.log("Transfer result:", transfer);
+```
+
+### Perform Token Transfer using Wormhole
+```typescript
+const transfer = await agent.methods.tokenTransfer({
+  destinationChain: "Base Sepolia", // Target chain
+  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address or leave it empty to treansfer Native SOL
+  network: "Testnet", // Network type (Testnet or Mainnet)
+});
+```
+
+
 ### Create NFT Collection on 3Land
 ```typescript
 const isDevnet = false; // (Optional) if not present TX takes place in Mainnet
@@ -718,6 +789,28 @@ console.log("Top gainers:", topGainers);
 ```typescript
 const trendingPools = await agent.getTrendingPools("24h");
 console.log("Trending pools:", trendingPools);
+```
+
+### Parse Instruction Data
+
+```typescript
+const parsedData = await agent.methods.parseInstruction(
+  "<programId>",
+  "<instructionData>" // base64
+)
+
+console.log("parsed data:", parsedData)
+```
+
+### Parse Instruction Data
+
+```typescript
+const parsedData = await agent.methods.parseAccount(
+  "<programId>",
+  "<accountData>" // base64
+)
+
+console.log("parsed data:", parsedData)
 ```
 
 ## Examples

@@ -1,4 +1,4 @@
-import { Plugin, SolanaAgentKit } from "solana-agent-kit";
+import type { Plugin, SolanaAgentKit } from "solana-agent-kit";
 
 // Import Metaplex actions
 import deployCollectionAction from "./metaplex/actions/deployCollection";
@@ -8,6 +8,7 @@ import getAssetsByAuthorityAction from "./metaplex/actions/getAssetsByAuthority"
 import getAssetsByCreatorAction from "./metaplex/actions/getAssetsByCreator";
 import mintNFTAction from "./metaplex/actions/mintNFT";
 import searchAssetsAction from "./metaplex/actions/searchAssets";
+import deployToken2022Action from "./metaplex/actions/deployToken2022";
 
 // Import Tensor actions
 import {
@@ -26,6 +27,7 @@ import {
   get_assets_by_authority,
   get_assets_by_creator,
   mintCollectionNFT,
+  deploy_token2022,
 } from "./metaplex/tools";
 
 // Import Tensor tools
@@ -52,6 +54,7 @@ const NFTPlugin = {
     getAssetsByCreator: get_assets_by_creator,
     mintCollectionNFT: mintCollectionNFT,
     searchAssets: search_assets,
+    deployToken2022: deploy_token2022,
 
     // Tensor methods
     listNFTForSale,
@@ -72,6 +75,7 @@ const NFTPlugin = {
     getAssetsByCreatorAction,
     mintNFTAction,
     searchAssetsAction,
+    deployToken2022Action,
 
     // // Tensor actions
     listNFTForSaleAction,
