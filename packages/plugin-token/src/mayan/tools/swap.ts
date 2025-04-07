@@ -164,7 +164,7 @@ async function swapEVM(
   );
   const tokenContract = new Contract(
     quote.fromToken.contract,
-    ERC20Permit_ABI,
+    ERC20Permit_ABI.abi,
     signer,
   );
 
