@@ -99,9 +99,6 @@ const argsEvaluator = async (params: {
   };
 };
 
-// import dotenv from "dotenv";
-// dotenv.config();
-
 // Compare actual response with the expectedResponse using a LLM
 async function responseEvaluator(
   expectedResponse: string,
@@ -122,7 +119,6 @@ Actual: ${actualResponse}`;
     { role: "system", content: systemPrompt },
     { role: "user", content: userPrompt },
   ]);
-  console.log({ userPrompt, result: result.content });
   const content = result.content as string;
 
   return content.toLowerCase().includes("true");
