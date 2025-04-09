@@ -122,6 +122,12 @@ importers:
       '@solana/web3.js':
         specifier: ^1.98.0
         version: 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solanafm/explorer-kit':
+        specifier: 1.2.0
+        version: 1.2.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@solanafm/explorer-kit-idls':
+        specifier: 1.1.4
+        version: 1.1.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@solutiofi/sdk':
         specifier: ^1.0.2
         version: 1.0.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
@@ -1328,6 +1334,9 @@ packages:
   '@metaplex-foundation/umi-serializers-numbers@0.8.9':
     resolution: {integrity: sha512-NtBf1fnVNQJHFQjLFzRu2i9GGnigb9hOm/Gfrk628d0q0tRJB7BOM3bs5C61VAs7kJs4yd+pDNVAERJkknQ7Lg==}
 
+  '@metaplex-foundation/umi-serializers@0.8.9':
+    resolution: {integrity: sha512-Sve8Etm3zqvLSUfza+MYRkjTnCpiaAFT7VWdqeHzA3n58P0AfT3p74RrZwVt/UFkxI+ln8BslwBDJmwzcPkuHw==}
+
   '@metaplex-foundation/umi-serializers@0.9.0':
     resolution: {integrity: sha512-hAOW9Djl4w4ioKeR4erDZl5IG4iJdP0xA19ZomdaCbMhYAAmG/FEs5khh0uT2mq53/MnzWcXSUPoO8WBN4Q+Vg==}
 
@@ -1354,6 +1363,9 @@ packages:
     peerDependencies:
       '@metaplex-foundation/umi': ^1.0.0
       '@solana/web3.js': ^1.72.0
+
+  '@metaplex-foundation/umi@0.8.10':
+    resolution: {integrity: sha512-iGuGIfJh2+YFvUIkZ0nB/69EsQcaoq89DDPRPYvPBtOunfv8TH8SNrwcsXHlp9aBtn5FGKCPx3V3X/eurB32Fg==}
 
   '@metaplex-foundation/umi@0.9.2':
     resolution: {integrity: sha512-9i4Acm4pruQfJcpRrc2EauPBwkfDN0I9QTvJyZocIlKgoZwD6A6wH0PViH1AjOVG5CQCd1YI3tJd5XjYE1ElBw==}
@@ -2035,6 +2047,18 @@ packages:
 
   '@solana/web3.js@1.98.0':
     resolution: {integrity: sha512-nz3Q5OeyGFpFCR+erX2f6JPt3sKhzhYcSycBCSPkWjzSVDh/Rr1FqTVMRe58FKO16/ivTUcuJjeS5MyBvpkbzA==}
+
+  '@solanafm/explorer-kit-idls@1.1.4':
+    resolution: {integrity: sha512-ZFxizM3eNBUp5XKl53P6KnZhIdnA/moKc+K1e7RDJiWiQU6iXAWu2EtqFJcSuQqIbFZooI+iDA1+YPCinv2hFw==}
+
+  '@solanafm/explorer-kit@1.2.0':
+    resolution: {integrity: sha512-X5vMCdnV4hdMNq2MHIxhRmsx8O/qZKHZPvJuxUabl/xd/FMaWMYd1vQiOhkf1qHjZnLuaTSqO7MUjfJ2+oqe6g==}
+
+  '@solanafm/kinobi-lite@0.12.4':
+    resolution: {integrity: sha512-EJjgdFKOw23H6ULPd32wFiFX3O8mPALg6X2d5wSLjxOnJRHnlmVfGLNnTW8bZbLXAsZM8Ja9V+x5B9UQscftjQ==}
+
+  '@solanafm/utils@1.1.0':
+    resolution: {integrity: sha512-FSaXUiF9cqoYDvFsTzjfmNQEdNIQyfZQCueamh1bB5o9o3qp64zDPim3nxRdJZrAw/xuH+VIu2SjX0cNKAwKAw==}
 
   '@solutiofi/sdk@1.0.2':
     resolution: {integrity: sha512-iatce/OVEtLz+HqytMsXpvhwWNU8C5AUpPLheLFBBuN0xtF9dxvKsddy3H7fex/03/zRL3tNwbzz97pfn325Uw==}
@@ -8375,6 +8399,14 @@ snapshots:
     dependencies:
       '@metaplex-foundation/umi-serializers-core': 0.8.9
 
+  '@metaplex-foundation/umi-serializers@0.8.9':
+    dependencies:
+      '@metaplex-foundation/umi-options': 0.8.9
+      '@metaplex-foundation/umi-public-keys': 0.8.9
+      '@metaplex-foundation/umi-serializers-core': 0.8.9
+      '@metaplex-foundation/umi-serializers-encodings': 0.8.9
+      '@metaplex-foundation/umi-serializers-numbers': 0.8.9
+
   '@metaplex-foundation/umi-serializers@0.9.0':
     dependencies:
       '@metaplex-foundation/umi-options': 0.8.9
@@ -8421,6 +8453,12 @@ snapshots:
       '@metaplex-foundation/umi': 0.9.2
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       buffer: 6.0.3
+
+  '@metaplex-foundation/umi@0.8.10':
+    dependencies:
+      '@metaplex-foundation/umi-options': 0.8.9
+      '@metaplex-foundation/umi-public-keys': 0.8.9
+      '@metaplex-foundation/umi-serializers': 0.8.9
 
   '@metaplex-foundation/umi@0.9.2':
     dependencies:
@@ -9938,6 +9976,43 @@ snapshots:
       - bufferutil
       - encoding
       - utf-8-validate
+
+  '@solanafm/explorer-kit-idls@1.1.4(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@coral-xyz/anchor': 0.29.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@coral-xyz/anchor-new': '@coral-xyz/anchor@0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)'
+      '@solanafm/kinobi-lite': 0.12.4
+      axios: 1.7.9
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+
+  '@solanafm/explorer-kit@1.2.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@coral-xyz/anchor': 0.29.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
+      '@coral-xyz/anchor-new': '@coral-xyz/anchor@0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)'
+      '@metaplex-foundation/umi': 0.8.10
+      '@metaplex-foundation/umi-serializers': 0.8.9
+      '@solana/spl-type-length-value': 0.1.0
+      '@solanafm/kinobi-lite': 0.12.4
+      '@solanafm/utils': 1.1.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+
+  '@solanafm/kinobi-lite@0.12.4':
+    dependencies:
+      '@noble/hashes': 1.7.0
+
+  '@solanafm/utils@1.1.0':
+    dependencies:
+      '@metaplex-foundation/umi-options': 0.8.9
+      bn.js: 5.2.1
+      bs58: 5.0.0
+      dayjs: 1.11.13
 
   '@solutiofi/sdk@1.0.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:

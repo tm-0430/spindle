@@ -2,7 +2,7 @@
 
 # Solana Agent Kit
 
-![Solana Agent Kit Cover 1 (3)](https://github.com/user-attachments/assets/cfa380f6-79d9-474d-9852-3e1976c6de70)
+![SAKCover2](https://github.com/user-attachments/assets/a6072421-8958-4cee-934a-a10ea32ae75e)
 
 ![NPM Downloads](https://img.shields.io/npm/dm/solana-agent-kit?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/sendaifun/solana-agent-kit?style=for-the-badge)
@@ -780,6 +780,28 @@ const swapResult = await agent.executeSwap({
   userAddress: "signer-public-key" // optional, user wallet address
 });
 console.log("Swap executed:", swapResult);
+```
+
+### Parse Instruction Data
+
+```typescript
+const parsedData = await agent.parseInstruction(
+  "<programId>",
+  "<instructionData>" // base64
+)
+
+console.log("parsed data:", parsedData)
+```
+
+### Parse Instruction Data
+
+```typescript
+const parsedData = await agent.parseAccount(
+  "<programId>",
+  "<accountData>" // base64
+)
+
+console.log("parsed data:", parsedData)
 ```
 
 ### Get Chain Data
