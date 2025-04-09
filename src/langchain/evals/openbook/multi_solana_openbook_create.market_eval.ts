@@ -7,9 +7,19 @@ const DATASET: ComplexEvalDataset[] = [
       query: "I need to create a new openbook market",
     },
     turns: [
-      { input: "I need to create a new openbook market" },
-      { input: "Let’s use SOL as the base mint" },
-      { input: "And USDC as the quote mint" },
+      {
+        input: "I need to create a new openbook market",
+        expectedResponse: "Sure, what would be the base mint?",
+      },
+      {
+        input: "Let’s use SOL as the base mint",
+        expectedResponse:
+          "Got it, SOL is the base mint. What about the quote mint?",
+      },
+      {
+        input: "And USDC as the quote mint",
+        expectedResponse: "USDC as the quote mint. Any lot size or tick size?",
+      },
       {
         input: "Set the lot size to 100 and tick size to 1.5",
         expectedToolCall: {

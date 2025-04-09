@@ -133,6 +133,56 @@ const DATASET: ComplexEvalDataset[] = [
     ],
   },
   {
+    description: "Multi-turn flow: Check balance when asked to mint NFT.",
+    inputs: {
+      query: "Mint NFT if there is balance.",
+    },
+    turns: [
+      {
+        input:
+          "Mint an NFT with name 'MyFirstNFT' and symbol 'MFN', uri: https://example.com/nft.json.",
+        expectedToolCall: {
+          // Should check balance before trying to mint
+          tool: "solana_balance",
+          params: {},
+        },
+      },
+      {
+        input: "Try minting the NFTs anyways",
+        expectedToolCall: {
+          // since the user said so, should try minting with zero balance and get an error
+          tool: "solana_mint_nft",
+          params: {
+            name: "MyFirstNFT",
+            symbol: "MFN",
+            uri: "https://example.com/nft.json",
+          },
+        },
+      },
+    ],
+  },
+  {
+    description: "Multi-turn flow: Mint NFT without balance",
+    inputs: {
+      query: "Mint NFT if there is balance.",
+    },
+    turns: [
+      {
+        input:
+          "Mint an NFT with name 'MyFirstNFT' and symbol 'MFN', uri: https://example.com/nft.json.",
+        expectedToolCall: {
+          // will produce an error since the balance should be zero
+          tool: "solana_mint_nft",
+          params: {
+            name: "MyFirstNFT",
+            symbol: "MFN",
+            uri: "https://example.com/nft.json",
+          },
+        },
+      },
+    ],
+  },
+  {
     description: "Multi-turn flow: Create multisig, deposit SOL",
     inputs: {
       query: "I want to set up a multisig wallet",
@@ -186,16 +236,16 @@ const DATASET: ComplexEvalDataset[] = [
         input: "Now check my USDC balance",
         expectedToolCall: {
           tool: "solana_balance",
-          params: JSON.stringify({
+          params: {
             tokenAddres: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-          }),
+          },
         },
       },
       {
         input: "Stake 0.5 SOL",
         expectedToolCall: {
           tool: "solana_stake",
-          params: JSON.stringify({ amount: 0.5 }),
+          params: { amount: 0.5 },
         },
       },
     ],
@@ -258,9 +308,9 @@ const DATASET: ComplexEvalDataset[] = [
         input: "How much of that token do I hold?",
         expectedToolCall: {
           tool: "solana_balance",
-          params: JSON.stringify({
+          params: {
             tokenAddress: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
-          }),
+          },
         },
       },
       {
@@ -288,9 +338,9 @@ const DATASET: ComplexEvalDataset[] = [
           "How many tokens do I have at mint EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v?",
         expectedToolCall: {
           tool: "solana_balance",
-          params: JSON.stringify({
+          params: {
             tokenAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-          }),
+          },
         },
       },
       {
@@ -321,9 +371,9 @@ const DATASET: ComplexEvalDataset[] = [
         input: "Check how many tokens I have left",
         expectedToolCall: {
           tool: "solana_balance",
-          params: JSON.stringify({
+          params: {
             tokenAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-          }),
+          },
         },
       },
     ],
@@ -352,7 +402,7 @@ const DATASET: ComplexEvalDataset[] = [
         input: "Now stake 1 SOL",
         expectedToolCall: {
           tool: "solana_stake",
-          params: JSON.stringify({ amount: 1 }),
+          params: { amount: 1 },
         },
       },
       {
@@ -397,4 +447,86 @@ const DATASET: ComplexEvalDataset[] = [
   },
 ];
 
-runComplexEval(DATASET, "Multi-turn Basic User Flows test");
+async function clusterAwarenessEval() {
+  const devnet = {
+    description: "Multi-turn flow: if on devnet request funds from faucet",
+    inputs: {
+      query: "Check if on devnet",
+    },
+    turns: [
+      {
+        input: "Are you connected to the Solana mainnet or devnet?",
+        expectedResponse: "I am connected to the devnet.",
+      },
+      {
+        input: "Request 2 SOL from the faucet",
+        expectedToolCall: {
+          tool: "solana_request_funds",
+          params: "{}",
+        },
+      },
+      {
+        input: "Check how much SOL I have now",
+        expectedToolCall: {
+          tool: "solana_balance",
+          params: "{}",
+        },
+      },
+    ],
+  };
+  const mainnet = {
+    description:
+      "Multi-turn flow: if on mainnet requesting faucet funds should fail",
+    inputs: {
+      query: "Check if on mainnet",
+    },
+    turns: [
+      {
+        input: "Are you connected to the Solana mainnet or devnet?",
+        expectedResponse: "I am connected to the mainnet.",
+      },
+      {
+        input: "Request 2 SOL from the faucet",
+        expectedResponse: "I cannot request funds from the faucet on mainnet.",
+      },
+    ],
+  };
+
+  const rpc = process.env.RPC_URL || "https://api.devnet.solana.com";
+  try {
+    const response = await fetch(rpc, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "getGenesisHash",
+      }),
+    });
+
+    const data = await response.json();
+    const genesisHash = data.result;
+
+    const mainnetHash = "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d";
+    const devnetHash = "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG";
+
+    if (genesisHash === mainnetHash) {
+      return mainnet;
+    } else {
+      return devnet;
+    }
+  } catch (error) {
+    console.error("Error checking cluster:", error);
+    return devnet;
+  }
+}
+
+async function runEvaluations() {
+  const clusterEval = await clusterAwarenessEval();
+  const updatedDataset = [...DATASET, clusterEval];
+  runComplexEval(updatedDataset, "Multi-turn Basic User Flows Evals");
+}
+
+runEvaluations();

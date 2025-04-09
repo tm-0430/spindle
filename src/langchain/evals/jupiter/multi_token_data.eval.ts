@@ -7,7 +7,10 @@ const DATASET: ComplexEvalDataset[] = [
       query: "What's the price of KING?",
     },
     turns: [
-      { input: "What's the price of KING?" },
+      {
+        input: "What's the price of KING?",
+        expectedResponse: "Sure, can you provide the mint address of KING?",
+      },
       {
         input:
           "The mint address is 5eqNDjbsWL9hfAqUfhegTxgEa3XardzGdVAboMA4pump",

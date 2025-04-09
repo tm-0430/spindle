@@ -7,8 +7,15 @@ const DATASET: ComplexEvalDataset[] = [
       query: "I need to create a new Gibwork task",
     },
     turns: [
-      { input: "I need to create a new Gibwork task" },
-      { input: "The task is titled 'Fix my website'" },
+      {
+        input: "I need to create a new Gibwork task",
+        expectedResponse: "Sure, please provide the task title or details.",
+      },
+      {
+        input: "The task is titled 'Fix my website'",
+        expectedResponse:
+          "Understood, 'Fix my website' is the task title. Any more details?",
+      },
       {
         input: "Also, what's the current price of JUP?",
         expectedToolCall: {
@@ -16,7 +23,12 @@ const DATASET: ComplexEvalDataset[] = [
           params: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
         },
       },
-      { input: "It should be for 1000 JUP tokens with no extra content" },
+      {
+        input:
+          "The Gibwork job should be for 1000 JUP tokens with no extra content.",
+        expectedResponse:
+          "Okay, 1000 JUP tokens, no additional content. Any requirements or tags?",
+      },
       {
         input: "Set content and requirements to N/A and tag it as webdev",
         expectedToolCall: {

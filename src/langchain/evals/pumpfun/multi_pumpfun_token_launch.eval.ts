@@ -7,9 +7,20 @@ const DATASET: ComplexEvalDataset[] = [
       query: "I want to launch a new PumpFun token",
     },
     turns: [
-      { input: "I want to launch a new PumpFun token" },
-      { input: "I want it to be called YOLO" },
-      { input: "The ticker should be YOLO and description 'yolo token'" },
+      {
+        input: "I want to launch a new PumpFun token",
+        expectedResponse:
+          "Sure, I will need a token name, ticker, image and description.",
+      },
+      {
+        input: "I want it to be called YOLO",
+        expectedResponse:
+          "Okay, YOLO is the name. What about the ticker, description and image?",
+      },
+      {
+        input: "The ticker should be YOLO and description 'yolo token'",
+        expectedResponse: "Great. Do you have an image URL?",
+      },
       {
         input: "Use the image URL https://example.com/yolo.png",
         expectedToolCall: {

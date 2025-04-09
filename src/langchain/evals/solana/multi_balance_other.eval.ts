@@ -7,7 +7,10 @@ const DATASET: ComplexEvalDataset[] = [
       query: "I want to check my friend's balance",
     },
     turns: [
-      { input: "Check my friend's USDC balance" },
+      {
+        input: "Check my friend's USDC balance",
+        expectedResponse: "Sure, what's their wallet address?",
+      },
       {
         input:
           "The wallet address is GZbQmKYYzwjP3nbdqRWPLn98ipAni9w5eXMGp7bmZbGB",
@@ -21,7 +24,19 @@ const DATASET: ComplexEvalDataset[] = [
       },
       {
         input: "Also, check my SOL balance",
-        expectedToolCall: { tool: "solana_balance", params: {} },
+        expectedToolCall: {
+          tool: "solana_balance",
+          params: {},
+        },
+      },
+      {
+        input: "Whats my USDC balance?",
+        expectedToolCall: {
+          tool: "solana_balance",
+          params: {
+            tokenAddress: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          },
+        },
       },
     ],
   },

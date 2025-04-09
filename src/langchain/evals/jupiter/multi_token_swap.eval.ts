@@ -7,8 +7,14 @@ const DATASET: ComplexEvalDataset[] = [
       query: "I want to swap some tokens",
     },
     turns: [
-      { input: "I want to swap some tokens" },
-      { input: "I want to exchange USDC for JUP tokens" },
+      {
+        input: "I want to swap some tokens",
+        expectedResponse: "Sure, which tokens would you like to swap?",
+      },
+      {
+        input: "I want to exchange USDC for JUP tokens",
+        expectedResponse: "How much USDC?",
+      },
       {
         input: "Swap 10 USDC for JUP with 1% slippage",
         expectedToolCall: {

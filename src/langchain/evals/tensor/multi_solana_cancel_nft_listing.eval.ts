@@ -7,12 +7,15 @@ const DATASET: ComplexEvalDataset[] = [
       query: "I need to cancel my NFT listing",
     },
     turns: [
-      { input: "I need to cancel my NFT listing" },
       {
-        input: "Cancel the listing for my NFT with mint 4KG7k12",
+        input: "I need to cancel my NFT listing",
+        expectedResponse: "Please provide the mint address of your NFT.",
+      },
+      {
+        input: "zZNEUiAq2kLgWFJiZofHfcar91ph7yE2nUfLmXswkvP",
         expectedToolCall: {
           tool: "solana_cancel_nft_listing",
-          params: { nftMint: "4KG7k12" },
+          params: { nftMint: "zZNEUiAq2kLgWFJiZofHfcar91ph7yE2nUfLmXswkvP" },
         },
       },
     ],

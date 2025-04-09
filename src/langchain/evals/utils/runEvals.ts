@@ -99,6 +99,38 @@ const argsEvaluator = async (params: {
   };
 };
 
+// import dotenv from "dotenv";
+// dotenv.config();
+
+// Compare actual response with the expectedResponse using a LLM
+async function responseEvaluator(
+  expectedResponse: string,
+  actualResponse: string,
+) {
+  const systemPrompt = `Compare the two strings the user gives you. Are they completely different? If completely different, return "false", else return "true". Return only those words. 
+  Example: 
+  Expected: Sure, which base mint?
+  Actual: Please give me the mint address for the base token.
+
+  Response: "true"
+  `;
+
+  const userPrompt = `Expected: ${expectedResponse}
+Actual: ${actualResponse}`;
+
+  const result = await llm.invoke([
+    { role: "system", content: systemPrompt },
+    { role: "user", content: userPrompt },
+  ]);
+  console.log({ userPrompt, result: result.content });
+  const content = result.content as string;
+
+  return content.toLowerCase().includes("true");
+}
+
+/**
+ * Runs single-turn eval for basic function calls
+ */
 export async function runEvals<T>(
   dataset: {
     inputs: { query: string };
@@ -165,6 +197,7 @@ export async function runEvals<T>(
 
 export type ConversationTurn = {
   input: string;
+  expectedResponse?: string;
   expectedToolCall?: {
     tool: string;
     params: any;
@@ -206,6 +239,16 @@ export async function runComplexEval(
           ls.logOutputs(result);
           const assistantMessage = result.messages[result.messages.length - 1];
           conversation.push(assistantMessage);
+
+          if (turn.expectedResponse) {
+            foundCorrectToolCall =
+              foundCorrectToolCall &&
+              (await responseEvaluator(
+                turn.expectedResponse,
+                assistantMessage.content,
+              ));
+          }
+
           if (
             turn.expectedToolCall &&
             !(
