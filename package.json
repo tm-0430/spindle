@@ -15,8 +15,8 @@
     "build:plugin-blinks": "turbo run build --filter=@solana-agent-kit/plugin-blinks",
     "docs": "typedoc src --out docs",
     "generate": "tsx src/utils/keypair.ts",
-    "lint": "turbo run lint",
-    "lint:fix": "eslint . --ext .ts --fix",
+    "lint": "biome check",
+    "lint:fix": "biome check --write --unsafe",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepare": "husky",
     "version-packages": "changeset version",
@@ -36,6 +36,7 @@
   "author": "sendaifun",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@changesets/cli": "^2.27.12",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-json": "^6.1.0",
