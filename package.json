@@ -17,7 +17,7 @@
     "generate": "tsx src/utils/keypair.ts",
     "lint": "biome check",
     "lint:fix": "biome check --write --unsafe",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "biome format --write",
     "prepare": "husky",
     "version-packages": "changeset version",
     "publish-packages": "turbo run build && changeset publish"
@@ -45,7 +45,6 @@
     "@types/node": "^22.10.2",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
-    "prettier": "^3.4.2",
     "rollup": "^4.36.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.2.1",
