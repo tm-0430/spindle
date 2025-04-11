@@ -97,3 +97,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Note
+
+This is a starter template and may not include all features or optimizations for production use (e.g the use of the OpenAI API key on the client). Please review and modify as necessary for your specific use case.
