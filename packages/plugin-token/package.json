@@ -1,6 +1,6 @@
 {
   "name": "@solana-agent-kit/plugin-token",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -58,7 +58,7 @@
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.98.0",
-    "solana-agent-kit": "2.0.0-beta.8"
+    "solana-agent-kit": "2.0.0-beta.9"
   },
   "devDependencies": {
     "tsup": "^8.4.0"

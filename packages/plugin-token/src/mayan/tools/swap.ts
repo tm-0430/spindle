@@ -19,7 +19,7 @@ import {
   TypedDataEncoder,
   Wallet,
 } from "ethers";
-import { abi as ERC20Permit_ABI } from "@openzeppelin/contracts/build/contracts/ERC20Permit.json";
+import ERC20Permit_ABI from "@openzeppelin/contracts/build/contracts/ERC20Permit.json";
 import MayanForwarderArtifact from "./MayanForwarderArtifact";
 
 async function findTokenContract(
@@ -164,7 +164,7 @@ async function swapEVM(
   );
   const tokenContract = new Contract(
     quote.fromToken.contract,
-    ERC20Permit_ABI,
+    ERC20Permit_ABI.abi,
     signer,
   );
 
