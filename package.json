@@ -1,9 +1,7 @@
 {
   "name": "solana-agent-kit",
   "description": "connect any ai agents to solana protocols",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "clean": "turbo run clean",
     "build": "turbo run build",
@@ -15,9 +13,9 @@
     "build:plugin-blinks": "turbo run build --filter=@solana-agent-kit/plugin-blinks",
     "docs": "typedoc src --out docs",
     "generate": "tsx src/utils/keypair.ts",
-    "lint": "turbo run lint",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "biome check",
+    "lint:fix": "biome check --write --unsafe",
+    "format": "biome format --write",
     "prepare": "husky",
     "version-packages": "changeset version",
     "publish-packages": "turbo run build && changeset publish"
@@ -26,16 +24,11 @@
     "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
-  "keywords": [
-    "solana",
-    "agent",
-    "ai",
-    "solana agent kit",
-    "sendai"
-  ],
+  "keywords": ["solana", "agent", "ai", "solana agent kit", "sendai"],
   "author": "sendaifun",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@changesets/cli": "^2.27.12",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-json": "^6.1.0",
@@ -49,7 +42,6 @@
     "eslint-plugin-prettier": "^5.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
-    "prettier": "^3.4.2",
     "rollup": "^4.36.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.2.1",
