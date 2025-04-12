@@ -1,13 +1,19 @@
-import { SolanaAgentKit } from "@/agent";
-import { Action } from "@/types";
-import { transformToZodObject } from "@/utils/zod";
+import { SolanaAgentKit } from "../agent";
+import { Action } from "../types";
+import { transformToZodObject } from "../utils/zod";
 import { tool } from "@langchain/core/tools";
 
 export function createLangchainTools(
   solanaAgentKit: SolanaAgentKit,
   actions: Action[],
 ) {
-  const tools = actions.map((action) => {
+  if (actions.length > 128) {
+    console.warn(
+      `Too many actions provided. Only a maximum of 128 actions allowed. You provided ${actions.length}, the last ${actions.length - 128} will be ignored.`,
+    );
+  }
+
+  const tools = actions.slice(0, 127).map((action) => {
     const toolInstance = tool(
       async (inputs) =>
         JSON.stringify(await action.handler(solanaAgentKit, inputs)),
