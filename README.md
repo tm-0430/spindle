@@ -807,7 +807,7 @@ console.log("parsed data:", parsedData)
 ### Get Sanctum LST Price
 
 ```typescript
-const prices = await agent.getSanctumPrice([
+const prices = await agent.getSanctumLSTPrice([
   "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1", 
   "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
   ])
@@ -818,7 +818,7 @@ console.log('prices', prices)
 ### Get Sanctum LST APY
 
 ```typescript
-const apys = await agent.getSanctumApy([
+const apys = await agent.getSanctumLSTAPY([
   "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1", 
   "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
   ])
@@ -829,12 +829,20 @@ console.log('apys', apys)
 ### Get Sanctum LST TVL
 
 ```typescript
-const tvls = await agent.getSanctumTvl([
+const tvls = await agent.getSanctumLSTTVL([
   "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1", 
   "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
   ])
 
 console.log('tvls', tvls)
+```
+
+### Get Sanctum Owend LST
+
+```typescript
+const lsts = await agent.getSanctumOwnedLST()
+
+console.log('lsts', lsts)
 ```
 
 ### Add Liquidity to Sanctum Infinite Pool
@@ -858,6 +866,20 @@ const txId = await agent.removeSanctumLiquidity(
   "1000000000",
   "1100000000",
   5000
+)
+
+console.log('txId', txId)
+```
+
+### Swap Sanctum LST
+
+```typescript
+const txId = await agent.swapSanctumLST(
+  "So11111111111111111111111111111111111111112",
+  "1000000000",
+  "1100000000",
+  5000,
+  "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
 )
 
 console.log('txId', txId)
