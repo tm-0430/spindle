@@ -1,9 +1,9 @@
 import SolutioFi from "@solutiofi/sdk";
-import { type SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 import type {
   InputAssetStruct,
-  PriorityFee,
   TargetTokenStruct,
+  PriorityFee,
 } from "../types";
 
 let solutiofiClient: SolutioFi | null = null;
@@ -46,7 +46,7 @@ export async function closeAccounts(agent: SolanaAgentKit, mints: string[]) {
         transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
-      } catch (_error) {
+      } catch (error) {
         continue;
       }
     }
@@ -78,7 +78,7 @@ export async function burnTokens(agent: SolanaAgentKit, mints: string[]) {
         transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
-      } catch (_error) {
+      } catch (error) {
         continue;
       }
     }
@@ -117,7 +117,7 @@ export async function mergeTokens(
         txn.transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
-      } catch (_error) {
+      } catch (error) {
         continue;
       }
     }
@@ -156,7 +156,7 @@ export async function spreadToken(
         txn.transaction.message.recentBlockhash = blockhash;
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
-      } catch (_error) {
+      } catch (error) {
         continue;
       }
     }

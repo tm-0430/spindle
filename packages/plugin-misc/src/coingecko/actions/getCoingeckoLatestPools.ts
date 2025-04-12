@@ -1,5 +1,5 @@
-import { Action } from "solana-agent-kit";
 import { z } from "zod";
+import { Action } from "solana-agent-kit";
 import { getLatestPools } from "../tools";
 
 const getCoingeckoLatestPoolsActions: Action = {

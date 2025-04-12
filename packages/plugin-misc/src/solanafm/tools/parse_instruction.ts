@@ -1,9 +1,9 @@
 import {
+  checkIfInstructionParser,
   ParserType,
   SolanaFMParser,
-  checkIfInstructionParser,
 } from "@solanafm/explorer-kit";
-import { type IdlItem, getProgramIdl } from "@solanafm/explorer-kit-idls";
+import { getProgramIdl, type IdlItem } from "@solanafm/explorer-kit-idls";
 import type { InstructionParserResponse } from "../types";
 
 /**

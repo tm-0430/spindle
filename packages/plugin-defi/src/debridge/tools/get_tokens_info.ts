@@ -1,7 +1,7 @@
 import { DEBRIDGE_API } from "../constants";
 import {
-  GetDebridgeTokensInfoParams,
   deBridgeTokensInfoResponse,
+  GetDebridgeTokensInfoParams,
 } from "../types";
 
 /**

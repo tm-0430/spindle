@@ -1,22 +1,31 @@
 import {
-  Percentage,
-  TransactionBuilder,
-  resolveOrCreateATAs,
-} from "@orca-so/common-sdk";
+  Keypair,
+  PublicKey,
+  TransactionMessage,
+  VersionedTransaction,
+} from "@solana/web3.js";
+import type { SolanaAgentKit } from "solana-agent-kit";
+import { BN } from "bn.js";
+import { Decimal } from "decimal.js";
 import {
-  IncreaseLiquidityQuoteParam,
-  NO_TOKEN_EXTENSION_CONTEXT,
-  ORCA_WHIRLPOOL_PROGRAM_ID,
   PDAUtil,
-  PoolUtil,
-  PriceMath,
-  TickUtil,
-  TokenExtensionContextForPool,
-  TokenExtensionUtil,
+  ORCA_WHIRLPOOL_PROGRAM_ID,
   WhirlpoolContext,
+  TickUtil,
+  PriceMath,
+  PoolUtil,
+  TokenExtensionContextForPool,
+  NO_TOKEN_EXTENSION_CONTEXT,
+  TokenExtensionUtil,
   WhirlpoolIx,
+  IncreaseLiquidityQuoteParam,
   increaseLiquidityQuoteByInputTokenWithParams,
 } from "@orca-so/whirlpools-sdk";
+import {
+  Percentage,
+  resolveOrCreateATAs,
+  TransactionBuilder,
+} from "@orca-so/common-sdk";
 import {
   increaseLiquidityIx,
   increaseLiquidityV2Ix,
@@ -24,18 +33,9 @@ import {
   openPositionWithTokenExtensionsIx,
 } from "@orca-so/whirlpools-sdk/dist/instructions";
 import {
-  TOKEN_2022_PROGRAM_ID,
   getAssociatedTokenAddressSync,
+  TOKEN_2022_PROGRAM_ID,
 } from "@solana/spl-token";
-import {
-  Keypair,
-  PublicKey,
-  TransactionMessage,
-  VersionedTransaction,
-} from "@solana/web3.js";
-import { BN } from "bn.js";
-import { Decimal } from "decimal.js";
-import type { SolanaAgentKit } from "solana-agent-kit";
 import { sendTx } from "solana-agent-kit";
 
 /**

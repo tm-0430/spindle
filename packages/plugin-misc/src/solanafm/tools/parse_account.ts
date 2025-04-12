@@ -1,9 +1,9 @@
 import {
+  checkIfAccountParser,
   ParserType,
   SolanaFMParser,
-  checkIfAccountParser,
 } from "@solanafm/explorer-kit";
-import { type IdlItem, getProgramIdl } from "@solanafm/explorer-kit-idls";
+import { getProgramIdl, type IdlItem } from "@solanafm/explorer-kit-idls";
 import type { AccountParserResponse } from "../types";
 
 /**

@@ -1,13 +1,13 @@
-import {
-  createAssociatedTokenAccountInstruction,
-  createTransferInstruction,
-  getAssociatedTokenAddress,
-  getMint,
-} from "@solana/spl-token";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 import { type PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import {
+  getAssociatedTokenAddress,
+  createTransferInstruction,
+  getMint,
+  createAssociatedTokenAccountInstruction,
+} from "@solana/spl-token";
 import * as multisig from "@sqds/multisig";
-import { type SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
 
 /**
  * Transfer SOL or SPL tokens to a multisig vault.

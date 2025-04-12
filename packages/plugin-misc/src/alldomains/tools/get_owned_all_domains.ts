@@ -1,6 +1,6 @@
-import { TldParser } from "@onsol/tldparser";
-import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "solana-agent-kit";
+import { PublicKey } from "@solana/web3.js";
+import { TldParser } from "@onsol/tldparser";
 
 /**
  * Get all domains owned domains for a specific TLD for the agent's wallet

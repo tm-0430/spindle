@@ -1,3 +1,5 @@
+import type { TransactionOrVersionedTransaction } from "../types";
+import type { BaseWallet } from "../types/wallet";
 import {
   type ConfirmOptions,
   Connection,
@@ -8,10 +10,8 @@ import {
   TransactionSignature,
   VersionedTransaction,
 } from "@solana/web3.js";
-import bs58 from "bs58";
 import nacl from "tweetnacl";
-import type { TransactionOrVersionedTransaction } from "../types";
-import type { BaseWallet } from "../types/wallet";
+import bs58 from "bs58";
 
 /**
  * Check if a transaction object is a VersionedTransaction or not

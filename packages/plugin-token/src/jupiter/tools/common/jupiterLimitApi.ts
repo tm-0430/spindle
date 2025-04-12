@@ -4,8 +4,8 @@ import type {
   CancelJupiterOrderResponse,
   CreateJupiterOrderRequest,
   CreateJupiterOrderResponse,
-  JupiterOrderHistoryResponse,
   OpenJupiterOrderResponse,
+  JupiterOrderHistoryResponse,
 } from "../../types";
 
 const jupiterApi = axios.create({

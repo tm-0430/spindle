@@ -1,11 +1,11 @@
-import { PublicKey } from "@solana/web3.js";
 import { Action } from "solana-agent-kit";
 import { z } from "zod";
+import { PublicKey } from "@solana/web3.js";
 import {
-  closePerpTradeLong,
-  closePerpTradeShort,
   openPerpTradeLong,
   openPerpTradeShort,
+  closePerpTradeLong,
+  closePerpTradeShort,
 } from "../tools";
 
 const openPerpTradeLongAction: Action = {

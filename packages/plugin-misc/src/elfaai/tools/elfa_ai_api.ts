@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
 import { SolanaAgentKit } from "solana-agent-kit";
+import axios, { AxiosInstance } from "axios";
 
 function createAxiosInstance(apiKey: string | undefined): AxiosInstance {
   if (!apiKey) {

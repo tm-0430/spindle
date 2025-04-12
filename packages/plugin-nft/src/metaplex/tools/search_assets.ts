@@ -1,8 +1,8 @@
-import {
-  SearchAssetsRpcInput,
-  dasApi,
-} from "@metaplex-foundation/digital-asset-standard-api";
 import { SolanaAgentKit } from "solana-agent-kit";
+import {
+  dasApi,
+  SearchAssetsRpcInput,
+} from "@metaplex-foundation/digital-asset-standard-api";
 import { initUmi } from "../../utils";
 
 /**

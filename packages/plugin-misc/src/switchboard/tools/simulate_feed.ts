@@ -1,5 +1,5 @@
-import { CrossbarClient } from "@switchboard-xyz/common";
 import { SWITCHBOARD_DEFAULT_CROSSBAR } from "../constants";
+import { CrossbarClient } from "@switchboard-xyz/common";
 
 /**
  * Simulate a switchboard feed

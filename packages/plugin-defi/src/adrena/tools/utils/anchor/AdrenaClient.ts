@@ -1,13 +1,13 @@
-import { AnchorProvider, IdlAccounts, Program } from "@coral-xyz/anchor";
 import { Connection, PublicKey } from "@solana/web3.js";
 import type { SolanaAgentKit } from "solana-agent-kit";
-import { IDL as ADRENA_IDL, Adrena } from "./adrena";
+import { AnchorProvider, IdlAccounts, Program } from "@coral-xyz/anchor";
+import { Adrena, IDL as ADRENA_IDL } from "./adrena";
 
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
-  TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
+  TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import { TOKENS } from "../constants";
 

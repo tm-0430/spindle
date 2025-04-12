@@ -1,7 +1,7 @@
 import { DEBRIDGE_API } from "../constants";
 import {
-  deBridgeOrderIdsResponse,
   deBridgeOrderStatusResponse,
+  deBridgeOrderIdsResponse,
 } from "../types";
 
 /**

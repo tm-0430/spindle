@@ -1,5 +1,5 @@
-import type { Action } from "solana-agent-kit";
 import { z } from "zod";
+import type { Action } from "solana-agent-kit";
 import { driftPerpTrade } from "../tools";
 
 export const tradeDriftPerpAccountAction: Action = {

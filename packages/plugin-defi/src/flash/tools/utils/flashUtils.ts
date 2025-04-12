@@ -1,16 +1,16 @@
-import { AnchorProvider } from "@coral-xyz/anchor";
 import { HermesClient } from "@pythnetwork/hermes-client";
-import { getAssociatedTokenAddressSync } from "@solana/spl-token";
-import { Cluster, PublicKey } from "@solana/web3.js";
-import { BN } from "bn.js";
 import { OraclePrice } from "flash-sdk";
+import { BN } from "bn.js";
+import { AnchorProvider } from "@coral-xyz/anchor";
 import {
-  PerpetualsClient,
   PoolConfig,
-  Privilege,
-  Referral,
   Token,
+  Referral,
+  PerpetualsClient,
+  Privilege,
 } from "flash-sdk";
+import { Cluster, PublicKey } from "@solana/web3.js";
+import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import type { SolanaAgentKit } from "solana-agent-kit";
 
 const POOL_NAMES = [

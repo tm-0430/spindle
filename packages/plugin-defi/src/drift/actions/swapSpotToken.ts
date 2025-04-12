@@ -1,5 +1,5 @@
-import type { Action } from "solana-agent-kit";
 import { z } from "zod";
+import type { Action } from "solana-agent-kit";
 import { swapSpotToken } from "../tools";
 
 const driftSpotTokenSwapAction: Action = {

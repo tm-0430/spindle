@@ -1,5 +1,5 @@
 import { VersionedTransaction } from "@solana/web3.js";
-import { type SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 
 /**
  * Lend tokens for yields using Lulo

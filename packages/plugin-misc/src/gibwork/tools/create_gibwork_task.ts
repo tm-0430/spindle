@@ -1,7 +1,7 @@
 import { VersionedTransaction } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
-import { SolanaAgentKit } from "solana-agent-kit";
 import { GibworkCreateTaskReponse } from "../types";
+import { SolanaAgentKit } from "solana-agent-kit";
 
 /**
  * Create an new task on Gibwork

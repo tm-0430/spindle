@@ -1,8 +1,8 @@
-import { Keypair, VersionedTransaction } from "@solana/web3.js";
+import { VersionedTransaction, Keypair } from "@solana/web3.js";
 import {
   PumpFunTokenOptions,
-  SolanaAgentKit,
   signOrSendTX,
+  SolanaAgentKit,
 } from "solana-agent-kit";
 
 async function uploadMetadata(

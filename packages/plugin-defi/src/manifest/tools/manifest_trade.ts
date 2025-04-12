@@ -10,7 +10,7 @@ import {
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { type SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 import type { BatchOrderPattern, OrderParams } from "../types";
 
 export async function manifestCreateMarket(

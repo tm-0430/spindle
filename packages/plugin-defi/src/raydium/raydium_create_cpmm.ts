@@ -7,7 +7,7 @@ import {
 import { MintLayout } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
-import { type SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
+import { signOrSendTX, type SolanaAgentKit } from "solana-agent-kit";
 
 export async function raydiumCreateCpmm(
   agent: SolanaAgentKit,
