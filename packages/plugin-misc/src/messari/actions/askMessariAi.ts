@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Action } from "solana-agent-kit";
-import { getChatCompletion } from "../tools";
+import { askMessariAi } from "../tools";
 
 const getMessariChatCompletion: Action = {
   name: "GET_MESSARI_CHAT_COMPLETION",
@@ -57,7 +57,7 @@ const getMessariChatCompletion: Action = {
       const question = input.question as string;
       return {
         status: "success",
-        result: await getChatCompletion(agent, question),
+        result: await askMessariAi(agent, question),
       };
     } catch (e) {
       return {

@@ -1,7 +1,7 @@
 import { SolanaAgentKit } from "solana-agent-kit";
 import { MessariAPIResponse } from "../types";
 
-export async function getChatCompletion(
+export async function askMessariAi(
   agent: SolanaAgentKit, question: string
 ): Promise<any> {
   try {
@@ -32,7 +32,8 @@ export async function getChatCompletion(
     return result;
 
   } catch (error: any) {
-    console.error("Error retrieving assets: ", error.errorResponse.error);
-    throw new Error(`Error fetching data from Messari: ${error.errorResponse.error}`);
+    const errorMessage = error?.errorResponse?.error || error?.message || "Unknown error occurred";
+    console.error("Error retrieving assets: ", errorMessage);
+    throw new Error(`Error fetching data from Messari: ${errorMessage}`);
   }
 }
