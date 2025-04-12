@@ -132,7 +132,7 @@ npm install @solana-agent-kit/plugin-token @solana-agent-kit/plugin-nft @solana-
 Initializing the wallet interface and agent with plugins:
 
 ```typescript
-import { SolanaAgentKit, createVercelAITools, KeypairWallet } from "solana-agent-kit";
+import { SolanaAgentKit, createVercelAITools, KeypairWallet } from "solana-agent-kit"; // or import createLangchainTools if using langchain
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 import NFTPlugin from "@solana-agent-kit/plugin-nft";
 import DefiPlugin from "@solana-agent-kit/plugin-defi";
