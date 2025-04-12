@@ -1,3 +1,17 @@
+import { CompressedTokenProgram } from "@lightprotocol/compressed-token";
+import {
+  Rpc,
+  buildAndSignTx,
+  buildTx,
+  calculateComputeUnitPrice,
+  sendAndConfirmTx,
+  sleep,
+} from "@lightprotocol/stateless.js";
+import {
+  createAssociatedTokenAccountInstruction,
+  getAssociatedTokenAddress,
+  getAssociatedTokenAddressSync,
+} from "@solana/spl-token";
 import {
   AddressLookupTableAccount,
   ComputeBudgetProgram,
@@ -6,21 +20,7 @@ import {
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
-import {
-  buildAndSignTx,
-  buildTx,
-  calculateComputeUnitPrice,
-  Rpc,
-  sendAndConfirmTx,
-  sleep,
-} from "@lightprotocol/stateless.js";
-import { CompressedTokenProgram } from "@lightprotocol/compressed-token";
-import {
-  createAssociatedTokenAccountInstruction,
-  getAssociatedTokenAddress,
-  getAssociatedTokenAddressSync,
-} from "@solana/spl-token";
+import { SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
 
 // arbitrary
 const MAX_AIRDROP_RECIPIENTS = 1000;
@@ -84,7 +84,7 @@ export async function sendCompressedAirdrop(
 
   try {
     await getAssociatedTokenAddress(mintAddress, agent.wallet.publicKey);
-  } catch (error) {
+  } catch (_error) {
     const associatedToken = getAssociatedTokenAddressSync(
       mintAddress,
       agent.wallet.publicKey,
