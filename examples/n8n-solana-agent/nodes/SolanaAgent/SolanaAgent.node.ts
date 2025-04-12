@@ -6,30 +6,20 @@ import {
 	NodeConnectionType,
 	NodeOperationError,
 } from 'n8n-workflow';
-import type { SolanaAgentKit } from 'solana-agent-kit';
-
-// Define the expected methods interface
-interface SolanaAgentMethods {
-	deployToken(params: { name: string; symbol: string }): Promise<any>;
-	deployCollection(params: { name: string; symbol: string }): Promise<any>;
-}
-
-// Extend SolanaAgentKit with the methods we need
-type SolanaAgentType = SolanaAgentKit & {
-	methods: SolanaAgentMethods;
-};
+import { PublicKey } from '@solana/web3.js';
+import { Config, SolanaAgentKit } from "solana-agent-kit";
 
 export class SolanaAgent implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Solana Agent',
+		displayName: 'Solana Token Agent',
 		name: 'solanaAgent',
 		icon: 'file:solana.svg',
 		group: ['blockchain'],
 		version: 1,
-		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'Interact with Solana blockchain using AI',
+		subtitle: '={{$parameter["operation"]}}',
+		description: 'Interact with Solana tokens using AI',
 		defaults: {
-			name: 'Solana Agent',
+			name: 'Solana Token Agent',
 		},
 		inputs: [
 			{
@@ -54,91 +44,69 @@ export class SolanaAgent implements INodeType {
 		],
 		properties: [
 			{
-				displayName: 'Resource',
-				name: 'resource',
-				type: 'options',
-				noDataExpression: true,
-				options: [
-					{
-						name: 'Token',
-						value: 'token',
-					},
-					{
-						name: 'NFT',
-						value: 'nft',
-					},
-					{
-						name: 'DeFi',
-						value: 'defi',
-					},
-				],
-				default: 'token',
-			},
-			{
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
-				displayOptions: {
-					show: {
-						resource: ['token'],
-					},
-				},
 				options: [
 					{
-						name: 'Create',
-						value: 'create',
+						name: 'Create Token',
+						value: 'createToken',
 						description: 'Create a new token',
 						action: 'Create a new token',
 					},
 					{
-						name: 'Mint',
-						value: 'mint',
-						description: 'Mint tokens',
-						action: 'Mint tokens',
-					},
-					{
-						name: 'Transfer',
-						value: 'transfer',
+						name: 'Transfer Token',
+						value: 'transferToken',
 						description: 'Transfer tokens',
 						action: 'Transfer tokens',
 					},
+					{
+						name: 'Get Token Balances',
+						value: 'getTokenBalances',
+						description: 'Get all token balances for a wallet',
+						action: 'Get token balances',
+					},
+					{
+						name: 'Get Single Token Balance',
+						value: 'getSingleBalance',
+						description: 'Get balance for a specific token',
+						action: 'Get single token balance',
+					},
+					{
+						name: 'Get Other Wallet Balance',
+						value: 'getOtherBalance',
+						description: 'Get token balance for another wallet',
+						action: 'Get other wallet balance',
+					},
+					{
+						name: 'Close Empty Token Accounts',
+						value: 'closeEmptyTokenAccounts',
+						description: 'Close empty token accounts',
+						action: 'Close empty token accounts',
+					},
+					{
+						name: 'Request Faucet Funds',
+						value: 'requestFaucet',
+						description: 'Request SOL from faucet (devnet/testnet)',
+						action: 'Request faucet funds',
+					},
+					{
+						name: 'Get Network TPS',
+						value: 'getTPS',
+						description: 'Get current network TPS',
+						action: 'Get network TPS',
+					},
+					{
+						name: 'Get Wallet Address',
+						value: 'getWalletAddress',
+						description: 'Get current wallet address',
+						action: 'Get wallet address',
+					},
 				],
-				default: 'create',
+				default: 'createToken',
 			},
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: {
-					show: {
-						resource: ['nft'],
-					},
-				},
-				options: [
-					{
-						name: 'Deploy Collection',
-						value: 'deployCollection',
-						description: 'Deploy a new NFT collection',
-						action: 'Deploy a new NFT collection',
-					},
-					{
-						name: 'Mint NFT',
-						value: 'mintNFT',
-						description: 'Mint a new NFT',
-						action: 'Mint a new NFT',
-					},
-					{
-						name: 'List for Sale',
-						value: 'listForSale',
-						description: 'List NFT for sale',
-						action: 'List NFT for sale',
-					},
-				],
-				default: 'deployCollection',
-			},
-			// Token Parameters
+			// Token Creation Parameters
 			{
 				displayName: 'Token Name',
 				name: 'tokenName',
@@ -146,8 +114,7 @@ export class SolanaAgent implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['token'],
-						operation: ['create'],
+						operation: ['createToken'],
 					},
 				},
 				default: '',
@@ -160,41 +127,104 @@ export class SolanaAgent implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['token'],
-						operation: ['create'],
+						operation: ['createToken'],
 					},
 				},
 				default: '',
 				description: 'Symbol of the token to create',
 			},
-			// NFT Parameters
 			{
-				displayName: 'Collection Name',
-				name: 'collectionName',
-				type: 'string',
-				required: true,
+				displayName: 'Decimals',
+				name: 'decimals',
+				type: 'number',
+				required: false,
 				displayOptions: {
 					show: {
-						resource: ['nft'],
-						operation: ['deployCollection'],
+						operation: ['createToken'],
 					},
 				},
-				default: '',
-				description: 'Name of the NFT collection',
+				default: 9,
+				description: 'Number of decimal places for the token',
 			},
 			{
-				displayName: 'Collection Symbol',
-				name: 'collectionSymbol',
+				displayName: 'Initial Supply',
+				name: 'initialSupply',
+				type: 'number',
+				required: false,
+				displayOptions: {
+					show: {
+						operation: ['createToken'],
+					},
+				},
+				default: 0,
+				description: 'Initial supply of tokens to mint',
+			},
+			// Transfer Parameters
+			{
+				displayName: 'Recipient Address',
+				name: 'recipientAddress',
 				type: 'string',
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['nft'],
-						operation: ['deployCollection'],
+						operation: ['transferToken'],
 					},
 				},
 				default: '',
-				description: 'Symbol of the NFT collection',
+				description: 'Recipient wallet address',
+			},
+			{
+				displayName: 'Amount',
+				name: 'amount',
+				type: 'number',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: ['transferToken'],
+					},
+				},
+				default: 0,
+				description: 'Amount to transfer',
+			},
+			{
+				displayName: 'Token Address',
+				name: 'tokenAddress',
+				type: 'string',
+				required: false,
+				displayOptions: {
+					show: {
+						operation: ['transferToken', 'getSingleBalance'],
+					},
+				},
+				default: '',
+				description: 'SPL token address (leave empty for SOL)',
+			},
+			// Balance Parameters
+			{
+				displayName: 'Wallet Address',
+				name: 'walletAddress',
+				type: 'string',
+				required: false,
+				displayOptions: {
+					show: {
+						operation: ['getTokenBalances', 'getOtherBalance'],
+					},
+				},
+				default: '',
+				description: 'Wallet address to check balances for (leave empty for own wallet)',
+			},
+			{
+				displayName: 'Token Address for Other Wallet',
+				name: 'otherTokenAddress',
+				type: 'string',
+				required: false,
+				displayOptions: {
+					show: {
+						operation: ['getOtherBalance'],
+					},
+				},
+				default: '',
+				description: 'Token address to check balance for (leave empty for SOL)',
 			},
 		],
 	};
@@ -202,33 +232,90 @@ export class SolanaAgent implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
-		const resource = this.getNodeParameter('resource', 0) as string;
 		const operation = this.getNodeParameter('operation', 0) as string;
 		
 		// Get credentials
 		const credentials = await this.getCredentials('solanaApi');
 		
 		// Initialize Solana Agent Kit
-		const agent = new (require('solana-agent-kit').SolanaAgentKit)(
+		const agent = new SolanaAgentKit(
 			credentials.privateKey as string,
 			credentials.rpcUrl as string,
-			credentials.openAiApiKey as string,
-		) as SolanaAgentType;
+			{OPENAI_API_KEY: credentials.openAiApiKey as string} as Config,
+		)
 
 		for (let i = 0; i < items.length; i++) {
 			try {
 				let result;
 				
-				if (resource === 'token') {
-					result = await handleTokenOperations(this, agent, operation, i);
-				} else if (resource === 'nft') {
-					result = await handleNFTOperations(this, agent, operation, i);
-				} else {
-					throw new NodeOperationError(this.getNode(), `The resource "${resource}" is not supported!`);
+				switch (operation) {
+					// case 'createToken':
+					// 	const tokenName = this.getNodeParameter('tokenName', i) as string;
+					// 	const tokenSymbol = this.getNodeParameter('tokenSymbol', i) as string;
+					// 	const decimals = this.getNodeParameter('decimals', i) as number;
+					// 	const initialSupply = this.getNodeParameter('initialSupply', i) as number;
+						
+					// 	result = await agent.deployToken({
+					// 		name: tokenName,
+					// 		symbol: tokenSymbol,
+					// 		decimals,
+					// 		initialSupply,
+					// 	});
+					// 	break;
+
+					case 'transferToken':
+						const recipientAddress = new PublicKey(this.getNodeParameter('recipientAddress', i) as string);
+						const amount = this.getNodeParameter('amount', i) as number;
+						const tokenAddress = this.getNodeParameter('tokenAddress', i) as string;
+						const mintAddress = tokenAddress ? new PublicKey(tokenAddress) : undefined;
+						
+						result = await agent.transfer(recipientAddress, amount, mintAddress);
+						break;
+
+					case 'getTokenBalances':
+						const walletAddress = this.getNodeParameter('walletAddress', i) as string;
+						const walletPubkey = walletAddress ? new PublicKey(walletAddress) : undefined;
+						
+						result = await agent.getTokenBalances(walletPubkey);
+						break;
+
+					case 'getSingleBalance':
+						const singleTokenAddress = this.getNodeParameter('tokenAddress', i) as string;
+						const singleMintAddress = singleTokenAddress ? new PublicKey(singleTokenAddress) : undefined;
+						
+						result = await agent.getBalance(singleMintAddress);
+						break;
+
+					case 'getOtherBalance':
+						const otherWalletAddress = new PublicKey(this.getNodeParameter('walletAddress', i) as string);
+						const otherTokenAddress = this.getNodeParameter('otherTokenAddress', i) as string;
+						const otherMintAddress = otherTokenAddress ? new PublicKey(otherTokenAddress) : undefined;
+						
+						result = await agent.getBalanceOther(otherWalletAddress, otherMintAddress);
+						break;
+
+					case 'closeEmptyTokenAccounts':
+						result = await agent.closeEmptyTokenAccounts();
+						break;
+
+					case 'requestFaucet':
+						result = await agent.requestFaucetFunds();
+						break;
+
+					case 'getTPS':
+						result = await agent.getTPS();
+						break;
+
+					case 'getWalletAddress':
+						result = agent.wallet_address.toString;
+						break;
+
+					default:
+						throw new NodeOperationError(this.getNode(), `The operation "${operation}" is not supported!`);
 				}
 
 				returnData.push({
-					json: result,
+					json: {result},
 				});
 			} catch (error) {
 				if (this.continueOnFail()) {
@@ -244,46 +331,6 @@ export class SolanaAgent implements INodeType {
 		}
 		
 		return [returnData];
-	}
-}
-
-async function handleTokenOperations(
-	executeFunctions: IExecuteFunctions,
-	agent: SolanaAgentType,
-	operation: string,
-	itemIndex: number,
-) {
-	const tokenName = executeFunctions.getNodeParameter('tokenName', itemIndex) as string;
-	const tokenSymbol = executeFunctions.getNodeParameter('tokenSymbol', itemIndex) as string;
-	
-	switch (operation) {
-		case 'create':
-			return await agent.methods.deployToken({
-				name: tokenName,
-				symbol: tokenSymbol,
-			});
-		default:
-			throw new NodeOperationError(executeFunctions.getNode(), `The operation "${operation}" is not supported!`);
-	}
-}
-
-async function handleNFTOperations(
-	executeFunctions: IExecuteFunctions,
-	agent: SolanaAgentType,
-	operation: string,
-	itemIndex: number,
-) {
-	const collectionName = executeFunctions.getNodeParameter('collectionName', itemIndex) as string;
-	const collectionSymbol = executeFunctions.getNodeParameter('collectionSymbol', itemIndex) as string;
-	
-	switch (operation) {
-		case 'deployCollection':
-			return await agent.methods.deployCollection({
-				name: collectionName,
-				symbol: collectionSymbol,
-			});
-		default:
-			throw new NodeOperationError(executeFunctions.getNode(), `The operation "${operation}" is not supported!`);
 	}
 }
 
