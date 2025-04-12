@@ -6,7 +6,7 @@ import { SANCTUM_TRADE_API_URI } from "../../constants";
  * @returns TVL of the LST
  */
 
-export async function get_tvl(
+export async function sanctumGetLSTTVL(
   inputs: string[],
 ): Promise<{ tvls: Record<string, string> }> {
   try {

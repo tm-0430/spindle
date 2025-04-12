@@ -1,12 +1,12 @@
 import { SolanaAgentKit } from "../../agent";
-import { add_liquidity } from "../../tools";
+import { sanctumRemoveLiquidity } from "../../tools";
 import { Action } from "../../types/action";
 import { z } from "zod";
 
-const sanctumAddLiquidityAction: Action = {
-  name: "SANCTUM_ADD_LIQUIDITY",
-  similes: ["add liquidity to sanctum pool", "deposit to sanctum pool"],
-  description: "Add liquidity to a Sanctum pool with specified parameters",
+const sanctumRemoveLiquidityAction: Action = {
+  name: "SANCTUM_REMOVE_LIQUIDITY",
+  similes: ["remove liquidity from sanctum pool", "withdraw from sanctum pool"],
+  description: "Remove liquidity from a Sanctum pool with specified parameters",
   examples: [
     [
       {
@@ -18,10 +18,10 @@ const sanctumAddLiquidityAction: Action = {
         },
         output: {
           status: "success",
-          message: "Liquidity added successfully",
-          txId: "2jg87stmvPygRXJrqfpydZQSzGJK9rKvawekzy5mzuEmSjRf8bCmiGpFH8iLa2YrQxtreWcK99319DVTpCJHYZfx",
+          message: "Liquidity removed successfully",
+          txId: "2FqduazbmVrYAs6VMj7whKvFhEJnCyCvm7GiX4xCj1FSVr4CquPqFoCPDokUuJJ3T24EpXLPxrJWmGq6EnpsrJWf",
         },
-        explanation: "Add liquidity to a Sanctum pool",
+        explanation: "Remove liquidity from a Sanctum pool",
       },
     ],
   ],
@@ -33,7 +33,7 @@ const sanctumAddLiquidityAction: Action = {
   }),
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const result = await add_liquidity(
+      const result = await sanctumRemoveLiquidity(
         agent,
         input.lstMint,
         input.amount,
@@ -43,16 +43,16 @@ const sanctumAddLiquidityAction: Action = {
 
       return {
         status: "success",
-        message: "Liquidity added successfully",
+        message: "Liquidity removed successfully",
         txId: result.txId,
       };
     } catch (error: any) {
       return {
         status: "error",
-        message: `Adding liquidity to Sanctum pool failed: ${error.message}`,
+        message: `Removing liquidity from Sanctum pool failed: ${error.message}`,
       };
     }
   },
 };
 
-export default sanctumAddLiquidityAction;
+export default sanctumRemoveLiquidityAction;

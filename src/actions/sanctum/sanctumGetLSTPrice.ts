@@ -1,8 +1,8 @@
+import { sanctumGetLSTPrice } from "../../tools";
 import { Action } from "../../types/action";
-import { get_price } from "../../tools";
 import { z } from "zod";
 
-const sanctumGetPriceAction: Action = {
+const sanctumGetLSTPriceAction: Action = {
   name: "GET_SANCTUM_PRICE",
   similes: ["get sanctum LST price", "fetch sanctum LST price"],
   description:
@@ -33,7 +33,7 @@ const sanctumGetPriceAction: Action = {
   }),
   handler: async (input: Record<string, any>) => {
     try {
-      const prices = await get_price(input.mints);
+      const prices = await sanctumGetLSTPrice(input.mints);
 
       return {
         status: "success",
@@ -49,4 +49,4 @@ const sanctumGetPriceAction: Action = {
   },
 };
 
-export default sanctumGetPriceAction;
+export default sanctumGetLSTPriceAction;

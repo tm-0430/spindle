@@ -169,13 +169,6 @@ import {
   GetWormholeSupportedChainsTool,
   SolanaParseAccountTool,
   SolanaParseInstructionTool,
-  SanctumGetPriceTool,
-  SanctumGetApyTool,
-  SanctumGetTvlTool,
-  SanctumAddLiquidityTool,
-  SanctumRemoveLiquidityTool,
-  SanctumGetOwnedLstTool,
-  SanctumSwapLstTool,
 } from "./index";
 import {
   SolanaCancelLimitOrdersTool,
@@ -183,6 +176,15 @@ import {
   SolanaGetOpenOrdersTool,
   SolanaGetOrderHistoryTool,
 } from "./jupiter";
+import {
+  SanctumAddLiquidityTool,
+  SanctumGetLSTAPYTool,
+  SanctumGetLSTPriceTool,
+  SanctumGetLSTTVLTool,
+  SanctumGetOwnedLSTTool,
+  SanctumRemoveLiquidityTool,
+  SanctumSwapLSTTool,
+} from "./sanctum";
 
 export function createSolanaTools(solanaKit: SolanaAgentKit) {
   return [
@@ -317,12 +319,19 @@ export function createSolanaTools(solanaKit: SolanaAgentKit) {
     new SolanaGetOrderHistoryTool(solanaKit),
     new SolanaParseAccountTool(solanaKit),
     new SolanaParseInstructionTool(solanaKit),
-    new SanctumGetPriceTool(solanaKit),
-    new SanctumGetApyTool(solanaKit),
-    new SanctumGetTvlTool(solanaKit),
+    new SanctumGetLSTPriceTool(solanaKit),
+    new SanctumGetLSTTVLTool(solanaKit),
+    new SanctumGetLSTAPYTool(solanaKit),
+    new SanctumGetOwnedLSTTool(solanaKit),
     new SanctumAddLiquidityTool(solanaKit),
     new SanctumRemoveLiquidityTool(solanaKit),
-    new SanctumGetOwnedLstTool(solanaKit),
-    new SanctumSwapLstTool(solanaKit),
+    new SanctumSwapLSTTool(solanaKit),
+    // new SanctumGetPriceTool(solanaKit),
+    // new SanctumGetApyTool(solanaKit),
+    // new SanctumGetTvlTool(solanaKit),
+    // new SanctumAddLiquidityTool(solanaKit),
+    // new SanctumRemoveLiquidityTool(solanaKit),
+    // new SanctumGetOwnedLstTool(solanaKit),
+    // new SanctumSwapLstTool(solanaKit),
   ];
 }

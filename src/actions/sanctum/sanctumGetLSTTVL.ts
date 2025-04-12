@@ -1,8 +1,8 @@
-import { get_tvl } from "../../tools";
+import { sanctumGetLSTTVL } from "../../tools";
 import { Action } from "../../types/action";
 import { z } from "zod";
 
-const sanctumGetTvlTool: Action = {
+const sanctumGetLSTTVLTool: Action = {
   name: "GET_SANCTUM_TVL",
   similes: ["get sanctum LST TVL", "fetch sanctum LST TVL"],
   description:
@@ -34,7 +34,7 @@ const sanctumGetTvlTool: Action = {
   }),
   handler: async (input: Record<string, any>) => {
     try {
-      const tvls = await get_tvl(input.inputs);
+      const tvls = await sanctumGetLSTTVL(input.inputs);
 
       return {
         status: "success",
@@ -50,4 +50,4 @@ const sanctumGetTvlTool: Action = {
   },
 };
 
-export default sanctumGetTvlTool;
+export default sanctumGetLSTTVLTool;

@@ -1,7 +1,7 @@
 import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 
-export class SanctumGetOwnedLstTool extends Tool {
+export class SanctumGetOwnedLSTTool extends Tool {
   name = "sanctum_get_owned_lst";
   description = `Fetch the owned LST(Liquid Staking Token) on Sanctum with specified account`;
 
@@ -11,7 +11,7 @@ export class SanctumGetOwnedLstTool extends Tool {
 
   protected async _call(): Promise<string> {
     try {
-      const lsts = await this.solanaKit.getSanctumOwnedLst();
+      const lsts = await this.solanaKit.getSanctumOwnedLST();
 
       return JSON.stringify({
         status: "success",

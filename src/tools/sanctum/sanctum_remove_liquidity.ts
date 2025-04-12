@@ -17,7 +17,7 @@ import {
  * @return tranasction signature
  */
 
-export async function remove_liquidity(
+export async function sanctumRemoveLiquidity(
   agent: SolanaAgentKit,
   lstMint: string,
   amount: string,

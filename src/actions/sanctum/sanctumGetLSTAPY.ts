@@ -1,8 +1,8 @@
-import { get_apy } from "../../tools";
+import { sanctumGetLSTAPY } from "../../tools";
 import { Action } from "../../types/action";
 import { z } from "zod";
 
-const sanctumGetApyAction: Action = {
+const sanctumGetLSTAPYAction: Action = {
   name: "GET_SANCTUM_APY",
   similes: ["get sanctum LST APY", "fetch sanctum LST APY"],
   description:
@@ -33,7 +33,7 @@ const sanctumGetApyAction: Action = {
   }),
   handler: async (input: Record<string, any>) => {
     try {
-      const apys = await get_apy(input.inputs);
+      const apys = await sanctumGetLSTAPY(input.inputs);
 
       return {
         status: "success",
@@ -49,4 +49,4 @@ const sanctumGetApyAction: Action = {
   },
 };
 
-export default sanctumGetApyAction;
+export default sanctumGetLSTAPYAction;

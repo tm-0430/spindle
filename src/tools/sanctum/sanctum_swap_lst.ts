@@ -1,44 +1,35 @@
 import axios from "axios";
+import { SolanaAgentKit } from "../../agent";
 import { SANCTUM_TRADE_API_URI } from "../../constants";
-import { SolanaAgentKit } from "../../index";
-import {
-  TransactionInstruction,
-  TransactionMessage,
-  VersionedTransaction,
-} from "@solana/web3.js";
+import { VersionedTransaction } from "@solana/web3.js";
+import { TransactionInstruction } from "@solana/web3.js";
+import { TransactionMessage } from "@solana/web3.js";
 
-/**
- * Add Liquidity to a Sanctum infinite-LST pool
- * @param agent SolanaAgentKit instance
- * @param lstMint mint address of the LST
- * @param amount amount of LST to add
- * @param quotedAmount amount of the INF token to mint
- * @param priorityFee priority fee for the transaction
- * @return transaction signature
- */
-
-export async function add_liquidity(
+export async function sanctumSwapLST(
   agent: SolanaAgentKit,
-  lstMint: string,
+  inputLstMint: string,
   amount: string,
   quotedAmount: string,
   priorityFee: number,
+  outputLstMint: string,
 ): Promise<{ txId: string }> {
   try {
     const client = axios.create({
       baseURL: SANCTUM_TRADE_API_URI,
     });
 
-    const response = await client.post("/v1/liquidity/add", {
+    const response = await client.post("/v1/swap", {
       amount,
       dstLstAcc: null,
-      lstMint,
+      input: inputLstMint,
+      mode: "ExactIn",
       priorityFee: {
         Auto: {
           max_unit_price_micro_lamports: priorityFee,
           unit_limit: 300000,
         },
       },
+      outputLstMint,
       quotedAmount,
       signer: agent.wallet.publicKey.toBase58(),
       srcLstAcc: null,
@@ -79,7 +70,6 @@ export async function add_liquidity(
 
     return { txId };
   } catch (error: any) {
-    console.error(error);
-    throw new Error(`Failed to add liquidity: ${error.message}`);
+    throw new Error(`Failed to swap lst: ${error.message}`);
   }
 }

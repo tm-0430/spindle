@@ -2,19 +2,19 @@ import axios from "axios";
 import { SANCTUM_STAT_API_URI } from "../../constants";
 
 /**
- * @param inputs: Array of mint addresses or symbols of the LST to get price for registered in sanctum
- * @returns Price of the mints
+ * @param inputs: Array of mint addresses or symbols of the LST to get apy for registered in sanctum
+ * @returns APY of the LST
  */
 
-export async function get_price(
+export async function sanctumGetLSTAPY(
   inputs: string[],
-): Promise<{ mint: string; amount: number }[]> {
+): Promise<{ apys: Record<string, number> }> {
   try {
     const client = axios.create({
       baseURL: SANCTUM_STAT_API_URI,
     });
 
-    const response = await client.get("/v1/sol-value/current", {
+    const response = await client.get("/v1/apy/latest", {
       params: {
         lst: inputs,
       },
@@ -23,10 +23,10 @@ export async function get_price(
       },
     });
 
-    const result = response.data.solValues;
+    const result = response.data.apys;
 
     return result;
   } catch (error: any) {
-    throw new Error(`Failed to get price: ${error.message}`);
+    throw new Error(`Failed to get apy: ${error.message}`);
   }
 }

@@ -843,7 +843,7 @@ console.log('tvls', tvls)
 const txId = await agent.addSanctumLiquidity(
   "So11111111111111111111111111111111111111112",
   "1000000000",
-  "1100000000"
+  "1100000000",
   5000
 )
 
@@ -856,7 +856,7 @@ console.log('txId', txId)
 const txId = await agent.removeSanctumLiquidity(
   "So11111111111111111111111111111111111111112",
   "1000000000",
-  "1100000000"
+  "1100000000",
   5000
 )
 

@@ -1,7 +1,7 @@
 import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 
-export class SanctumSwapLstTool extends Tool {
+export class SanctumSwapLSTTool extends Tool {
   name = "sanctum_swap_lst";
   description = `Swap LST(Liquid Staking Token) on Sanctum.
   
@@ -21,7 +21,7 @@ export class SanctumSwapLstTool extends Tool {
     try {
       const parsedInput = JSON.parse(input);
 
-      const result = await this.solanaKit.swapSanctumLst(
+      const result = await this.solanaKit.swapSanctumLST(
         parsedInput.inputLstMint,
         parsedInput.amount,
         parsedInput.quotedAmount,

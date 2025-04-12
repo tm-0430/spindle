@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { Action } from "../../types/action";
 import { SolanaAgentKit } from "../../agent";
-import { swap_lst } from "../../tools";
+import { sanctumSwapLST } from "../../tools";
 
-const sanctumSwapLstAction: Action = {
+const sanctumSwapLSTAction: Action = {
   name: "SANCTUM_SWAP_LST",
   similes: ["swap lst in sanctum", "swap lst", "trade lst in sanctum"],
   description: `Swap LST(Liquid Staking Token) on Sanctum with specified parameters`,
@@ -36,7 +36,7 @@ const sanctumSwapLstAction: Action = {
 
   handler: async (agent: SolanaAgentKit, input: Record<string, any>) => {
     try {
-      const result = await swap_lst(
+      const result = await sanctumSwapLST(
         agent,
         input.inputLstMint,
         input.amount,
@@ -59,4 +59,4 @@ const sanctumSwapLstAction: Action = {
   },
 };
 
-export default sanctumSwapLstAction;
+export default sanctumSwapLSTAction;

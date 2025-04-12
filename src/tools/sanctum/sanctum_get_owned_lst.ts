@@ -3,7 +3,7 @@ import { SolanaAgentKit } from "../../index";
 import axios from "axios";
 import { SANCTUM_STAT_API_URI } from "../../constants";
 
-export async function get_owned_lst(
+export async function sanctumGetOwnedLST(
   agent: SolanaAgentKit,
 ): Promise<{ mint: string; amount: number }[]> {
   try {

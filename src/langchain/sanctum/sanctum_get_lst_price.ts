@@ -1,7 +1,7 @@
 import { Tool } from "langchain/tools";
 import { SolanaAgentKit } from "../../agent";
 
-export class SanctumGetPriceTool extends Tool {
+export class SanctumGetLSTPriceTool extends Tool {
   name = "sanctum_get_price";
   description = `Fetch the price of a LST(Liquid Staking Token) list on the Sanctum with specified mint addresses or symbols.
   
@@ -16,7 +16,9 @@ export class SanctumGetPriceTool extends Tool {
     try {
       const parsedInput = JSON.parse(input);
 
-      const prices = await this.solanaKit.getSanctumPrice(parsedInput.mints);
+      const prices = await this.solanaKit.getSanctumLSTPrice(
+        parsedInput.inputs,
+      );
 
       return JSON.stringify({
         status: "success",

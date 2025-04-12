@@ -1,9 +1,9 @@
 import { SolanaAgentKit } from "../../agent";
-import { get_owned_lst } from "../../tools/sanctum/get_owned_lst";
+import { sanctumGetOwnedLST } from "../../tools";
 import { Action } from "../../types/action";
 import { z } from "zod";
 
-const sanctumGetOwnedLstAction: Action = {
+const sanctumGetOwnedLSTAction: Action = {
   name: "SANCTUM_GET_OWNED_LST",
   similes: [
     "get owned lst",
@@ -32,7 +32,7 @@ const sanctumGetOwnedLstAction: Action = {
   schema: z.object({}),
   handler: async (agent: SolanaAgentKit) => {
     try {
-      const result = await get_owned_lst(agent);
+      const result = await sanctumGetOwnedLST(agent);
 
       return {
         status: "success",
@@ -48,4 +48,4 @@ const sanctumGetOwnedLstAction: Action = {
   },
 };
 
-export default sanctumGetOwnedLstAction;
+export default sanctumGetOwnedLSTAction;

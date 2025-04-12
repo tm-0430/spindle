@@ -124,13 +124,13 @@ import cancelLimitOrdersAction from "./jupiter/cancelLimitOrders";
 import getOpenLimitOrdersAction from "./jupiter/getOpenLimitOrders";
 import parseAccountAction from "./solanafm/parseAccount";
 import parseInstructionAction from "./solanafm/parseInstruction";
-import getSanctumPriceAction from "./sanctum/getPrice";
-import getSanctumApyAction from "./sanctum/getApy";
-import getSanctumTvlAction from "./sanctum/getTvl";
-import sanctumAddLiquidityAction from "./sanctum/addLiquidity";
-import sanctumRemoveLiquidityAction from "./sanctum/removeLiquidity";
-import sanctumGetOwnedLstAction from "./sanctum/getOwnedLst";
-import sanctumSwapLstAction from "./sanctum/swapLst";
+import getSanctumLSTPriceAction from "./sanctum/sanctumGetLSTPrice";
+import getSanctumLSTAPYAction from "./sanctum/sanctumGetLSTAPY";
+import getSanctumLSTTVLAction from "./sanctum/sanctumGetLSTTVL";
+import sanctumAddLiquidityAction from "./sanctum/sanctumAddLiquidity";
+import sanctumRemoveLiquidityAction from "./sanctum/sanctumRemoveLiquidity";
+import sanctumGetOwnedLSTAction from "./sanctum/sanctumGetOwnedLST";
+import sanctumSwapLSTAction from "./sanctum/sanctumSwapLST";
 
 export const ACTIONS = {
   GET_INFO_ACTION: getInfoAction,
@@ -263,13 +263,13 @@ export const ACTIONS = {
   GET_OPEN_LIMIT_ORDERS_ACTION: getOpenLimitOrdersAction,
   PARSE_ACCOUNT_ACTION: parseAccountAction,
   PARSE_INSTRUCTION_ACTION: parseInstructionAction,
-  SANCTUM_GET_PRICE_ACTION: getSanctumPriceAction,
-  SANCTUM_GET_APY_ACTION: getSanctumApyAction,
-  SANCTUM_GET_TVL_ACTION: getSanctumTvlAction,
+  SANCTUM_GET_PRICE_ACTION: getSanctumLSTPriceAction,
+  SANCTUM_GET_APY_ACTION: getSanctumLSTAPYAction,
+  SANCTUM_GET_TVL_ACTION: getSanctumLSTTVLAction,
   SANCTUM_ADD_LIQUIDITY_ACTION: sanctumAddLiquidityAction,
   SANCTUM_REMOVE_LIQUIDITY_ACTION: sanctumRemoveLiquidityAction,
-  SANCTUM_GET_OWNED_LST_ACTION: sanctumGetOwnedLstAction,
-  SANCTUM_SWAP_LST_ACTION: sanctumSwapLstAction,
+  SANCTUM_GET_OWNED_LST_ACTION: sanctumGetOwnedLSTAction,
+  SANCTUM_SWAP_LST_ACTION: sanctumSwapLSTAction,
 };
 
 export type { Action, ActionExample, Handler } from "../types/action";
