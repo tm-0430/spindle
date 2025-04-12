@@ -1,11 +1,12 @@
-import { IExecuteFunctions } from 'n8n-core';
 import {
+	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	NodeConnectionType,
 	NodeOperationError,
 } from 'n8n-workflow';
-import { SolanaAgentKit } from 'solana-agent-kit';
+import type { SolanaAgentKit } from 'solana-agent-kit';
 
 // Define the expected methods interface
 interface SolanaAgentMethods {
@@ -14,11 +15,11 @@ interface SolanaAgentMethods {
 }
 
 // Extend SolanaAgentKit with the methods we need
-type SolanaAgent = SolanaAgentKit & {
+type SolanaAgentType = SolanaAgentKit & {
 	methods: SolanaAgentMethods;
 };
 
-export class SolanaAgentNode implements INodeType {
+export class SolanaAgent implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Solana Agent',
 		name: 'solanaAgent',
@@ -30,8 +31,21 @@ export class SolanaAgentNode implements INodeType {
 		defaults: {
 			name: 'Solana Agent',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [
+			{
+				displayName: 'Input',
+				maxConnections: 1,
+				required: true,
+				type: NodeConnectionType.Main,
+			},
+		],
+		outputs: [
+			{
+				displayName: 'Output',
+				maxConnections: 1,
+				type: NodeConnectionType.Main,
+			},
+		],
 		credentials: [
 			{
 				name: 'solanaApi',
@@ -195,11 +209,11 @@ export class SolanaAgentNode implements INodeType {
 		const credentials = await this.getCredentials('solanaApi');
 		
 		// Initialize Solana Agent Kit
-		const agent = new SolanaAgentKit(
+		const agent = new (require('solana-agent-kit').SolanaAgentKit)(
 			credentials.privateKey as string,
 			credentials.rpcUrl as string,
 			credentials.openAiApiKey as string,
-		) as SolanaAgent;
+		) as SolanaAgentType;
 
 		for (let i = 0; i < items.length; i++) {
 			try {
@@ -235,7 +249,7 @@ export class SolanaAgentNode implements INodeType {
 
 async function handleTokenOperations(
 	executeFunctions: IExecuteFunctions,
-	agent: SolanaAgent,
+	agent: SolanaAgentType,
 	operation: string,
 	itemIndex: number,
 ) {
@@ -248,23 +262,14 @@ async function handleTokenOperations(
 				name: tokenName,
 				symbol: tokenSymbol,
 			});
-		case 'mint':
-			// Implement mint operation
-			break;
-		case 'transfer':
-			// Implement transfer operation
-			break;
 		default:
-			throw new NodeOperationError(
-				executeFunctions.getNode(),
-				`The operation "${operation}" is not supported for tokens!`,
-			);
+			throw new NodeOperationError(executeFunctions.getNode(), `The operation "${operation}" is not supported!`);
 	}
 }
 
 async function handleNFTOperations(
 	executeFunctions: IExecuteFunctions,
-	agent: SolanaAgent,
+	agent: SolanaAgentType,
 	operation: string,
 	itemIndex: number,
 ) {
@@ -277,16 +282,10 @@ async function handleNFTOperations(
 				name: collectionName,
 				symbol: collectionSymbol,
 			});
-		case 'mintNFT':
-			// Implement mint NFT operation
-			break;
-		case 'listForSale':
-			// Implement list for sale operation
-			break;
 		default:
-			throw new NodeOperationError(
-				executeFunctions.getNode(),
-				`The operation "${operation}" is not supported for NFTs!`,
-			);
+			throw new NodeOperationError(executeFunctions.getNode(), `The operation "${operation}" is not supported!`);
 	}
-} 
+}
+
+// Change from ES module export to CommonJS export
+module.exports = { SolanaAgent }; 
