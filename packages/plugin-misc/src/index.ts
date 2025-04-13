@@ -67,6 +67,9 @@ import {
 import parseAccountAction from "./solanafm/actions/parseAccount";
 import parseInstructionAction from "./solanafm/actions/parseInstruction";
 
+// messari
+import getMessariAiAction from "./messari/actions/askMessariAi";
+
 // Import all tools
 import {
   getAllDomainsTLDs,
@@ -117,6 +120,10 @@ import {
   parse_instruction as parseInstructionUsingSolanaFM,
 } from "./solanafm/tools";
 import {
+<<<<<<< HEAD
+  askMessariAi
+} from "./messari/tools";
+=======
   create_squads_multisig,
   multisig_approve_proposal,
   multisig_create_proposal,
@@ -127,6 +134,7 @@ import {
 } from "./squads/tools";
 import { simulate_switchboard_feed } from "./switchboard/tools";
 import { create_TipLink } from "./tiplink/tools";
+>>>>>>> afb9b2fd638df12eedad6c45f73d42d024af5f87
 
 // Define and export the plugin
 const MiscPlugin = {
@@ -177,6 +185,7 @@ const MiscPlugin = {
     searchMentionsByKeywordsUsingElfaAi: searchMentionsByKeywords,
     parseAccountUsingSolanaFM,
     parseInstructionUsingSolanaFM,
+    askMessariAi
   },
 
   // Combine all actions
@@ -223,6 +232,7 @@ const MiscPlugin = {
     elfaTrendingTokensAction,
     parseAccountAction,
     parseInstructionAction,
+    getMessariAiAction
   ],
 
   // Initialize function
