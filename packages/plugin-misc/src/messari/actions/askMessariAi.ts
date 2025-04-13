@@ -2,8 +2,8 @@ import { z } from "zod";
 import { Action } from "solana-agent-kit";
 import { askMessariAi } from "../tools";
 
-const getMessariChatCompletion: Action = {
-  name: "GET_MESSARI_CHAT_COMPLETION",
+const getMessariAiAction: Action = {
+  name: "GET_MESSARI_AI",
   description: `This tool queries Messari AI for comprehensive crypto research across these datasets: 
   Latest crypto news, CEX/DEX volumes, market share, transaction fees, total transactions, Asset prices, 
   trading volume, market cap, TVL, and historical performance, Investment data, Technical analysis of how protocols work, 
@@ -69,4 +69,4 @@ const getMessariChatCompletion: Action = {
   },
 };
 
-export default getMessariChatCompletion;
+export default getMessariAiAction;

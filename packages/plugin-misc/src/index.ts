@@ -67,6 +67,9 @@ import {
 import parseAccountAction from "./solanafm/actions/parseAccount";
 import parseInstructionAction from "./solanafm/actions/parseInstruction";
 
+// messari
+import getMessariAiAction from "./messari/actions/askMessariAi";
+
 // Import all tools
 import {
   getAllDomainsTLDs,
@@ -127,6 +130,9 @@ import {
   parse_account as parseAccountUsingSolanaFM,
   parse_instruction as parseInstructionUsingSolanaFM,
 } from "./solanafm/tools";
+import {
+  askMessariAi
+} from "./messari/tools";
 
 // Define and export the plugin
 const MiscPlugin = {
@@ -177,6 +183,7 @@ const MiscPlugin = {
     searchMentionsByKeywordsUsingElfaAi: searchMentionsByKeywords,
     parseAccountUsingSolanaFM,
     parseInstructionUsingSolanaFM,
+    askMessariAi
   },
 
   // Combine all actions
@@ -223,6 +230,7 @@ const MiscPlugin = {
     elfaTrendingTokensAction,
     parseAccountAction,
     parseInstructionAction,
+    getMessariAiAction
   ],
 
   // Initialize function
