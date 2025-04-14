@@ -1,6 +1,6 @@
-import type { SolanaAgentKit, Action } from "solana-agent-kit";
-import { sanctumAddLiquidity } from "../tools";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
+import { sanctumAddLiquidity } from "../tools";
 
 export const sanctumAddLiquidityAction: Action = {
   name: "SANCTUM_ADD_LIQUIDITY",

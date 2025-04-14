@@ -1,11 +1,11 @@
-import axios from "axios";
-import { SANCTUM_TRADE_API_URI } from "../constants";
-import { signOrSendTX, SolanaAgentKit } from "solana-agent-kit";
 import {
   TransactionInstruction,
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
+import axios from "axios";
+import { SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
+import { SANCTUM_TRADE_API_URI } from "../constants";
 
 /**
  * Remove Liquidity to a Sanctum infinite-LST pool

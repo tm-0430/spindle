@@ -1,9 +1,7 @@
 {
   "name": "solana-agent-kit",
   "description": "connect any ai agents to solana protocols",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "clean": "turbo run clean",
     "build": "turbo run build",
@@ -13,6 +11,7 @@
     "build:plugin-defi": "turbo run build --filter=@solana-agent-kit/plugin-defi",
     "build:plugin-misc": "turbo run build --filter=@solana-agent-kit/plugin-misc",
     "build:plugin-blinks": "turbo run build --filter=@solana-agent-kit/plugin-blinks",
+    "build:adapter-mcp": "turbo run build --filter=@solana-agent-kit/adapter-mcp",
     "test": "npx tsx test/index.ts",
     "docs": "typedoc src --out docs",
     "generate": "tsx src/utils/keypair.ts",
@@ -27,13 +26,7 @@
     "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
-  "keywords": [
-    "solana",
-    "agent",
-    "ai",
-    "solana agent kit",
-    "sendai"
-  ],
+  "keywords": ["solana", "agent", "ai", "solana agent kit", "sendai"],
   "author": "sendaifun",
   "license": "Apache-2.0",
   "devDependencies": {

@@ -171,16 +171,6 @@ import {
   withdrawFromDriftVault,
 } from "./drift/tools";
 
-// Import Sanctum tools and actions
-import {
-  sanctumSwapLST,
-  sanctumAddLiquidity,
-  sanctumGetLSTAPY,
-  sanctumGetLSTPrice,
-  sanctumGetLSTTVL,
-  sanctumGetOwnedLST,
-  sanctumRemoveLiquidity,
-} from "./sanctum/tools";
 import {
   sanctumAddLiquidityAction,
   sanctumGetLSTAPYAction,
@@ -190,6 +180,16 @@ import {
   sanctumRemoveLiquidityAction,
   sanctumSwapLSTAction,
 } from "./sanctum/actions";
+// Import Sanctum tools and actions
+import {
+  sanctumAddLiquidity,
+  sanctumGetLSTAPY,
+  sanctumGetLSTPrice,
+  sanctumGetLSTTVL,
+  sanctumGetOwnedLST,
+  sanctumRemoveLiquidity,
+  sanctumSwapLST,
+} from "./sanctum/tools";
 
 // Define and export the plugin
 const DefiPlugin = {

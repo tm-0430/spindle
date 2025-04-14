@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { Action } from "solana-agent-kit";
+import { z } from "zod";
 import { askMessariAi } from "../tools";
 
 const getMessariAiAction: Action = {
@@ -33,7 +33,8 @@ const getMessariAiAction: Action = {
     [
       {
         input: {
-          question: "How did ethereum performed over the last month in terms of its price and trading volume?"
+          question:
+            "How did ethereum performed over the last month in terms of its price and trading volume?",
         },
         output: {
           data: {
@@ -45,12 +46,12 @@ const getMessariAiAction: Action = {
               },
             ],
           },
-        }
-      }
+        },
+      },
     ],
   ],
   schema: z.object({
-    question: z.string().nonempty()
+    question: z.string().nonempty(),
   }),
   handler: async (agent, input: Record<string, any>) => {
     try {

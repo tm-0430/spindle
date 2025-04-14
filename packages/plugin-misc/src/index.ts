@@ -108,6 +108,7 @@ import {
   parseTransaction,
   sendTransactionWithPriorityFee,
 } from "./helius/tools";
+import { askMessariAi } from "./messari/tools";
 import {
   getAllRegisteredAllDomains,
   getMainAllDomainsDomain,
@@ -119,7 +120,6 @@ import {
   parse_account as parseAccountUsingSolanaFM,
   parse_instruction as parseInstructionUsingSolanaFM,
 } from "./solanafm/tools";
-import { askMessariAi } from "./messari/tools";
 import {
   create_squads_multisig,
   multisig_approve_proposal,

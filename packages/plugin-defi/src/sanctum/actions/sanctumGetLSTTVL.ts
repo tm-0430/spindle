@@ -1,6 +1,6 @@
-import { sanctumGetLSTTVL } from "../tools";
 import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { z } from "zod";
+import { sanctumGetLSTTVL } from "../tools";
 
 export const sanctumGetLSTTVLAction: Action = {
   name: "GET_SANCTUM_TVL",
