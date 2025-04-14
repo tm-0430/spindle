@@ -148,6 +148,13 @@ import {
   createWrappedToken,
   parse_instruction,
   parse_account,
+  sanctumGetLSTPrice,
+  sanctumGetLSTTVL,
+  sanctumGetLSTAPY,
+  sanctumGetOwnedLST,
+  sanctumSwapLST,
+  sanctumAddLiquidity,
+  sanctumRemoveLiquidity,
 } from "../tools";
 import {
   Config,
@@ -1459,5 +1466,68 @@ export class SolanaAgentKit {
    */
   async getJupiterLimitOrderHistory() {
     return getLimitOrderHistory(this);
+  }
+
+  async getSanctumLSTPrice(mints: string[]) {
+    return sanctumGetLSTPrice(mints);
+  }
+
+  async getSanctumLSTAPY(inputs: string[]) {
+    return sanctumGetLSTAPY(inputs);
+  }
+
+  async getSanctumLSTTVL(inputs: string[]) {
+    return sanctumGetLSTTVL(inputs);
+  }
+
+  async getSanctumOwnedLST() {
+    return sanctumGetOwnedLST(this);
+  }
+
+  async addSanctumLiquidity(
+    lstMint: string,
+    amount: string,
+    quotedAmount: string,
+    priorityFee: number,
+  ) {
+    return sanctumAddLiquidity(
+      this,
+      lstMint,
+      amount,
+      quotedAmount,
+      priorityFee,
+    );
+  }
+
+  async removeSanctumLiquidity(
+    lstMint: string,
+    amount: string,
+    quotedAmount: string,
+    priorityFee: number,
+  ) {
+    return sanctumRemoveLiquidity(
+      this,
+      lstMint,
+      amount,
+      quotedAmount,
+      priorityFee,
+    );
+  }
+
+  async swapSanctumLST(
+    inputLstMint: string,
+    amount: string,
+    quotedAmount: string,
+    priorityFee: number,
+    outputLstMint: string,
+  ) {
+    return sanctumSwapLST(
+      this,
+      inputLstMint,
+      amount,
+      quotedAmount,
+      priorityFee,
+      outputLstMint,
+    );
   }
 }
