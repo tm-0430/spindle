@@ -8,7 +8,9 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -47,6 +49,7 @@
     "@types/bn.js": "^5.1.6",
     "@types/decimal.js": "^7.4.3",
     "@voltr/vault-sdk": "^0.1.2",
+    "axios": "^1.7.9",
     "bn.js": "^5.2.1",
     "bs58": "^6.0.0",
     "decimal.js": "^10.5.0",

@@ -93,11 +93,6 @@ const NFTPlugin = {
         this.methods[methodName] = method.bind(null, agent);
       }
     });
-
-    // Any necessary initialization logic
-    if (!agent.config.OPENAI_API_KEY) {
-      console.warn("Warning: OPENAI_API_KEY not provided in config");
-    }
   },
 } satisfies Plugin;
 
