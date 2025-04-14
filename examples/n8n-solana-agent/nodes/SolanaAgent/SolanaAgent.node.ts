@@ -7,9 +7,17 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 import { PublicKey } from '@solana/web3.js';
-import { Config, SolanaAgentKit } from "solana-agent-kit";
+import { KeypairWallet, SolanaAgentKit } from "solana-agent-kit";
+import TokenPlugin from "@solana-agent-kit/plugin-token";
+import { Keypair } from '@solana/web3.js';
+import bs58 from "bs58";
 
-export class SolanaAgent implements INodeType {
+
+function createKeypairFromPrivateKeyString(privateKeyString: string) {
+	return Keypair.fromSecretKey(bs58.decode(privateKeyString));
+}
+
+class SolanaAgent implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Solana Token Agent',
 		name: 'solanaAgent',
@@ -229,6 +237,8 @@ export class SolanaAgent implements INodeType {
 		],
 	};
 
+	
+
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
@@ -236,13 +246,18 @@ export class SolanaAgent implements INodeType {
 		
 		// Get credentials
 		const credentials = await this.getCredentials('solanaApi');
+
+		const wallet = new KeypairWallet(
+			createKeypairFromPrivateKeyString(credentials.privateKey as string),
+			credentials.rpcUrl as string
+		)
 		
 		// Initialize Solana Agent Kit
 		const agent = new SolanaAgentKit(
-			credentials.privateKey as string,
+			wallet,
 			credentials.rpcUrl as string,
-			{OPENAI_API_KEY: credentials.openAiApiKey as string} as Config,
-		)
+			{OPENAI_API_KEY: credentials.openAiApiKey as string},
+		).use(TokenPlugin)
 
 		for (let i = 0; i < items.length; i++) {
 			try {
@@ -268,22 +283,20 @@ export class SolanaAgent implements INodeType {
 						const amount = this.getNodeParameter('amount', i) as number;
 						const tokenAddress = this.getNodeParameter('tokenAddress', i) as string;
 						const mintAddress = tokenAddress ? new PublicKey(tokenAddress) : undefined;
-						
-						result = await agent.transfer(recipientAddress, amount, mintAddress);
+						result = await agent.methods.transfer(agent, recipientAddress, amount, mintAddress);
 						break;
 
 					case 'getTokenBalances':
 						const walletAddress = this.getNodeParameter('walletAddress', i) as string;
 						const walletPubkey = walletAddress ? new PublicKey(walletAddress) : undefined;
-						
-						result = await agent.getTokenBalances(walletPubkey);
+						result = await agent.methods.get_token_balance(agent, walletPubkey);
 						break;
 
 					case 'getSingleBalance':
 						const singleTokenAddress = this.getNodeParameter('tokenAddress', i) as string;
 						const singleMintAddress = singleTokenAddress ? new PublicKey(singleTokenAddress) : undefined;
 						
-						result = await agent.getBalance(singleMintAddress);
+						result = await agent.methods.get_balance(agent, singleMintAddress);
 						break;
 
 					case 'getOtherBalance':
@@ -291,23 +304,23 @@ export class SolanaAgent implements INodeType {
 						const otherTokenAddress = this.getNodeParameter('otherTokenAddress', i) as string;
 						const otherMintAddress = otherTokenAddress ? new PublicKey(otherTokenAddress) : undefined;
 						
-						result = await agent.getBalanceOther(otherWalletAddress, otherMintAddress);
+						result = await agent.methods.get_balance_other(agent, otherWalletAddress, otherMintAddress);
 						break;
 
 					case 'closeEmptyTokenAccounts':
-						result = await agent.closeEmptyTokenAccounts();
+						result = await agent.methods.closeEmptyTokenAccounts(agent);
 						break;
 
 					case 'requestFaucet':
-						result = await agent.requestFaucetFunds();
+						result = await agent.methods.request_faucet_funds(agent);
 						break;
 
 					case 'getTPS':
-						result = await agent.getTPS();
+						result = await agent.methods.getTPS(agent);
 						break;
 
 					case 'getWalletAddress':
-						result = agent.wallet_address.toString;
+						result = agent.methods.getWalletAddress(agent as any);
 						break;
 
 					default:
@@ -334,5 +347,5 @@ export class SolanaAgent implements INodeType {
 	}
 }
 
-// Change from ES module export to CommonJS export
-module.exports = { SolanaAgent }; 
+// Export the class
+export { SolanaAgent }; 

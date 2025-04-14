@@ -19,8 +19,8 @@
     "url": "git+https://github.com/sendaifun/solana-agent-kit.git"
   },
   "engines": {
-    "node": ">=18.10",
-    "pnpm": ">=9.1"
+    "node": ">=22.0.0",
+    "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@9.1.4",
   "main": "index.js",
@@ -55,8 +55,12 @@
     "typescript": "^5.5.3"
   },
   "dependencies": {
+    "@solana-agent-kit/plugin-token": "2.0.0-beta.11",
+    "@solana/web3.js": "^1.98.0",
     "@types/node": "^18.0.0",
-    "solana-agent-kit": "latest"
+    "bs58": "^6.0.0",
+    "n8n-workflow": "1.82.0",
+    "solana-agent-kit": "2.0.0-beta.11"
   },
   "peerDependencies": {
     "n8n-core": "1.82.0",
