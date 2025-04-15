@@ -2,20 +2,31 @@ import { NextRequest, NextResponse } from "next/server";
 import { ChatOpenAI } from "@langchain/openai";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { SolanaAgentKit, createSolanaTools } from "solana-agent-kit";
+import {
+  KeypairWallet,
+  SolanaAgentKit,
+  createLangchainTools,
+} from "solana-agent-kit";
+import TokenPlugin from "@solana-agent-kit/plugin-token";
+import { Keypair } from "@solana/web3.js";
+import bs58 from "bs58";
 
 const llm = new ChatOpenAI({
   temperature: 0.7,
   model: "gpt-4o-mini",
 });
 
-const solanaAgent = new SolanaAgentKit(
-  process.env.SOLANA_PRIVATE_KEY!,
-  process.env.RPC_URL,
-  process.env.OPENAI_API_KEY!,
+const keypair = Keypair.fromSecretKey(
+  bs58.decode(process.env.SOLANA_PRIVATE_KEY!),
 );
+const keypairWallet = new KeypairWallet(keypair, process.env.RPC_URL!);
+const solanaAgent = new SolanaAgentKit(
+  keypairWallet,
+  process.env.RPC_URL!,
+  {},
+).use(TokenPlugin);
 
-const tools = createSolanaTools(solanaAgent);
+const tools = createLangchainTools(solanaAgent, solanaAgent.actions);
 const memory = new MemorySaver();
 
 const agent = createReactAgent({
