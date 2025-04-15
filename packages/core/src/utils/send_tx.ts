@@ -9,10 +9,7 @@ import {
 import { ComputeBudgetProgram } from "@solana/web3.js";
 import bs58 from "bs58";
 import type { SolanaAgentKit } from "../agent";
-import type {
-  PriorityFeeResponse,
-  TransactionOrVersionedTransaction,
-} from "../types/index";
+import type { PriorityFeeResponse } from "../types/index";
 
 export const feeTiers = {
   min: 0.01,

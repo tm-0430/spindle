@@ -65,6 +65,15 @@ This plugin provides a comprehensive suite of tools and actions to interact with
 - **`voltrDepositStrategy`**: Deposit into a Voltr strategy.
 - **`voltrGetPositionValues`**: Get position values for Voltr.
 
+### Sanctum
+- **`sanctumSwapLST`**: Swap LSTs on Sanctum.
+- **`sanctumAddLiquidity`**: Add liquidity on Sanctum.
+- **`sanctumRemoveLiquidity`**: Remove liquidity on Sanctum.
+- **`sanctumGetLSTAPY`**: Get the APY for LSTs on Sanctum.
+- **`sanctumGetLSTPrice`**: Get the price of LSTs on Sanctum.
+- **`sanctumGetLSTTVL`**: Get the TVL for LSTs on Sanctum.
+- **`sanctumGetOwnedLST`**: Get owned LSTs on Sanctum.
+
 ## Full Documentation
 
 For more detailed information, please refer to the full documentation at [docs.sendai.fun](https://docs.sendai.fun).
