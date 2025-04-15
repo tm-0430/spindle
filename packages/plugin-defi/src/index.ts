@@ -25,11 +25,11 @@ import luloLendAction from "./lulo/actions/luloLend";
 import luloWithdrawAction from "./lulo/actions/luloWithdraw";
 import { lendAsset, luloLend, luloWithdraw } from "./lulo/tools";
 
+// Import Manifest tools & actions
 import cancelAllOrdersAction from "./manifest/actions/cancelAllOrders";
 import limitOrderAction from "./manifest/actions/limitOrder";
 import manifestCreateMarketAction from "./manifest/actions/manifestCreateMarket";
 import withdrawAllAction from "./manifest/actions/withdrawAll";
-// Import Manifest tools & actions
 import {
   cancelAllOrders,
   limitOrder,
@@ -37,12 +37,12 @@ import {
   withdrawAll,
 } from "./manifest/tools";
 
+// Import Debridge tools & actions
 import checkDebridgeTransactionStatusAction from "./debridge/actions/checkTransactionStatus";
 import createDebridgeBridgeOrderAction from "./debridge/actions/createBridgeOrder";
 import executeDebridgeBridgeOrderAction from "./debridge/actions/executeBridgeOrder";
 import getDebridgeSupportedChainsAction from "./debridge/actions/getSupportedChains";
 import getDebridgeTokensInfoAction from "./debridge/actions/getTokensInfo";
-// Import Debridge tools & actions
 import {
   checkDebridgeTransactionStatus,
   createDebridgeBridgeOrder,
@@ -52,8 +52,8 @@ import {
   getDebridgeTokensInfo,
 } from "./debridge/tools";
 
-import fluxbeamCreatePoolAction from "./fluxbeam/actions/createPool";
 // Import Fluxbeam tools & actions
+import fluxbeamCreatePoolAction from "./fluxbeam/actions/createPool";
 import { fluxBeamCreatePool } from "./fluxbeam/tools/create_pool";
 
 // Import Meteora actions & tools
@@ -171,6 +171,26 @@ import {
   withdrawFromDriftVault,
 } from "./drift/tools";
 
+import {
+  sanctumAddLiquidityAction,
+  sanctumGetLSTAPYAction,
+  sanctumGetLSTPriceAction,
+  sanctumGetLSTTVLAction,
+  sanctumGetOwnedLSTAction,
+  sanctumRemoveLiquidityAction,
+  sanctumSwapLSTAction,
+} from "./sanctum/actions";
+// Import Sanctum tools and actions
+import {
+  sanctumAddLiquidity,
+  sanctumGetLSTAPY,
+  sanctumGetLSTPrice,
+  sanctumGetLSTTVL,
+  sanctumGetOwnedLST,
+  sanctumRemoveLiquidity,
+  sanctumSwapLST,
+} from "./sanctum/tools";
+
 // Define and export the plugin
 const DefiPlugin = {
   name: "defi",
@@ -267,6 +287,15 @@ const DefiPlugin = {
 
     // Fluxbeam methods
     fluxBeamCreatePool,
+
+    // Sanctum methods
+    sanctumSwapLST,
+    sanctumAddLiquidity,
+    sanctumGetLSTAPY,
+    sanctumGetLSTPrice,
+    sanctumGetLSTTVL,
+    sanctumGetOwnedLST,
+    sanctumRemoveLiquidity,
   },
 
   // Combine all actions
@@ -349,6 +378,15 @@ const DefiPlugin = {
 
     // Fluxbeam actions
     fluxbeamCreatePoolAction,
+
+    // Sanctum actions
+    sanctumAddLiquidityAction,
+    sanctumGetLSTAPYAction,
+    sanctumGetLSTPriceAction,
+    sanctumGetLSTTVLAction,
+    sanctumGetOwnedLSTAction,
+    sanctumRemoveLiquidityAction,
+    sanctumSwapLSTAction,
   ],
 
   // Initialize function
@@ -359,11 +397,6 @@ const DefiPlugin = {
         this.methods[methodName] = method.bind(null, agent);
       }
     });
-
-    // Any necessary initialization logic
-    if (!agent.config.OPENAI_API_KEY) {
-      console.warn("Warning: OPENAI_API_KEY not provided in config");
-    }
   },
 } satisfies Plugin;
 

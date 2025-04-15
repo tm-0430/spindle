@@ -307,6 +307,9 @@ importers:
       '@voltr/vault-sdk':
         specifier: ^0.1.2
         version: 0.1.2(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.6.3)(utf-8-validate@5.0.10)
+      axios:
+        specifier: ^1.7.9
+        version: 1.8.4
       bn.js:
         specifier: ^5.2.1
         version: 5.2.1
@@ -9196,7 +9199,7 @@ snapshots:
     dependencies:
       asn1.js: 5.4.1
       async-retry: 1.3.3
-      axios: 1.7.9
+      axios: 1.8.4
       base64-js: 1.5.1
       bignumber.js: 9.1.2
     transitivePeerDependencies:
@@ -9206,7 +9209,7 @@ snapshots:
     dependencies:
       asn1.js: 5.4.1
       async-retry: 1.3.3
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.8.4(debug@4.4.0)
       base64-js: 1.5.1
       bignumber.js: 9.1.2
     transitivePeerDependencies:
@@ -9215,14 +9218,14 @@ snapshots:
   '@irys/query@0.0.1(debug@4.4.0)':
     dependencies:
       async-retry: 1.3.3
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.8.4(debug@4.4.0)
     transitivePeerDependencies:
       - debug
 
   '@irys/query@0.0.8':
     dependencies:
       async-retry: 1.3.3
-      axios: 1.7.9
+      axios: 1.8.4
     transitivePeerDependencies:
       - debug
 
@@ -9243,7 +9246,7 @@ snapshots:
       aptos: 1.8.5(debug@4.4.0)
       arbundles: 0.10.1(arweave@1.15.5)(bufferutil@4.0.9)(debug@4.4.0)(utf-8-validate@5.0.10)
       async-retry: 1.3.3
-      axios: 1.7.9(debug@4.4.0)
+      axios: 1.8.4(debug@4.4.0)
       base64url: 3.0.1
       bignumber.js: 9.1.2
       bs58: 5.0.0
@@ -9277,7 +9280,7 @@ snapshots:
       algosdk: 1.24.1
       arbundles: 0.11.2(arweave@1.15.5)(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       async-retry: 1.3.3
-      axios: 1.7.9
+      axios: 1.8.4
       base64url: 3.0.1
       bignumber.js: 9.1.2
       bs58: 5.0.0
@@ -10529,7 +10532,7 @@ snapshots:
     dependencies:
       '@pythnetwork/price-service-sdk': 1.7.1
       '@types/ws': 8.5.13
-      axios: 1.7.9
+      axios: 1.8.4
       axios-retry: 3.9.1
       isomorphic-ws: 4.0.1(ws@8.18.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       ts-log: 2.2.7
@@ -10579,7 +10582,7 @@ snapshots:
       '@solana/buffer-layout': 4.0.1
       '@solana/spl-token': 0.4.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.6.3)(utf-8-validate@5.0.10)
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      axios: 1.7.9
+      axios: 1.8.4
       big.js: 6.2.2
       bn.js: 5.2.1
       dayjs: 1.11.13
@@ -11655,7 +11658,7 @@ snapshots:
       '@coral-xyz/anchor': 0.29.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@coral-xyz/anchor-new': '@coral-xyz/anchor@0.30.1(bufferutil@4.0.9)(utf-8-validate@5.0.10)'
       '@solanafm/kinobi-lite': 0.12.4
-      axios: 1.7.9
+      axios: 1.8.4
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -11691,7 +11694,7 @@ snapshots:
     dependencies:
       '@jup-ag/api': 6.0.39
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      axios: 1.8.4(debug@4.4.0)
+      axios: 1.8.4
       typescript: 5.7.3
     transitivePeerDependencies:
       - bufferutil
@@ -11802,7 +11805,7 @@ snapshots:
   '@switchboard-xyz/common@2.5.15(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      axios: 1.7.9
+      axios: 1.8.4
       big.js: 6.2.2
       bn.js: 5.2.1
       bs58: 6.0.0
@@ -11821,7 +11824,7 @@ snapshots:
   '@switchboard-xyz/common@2.5.17(bufferutil@4.0.9)(utf-8-validate@5.0.10)':
     dependencies:
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      axios: 1.7.9
+      axios: 1.8.4
       big.js: 6.2.2
       bn.js: 5.2.1
       bs58: 6.0.0
@@ -11844,7 +11847,7 @@ snapshots:
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@solworks/soltoolkit-sdk': 0.0.23(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(utf-8-validate@5.0.10)
       '@switchboard-xyz/common': 2.5.15(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      axios: 1.7.9
+      axios: 1.8.4
       big.js: 6.2.2
       bs58: 5.0.0
       js-yaml: 4.1.0
@@ -12767,15 +12770,15 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  axios@1.7.9(debug@4.4.0):
+  axios@1.8.4:
     dependencies:
-      follow-redirects: 1.15.9(debug@4.4.0)
+      follow-redirects: 1.15.9
       form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
 
-  axios@1.8.4:
+  axios@1.8.4(debug@4.4.0):
     dependencies:
       follow-redirects: 1.15.9(debug@4.4.0)
       form-data: 4.0.1
