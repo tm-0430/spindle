@@ -300,8 +300,11 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
   }, [initialMessages]);
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e?.preventDefault();
+    async (e?: React.FormEvent<HTMLFormElement>) => {
+      if (e && typeof e.preventDefault === 'function') {
+        e.preventDefault();
+      }
+      
       const messageContent = input;
       if (!messageContent) {
         setError("Message cannot be empty");
@@ -314,7 +317,9 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
         parts: [{ type: "text", text: messageContent }],
       };
       sendMessage(newMessage);
-      e?.currentTarget.reset();
+      if (e?.currentTarget) {
+        e.currentTarget.reset();
+      }
     },
     [sendMessage, input],
   );

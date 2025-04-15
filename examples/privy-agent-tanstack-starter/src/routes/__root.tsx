@@ -355,7 +355,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
               {/* Main Content with adjusted margin based on sidebar state */}
               <main className={`flex-1 transition-all duration-300 mt-4 mb-4 ${
-                sidebarOpen ? "ml-72" : "ml-28"
+                sidebarOpen ? "ml-32" : "ml-28"
               }`}>
                 <div className="container py-4 px-4 md:px-6 lg:px-8">
                   <Toaster position="top-center" />

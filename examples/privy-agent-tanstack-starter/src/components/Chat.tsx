@@ -49,23 +49,25 @@ export function Chat({
   };
 
   const handleInputSubmit = (e?: React.FormEvent) => {
-    e?.preventDefault();
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+    }
     
     if (!input.trim()) return;
     
     // Check authentication before submitting
-    if (!checkAuthAndShowModal(() => handleInputSubmit(e))) {
+    if (!checkAuthAndShowModal(() => handleInputSubmit())) {
       return;
     }
     
     setIsSubmitting(true);
     
     try {
-      if (e) {
+      if (e && e instanceof Event) {
         handleSubmit(e as React.FormEvent<HTMLFormElement>);
       } else {
-        // Create a synthetic event or call without the event
-        handleSubmit({} as React.FormEvent<HTMLFormElement>);
+        // When no event is provided, call handleSubmit without arguments
+        handleSubmit(undefined as any);
       }
     } catch (error) {
       console.error("Error sending message:", error);
