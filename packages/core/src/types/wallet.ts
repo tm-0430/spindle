@@ -9,7 +9,6 @@ import {
   type TransactionSignature,
   VersionedTransaction,
 } from "@solana/web3.js";
-import type { TransactionOrVersionedTransaction } from ".";
 import type { SolanaAgentKit } from "../agent";
 import {
   type feeTiers,
@@ -37,12 +36,9 @@ export interface BaseWallet {
    * @param {T} transaction - The transaction to be signed
    * @returns {Promise<T>} Promise resolving to the signed transaction
    */
-  signTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(transaction: T): Promise<T>;
+  signTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<T>;
 
   /**
    * Signs multiple transactions in batch
@@ -50,24 +46,18 @@ export interface BaseWallet {
    * @param {T[]} transactions - Array of transactions to be signed
    * @returns {Promise<T[]>} Promise resolving to an array of signed transactions
    */
-  signAllTransactions<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(transactions: T[]): Promise<T[]>;
+  signAllTransactions<T extends Transaction | VersionedTransaction>(
+    transactions: T[],
+  ): Promise<T[]>;
 
   /**
    * Sends a transaction on chain
    * @template T - Transaction type (Transaction or VersionedTransaction)
    * @param {T} transaction - The transaction to be signed and sent
    */
-  sendTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(transaction: T): Promise<string>;
+  sendTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<string>;
 
   /**
    * Signs and sends a transaction to the network
@@ -76,12 +66,7 @@ export interface BaseWallet {
    * @param {SendOptions} [options] - Optional transaction send configuration
    * @returns {Promise<{signature: TransactionSignature}>} Promise resolving to the transaction signature
    */
-  signAndSendTransaction?: <
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(
+  signAndSendTransaction?: <T extends Transaction | VersionedTransaction>(
     transaction: T,
     options?: SendOptions,
   ) => Promise<{ signature: TransactionSignature }>;
@@ -105,8 +90,10 @@ export async function signOrSendTX(
   feeTier?: keyof typeof feeTiers,
 ): Promise<
   | string
-  | TransactionOrVersionedTransaction
-  | TransactionOrVersionedTransaction[]
+  | Transaction
+  | VersionedTransaction
+  | Transaction[]
+  | VersionedTransaction[]
 > {
   if (
     Array.isArray(instructionsOrTransaction) &&

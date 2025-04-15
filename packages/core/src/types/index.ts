@@ -9,10 +9,6 @@ export interface Plugin {
   initialize(agent: SolanaAgentKit): void;
 }
 
-export type TransactionOrVersionedTransaction =
-  | Transaction
-  | VersionedTransaction;
-
 export interface Config {
   signOnly?: boolean;
   OPENAI_API_KEY?: string;
