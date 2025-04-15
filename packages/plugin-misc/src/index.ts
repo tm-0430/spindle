@@ -108,6 +108,7 @@ import {
   parseTransaction,
   sendTransactionWithPriorityFee,
 } from "./helius/tools";
+import { askMessariAi } from "./messari/tools";
 import {
   getAllRegisteredAllDomains,
   getMainAllDomainsDomain,
@@ -119,7 +120,6 @@ import {
   parse_account as parseAccountUsingSolanaFM,
   parse_instruction as parseInstructionUsingSolanaFM,
 } from "./solanafm/tools";
-import { askMessariAi } from "./messari/tools";
 import {
   create_squads_multisig,
   multisig_approve_proposal,
@@ -239,11 +239,6 @@ const MiscPlugin = {
         this.methods[methodName] = method.bind(null, agent);
       }
     });
-
-    // Any necessary initialization logic
-    if (!agent.config.OPENAI_API_KEY) {
-      console.warn("Warning: OPENAI_API_KEY not provided in config");
-    }
   },
 } satisfies Plugin;
 

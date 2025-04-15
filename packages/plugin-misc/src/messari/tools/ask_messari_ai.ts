@@ -2,7 +2,8 @@ import { SolanaAgentKit } from "solana-agent-kit";
 import { MessariAPIResponse } from "../types";
 
 export async function askMessariAi(
-  agent: SolanaAgentKit, question: string
+  agent: SolanaAgentKit,
+  question: string,
 ): Promise<any> {
   try {
     const apiKey = agent.config?.MESSARI_API_KEY;
@@ -26,13 +27,13 @@ export async function askMessariAi(
         ],
       }),
     });
-    
+
     const data = (await response.json()) as MessariAPIResponse;
     const result = data.data.messages[0].content;
     return result;
-
   } catch (error: any) {
-    const errorMessage = error?.errorResponse?.error || error?.message || "Unknown error occurred";
+    const errorMessage =
+      error?.errorResponse?.error || error?.message || "Unknown error occurred";
     console.error("Error retrieving assets: ", errorMessage);
     throw new Error(`Error fetching data from Messari: ${errorMessage}`);
   }

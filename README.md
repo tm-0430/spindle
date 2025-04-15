@@ -162,7 +162,7 @@ const tools = createVercelAITools(agent, agent.actions);
 
 You can also make use of the wallet interface provided by the Solana wallet adapter for embedded wallets.
 
-## Usage Examples
+## Usage Examples Using Tools From The Token, Defi, and Other Plugins
 
 ### Deploy a New Token
 
@@ -205,53 +205,6 @@ const result = await agent.methods.delpoyToken2022(
 console.log("Token2022 Mint Address:", result.mint.toString());
 ```
 
-
-
-### Get all supported chains using Wormhole
-```typescript
-const chains = await agent.methods.getWormholeSupportedChains();
-console.log("Supported Chains:", chains);
-```
-
-### Create a Wrapped Token using Wormhole
-
-```typescript
-
-const result = await agent.methods.createWrappedToken({
-  destinationChain: "BaseSepolia", // Target chain
-  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address
-  network: "Testnet", // Network type (Testnet or Mainnet)
-});
-console.log("Wrapped Token Result:", result);
-```
-
-
-Note:
- When using Wormhole for cross-chain operations:
-- Always verify the destination chain is supported before attempting transfers
-- Use the correct network parameter ("Testnet" or "Mainnet") based on your environment
-- Make sure the destination address wallet private key is presernt in the .env file as automatic transfer is not supported yet on Solana
-
-### Perform a CCTP transfer using Wormhole
-```typescript
-const transfer = await agent.methods.cctpTransfer({
-  destinationChain: "Base Sepolia", // Target chain
-  transferAmount: "1", // Amount to transfer
-  network: "Testnet", // Network type (Testnet or Mainnet)
-});
-console.log("Transfer result:", transfer);
-```
-
-### Perform Token Transfer using Wormhole
-```typescript
-const transfer = await agent.methods.tokenTransfer({
-  destinationChain: "Base Sepolia", // Target chain
-  tokenAddress: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU", // Original token address or leave it empty to treansfer Native SOL
-  network: "Testnet", // Network type (Testnet or Mainnet)
-});
-```
-
-
 ### Create NFT Collection on 3Land
 ```typescript
 const isDevnet = false; // (Optional) if not present TX takes place in Mainnet
@@ -264,7 +217,7 @@ const priorityFeeParam = 1000000; // (Optional) if not present the default prior
     mainImageUrl: ""
   };
 
-const result = await agent.create3LandCollection(
+const result = await agent.methods.create3LandCollection(
       collectionOpts,
       isDevnet, // (Optional) if not present TX takes place in Mainnet
       priorityFeeParam, //(Optional)
@@ -650,21 +603,21 @@ const asset = await agent.methods.getAsset(agent, "41Y8C4oxk4zgJT1KXyQr35UhZcfsp
 Get the price for a given token and timeframe from Allora's API
 
 ```typescript
-const sol5mPrice = await agent.getPriceInference("SOL", "5m");
+const sol5mPrice = await agent.methods.getPriceInference("SOL", "5m");
 console.log("5m price inference of SOL/USD:", sol5mPrice);
 ```
 
 ### List all topics from Allora
 
 ```typescript
-const topics = await agent.getAllTopics();
+const topics = await agent.methods.getAllTopics();
 console.log("Allora topics:", topics);
 ```
 
 ### Get an inference for an specific topic from Allora
 
 ```typescript
-const inference = await agent.getInferenceByTopicId(42);
+const inference = await agent.methods.getInferenceByTopicId(42);
 console.log("Allora inference for topic 42:", inference);
 ```
 
@@ -673,26 +626,10 @@ console.log("Allora inference for topic 42:", inference);
 Simulate a given Switchboard feed. Find or create feeds [here](https://ondemand.switchboard.xyz/solana/mainnet).
 
 ```typescript
-const value = await agent.simulateSwitchboardFeed(
+const value = await agent.methods.simulateSwitchboardFeed(
       "9wcBMATS8bGLQ2UcRuYjsRAD7TPqB1CMhqfueBx78Uj2", // TRUMP/USD
       "http://crossbar.switchboard.xyz");;
 console.log("Simulation resulted in the following value:", value);
-
-### Cross-Chain Swap
-
-```typescript
-import { PublicKey } from "@solana/web3.js";
-
-const signature = await agent.swap(
-  amount: "10",
-  fromChain: "bsc",
-  fromToken: "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
-  toChain: "solana",
-  toToken: "0x0000000000000000000000000000000000000000",
-  dstAddr: "0xc2d3024d64f27d85e05c40056674Fd18772dd922",
-);
-
-```
 
 ### Cross-Chain Bridge via deBridge
 
@@ -700,14 +637,14 @@ The Solana Agent Kit supports cross-chain token transfers using deBridge's DLN p
 
 1. Check supported chains:
 ```typescript
-const chains = await agent.getDebridgeSupportedChains();
+const chains = await agent.methods.getDebridgeSupportedChains();
 console.log("Available chains:", chains);
 // Example output: { chains: [{ chainId: "1", chainName: "Ethereum" }, { chainId: "7565164", chainName: "Solana" }] }
 ```
 
 2. Get available tokens (optional):
 ```typescript
-const tokens = await agent.getDebridgeTokensInfo("1", "USDC"); // Search for USDC on Ethereum
+const tokens = await agent.methods.getDebridgeTokensInfo("1", "USDC"); // Search for USDC on Ethereum
 console.log("Available tokens:", tokens);
 // Shows tokens matching 'USDC' on the specified chain
 ```
@@ -723,20 +660,20 @@ const orderInput = {
   dstChainTokenOutRecipient: "0x23C279e58ddF1018C3B9D0C224534fA2a83fb1d2" // ETH recipient
 };
 
-const order = await agent.createDebridgeOrder(orderInput);
+const order = await agent.methods.createDebridgeOrder(orderInput);
 console.log("Order created:", order);
 // Contains transaction data and estimated amounts
 ```
 
 4. Execute the bridge order:
 ```typescript
-const signature = await agent.executeDebridgeOrder(order.tx.data);
+const signature = await agent.methods.executeDebridgeOrder(order.tx.data);
 console.log("Bridge transaction sent:", signature);
 ```
 
 5. Check bridge status:
 ```typescript
-const status = await agent.checkDebridgeTransactionStatus(signature);
+const status = await agent.methods.checkDebridgeTransactionStatus(signature);
 console.log("Bridge status:", status);
 // Shows current status: Created, Fulfilled, etc.
 ```
@@ -749,7 +686,7 @@ Note: When bridging between chains:
 ### Get Token Price Data from CoinGecko
 
 ```typescript
-const priceData = await agent.getTokenPriceData([
+const priceData = await agent.methods.getTokenPriceData([
   "So11111111111111111111111111111111111111112", // SOL
   "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"  // USDC
 ]);
@@ -759,35 +696,35 @@ console.log("Token prices:", priceData);
 ### Get Trending Tokens
 
 ```typescript
-const trendingTokens = await agent.getTrendingTokens();
+const trendingTokens = await agent.methods.getTrendingTokens();
 console.log("Trending tokens:", trendingTokens);
 ```
 
 ### Get Latest Pools
 
 ```typescript
-const latestPools = await agent.getLatestPools();
+const latestPools = await agent.methods.getLatestPools();
 console.log("Latest pools:", latestPools);
 ```
 
 ### Get Token Information
 
 ```typescript
-const tokenInfo = await agent.getTokenInfo("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
+const tokenInfo = await agent.methods.getTokenInfo("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
 console.log("Token info:", tokenInfo);
 ```
 
 ### Get Top Gainers
 
 ```typescript
-const topGainers = await agent.getTopGainers("24h", "all");
+const topGainers = await agent.methods.getTopGainers("24h", "all");
 console.log("Top gainers:", topGainers);
 ```
 
 ### Get Trending Pools
 
 ```typescript
-const trendingPools = await agent.getTrendingPools("24h");
+const trendingPools = await agent.methods.getTrendingPools("24h");
 console.log("Trending pools:", trendingPools);
 ```
 
@@ -812,6 +749,99 @@ const parsedData = await agent.methods.parseAccount(
 
 console.log("parsed data:", parsedData)
 ```
+
+### Get Sanctum LST Price
+
+```typescript
+const prices = await agent.methods.getSanctumLSTPrice([
+  "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1",
+  "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
+  ])
+
+console.log('prices', prices)
+```
+
+### Get Sanctum LST APY
+
+```typescript
+const apys = await agent.methods.getSanctumLSTAPY([
+  "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1",
+  "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
+  ])
+
+console.log('apys', apys)
+```
+
+### Get Sanctum LST TVL
+
+```typescript
+const tvls = await agent.methods.getSanctumLSTTVL([
+  "bSo13r4TkiE4KumL71LsHTPpL2euBYLFx6h9HP3piy1",
+  "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
+  ])
+
+console.log('tvls', tvls)
+```
+
+### Get Sanctum Owend LST
+
+```typescript
+const lsts = await agent.methods.getSanctumOwnedLST()
+
+console.log('lsts', lsts)
+```
+
+### Add Liquidity to Sanctum Infinite Pool
+
+```typescript
+const txId = await agent.methods.addSanctumLiquidity(
+  "So11111111111111111111111111111111111111112",
+  "1000000000",
+  "1100000000",
+  5000
+)
+
+console.log('txId', txId)
+```
+
+### Remove Liquidity from Sanctum Infinite Pool
+
+```typescript
+const txId = await agent.methods.removeSanctumLiquidity(
+  "So11111111111111111111111111111111111111112",
+  "1000000000",
+  "1100000000",
+  5000
+)
+
+console.log('txId', txId)
+```
+
+### Swap Sanctum LST
+
+```typescript
+const txId = await agent.methods.swapSanctumLST(
+  "So11111111111111111111111111111111111111112",
+  "1000000000",
+  "1100000000",
+  5000,
+  "7Q2afV64in6N6SeZsAAB81TJzwDoD6zpqmHkzi9Dcavn"
+)
+
+console.log('txId', txId)
+```
+
+
+### Get Chain Data
+
+Note: To use OKX DEX integration, you need to set up the following environment variables: Get OKX API keys from the [OKX Developer Portal] (https://www.okx.com/web3/build/dev-portal)
+- `OKX_API_KEY`
+- `OKX_SECRET_KEY`
+- `OKX_API_PASSPHRASE`
+- `OKX_PROJECT_ID`
+- `RPC_URL`
+- `SOLANA_PRIVATE_KEY`
+- `SOLANA_WALLET_ADDRESS`
 
 ## Examples
 
@@ -871,4 +901,4 @@ Solana Network : EKHTbXpsm6YDgJzMkFxNU1LNXeWcUW7Ezf8mjUNQQ4Pa
 
 ## Security
 
-This toolkit handles private keys and transactions. Always ensure you're using it in a secure environment and never share your private keys.
+This toolkit handles transaction generation, signing and sending, using provided wallets. Always ensure you're using it in a secure environment and never share your private keys.

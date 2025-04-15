@@ -1,10 +1,10 @@
 export interface MessariMessage {
-    content: string;
-    role: string;
+  content: string;
+  role: string;
 }
 
 export interface MessariAPIResponse {
-    data: {
-        messages: MessariMessage[];
-    };
+  data: {
+    messages: MessariMessage[];
+  };
 }
