@@ -7,13 +7,13 @@ import {
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, Moon, Sun } from "lucide-react";
 import type * as React from "react";
 import { useState, useEffect } from "react";
 import { Toaster } from "sonner";
 import { DefaultCatchBoundary } from "~/components/DefaultCatchBoundary.js";
 import { NotFound } from "~/components/NotFound.js";
 import { Button } from "~/components/ui/button";
+import { Icon } from "~/components/ui/icon";
 import UserLoginButton from "~/components/UserLoginButton";
 import appCss from "~/styles/app.css?url";
 import { seo } from "~/utils/seo.js";
@@ -39,9 +39,9 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       ...seo({
-        title: "Privy Solana Agent",
+        title: "SAK Agent",
         description:
-          "Privy Solana Agent is a web app that enables you to interact with the Solana blockchain through simple language. Swap, transfer, and stake with ease.",
+          "SAK Agent is a web app that enables you to interact with the Solana blockchain through simple language. Swap, transfer, and stake with ease.",
       }),
     ],
     links: [
@@ -218,13 +218,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   </DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col items-center gap-6 py-4">
-                  {/* Simple Lock SVG */}
-                  <div className="w-16 h-16">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-gray-400">
-                      <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                      <path d="M8 11V7C8 4.79086 9.79086 3 12 3V3C14.2091 3 16 4.79086 16 7V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      <circle cx="12" cy="16" r="1" fill="currentColor" />
-                    </svg>
+                  {/* Lock Icon */}
+                  <div className="w-16 h-16 flex items-center justify-center">
+                    <Icon name="lock-password-unlocked-linear" className="w-12 h-12 text-gray-400" />
                   </div>
                   
                   {/* Description */}
@@ -273,7 +269,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                     className="flex items-center justify-center h-8 w-8 rounded-md text-[#1E9BB9] hover:bg-[#1E9BB9]/10 transition-colors duration-200"
                   >
-                    {sidebarOpen ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+                    {sidebarOpen ? <Icon name="alt-arrow-left-linear" className="w-[18px] h-[18px]" /> : <Icon name="alt-arrow-right-linear" className="w-[18px] h-[18px]" />}
                   </button>
                 </div>
                 
@@ -284,10 +280,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                       to="/"
                       className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
                     >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
-                        <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.5"></circle>
-                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.5"></circle>
-                      </svg>
+                      <Icon name="planet-linear" className="h-5 w-5" />
                       {sidebarOpen && <span>Home</span>}
                     </Link>
 
@@ -295,12 +288,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                       to="/chats"
                       className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
                     >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
-                        <path d="M3 7.5V16.5C3 18.9853 5.01472 21 7.5 21H16.5C18.9853 21 21 18.9853 21 16.5V7.5C21 5.01472 18.9853 3 16.5 3H7.5C5.01472 3 3 5.01472 3 7.5Z" stroke="currentColor" strokeWidth="1.5"></path>
-                        <path d="M8 8H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
-                        <path d="M8 12H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
-                        <path d="M8 16H12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
-                      </svg>
+                      <Icon name="chat-square-linear" className="h-5 w-5" />
                       {sidebarOpen && <span>Chat</span>}
                     </Link>
 
@@ -308,21 +296,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                       to="/chats/history"
                       className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
                     >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
-                        <path d="M12 8V12L14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5"></circle>
-                      </svg>
+                      <Icon name="clock-circle-linear" className="h-5 w-5" />
                       {sidebarOpen && <span>History</span>}
                     </Link>
 
                     <div
                       className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-[#1E9BB9]/20 cursor-pointer transition-colors duration-200"
                     >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5">
-                        <path d="M12 3C16.982 3 21 7.018 21 12C21 16.982 16.982 21 12 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
-                        <path d="M12 21C7.018 21 3 16.982 3 12C3 7.018 7.018 3 12 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
-                        <path fillRule="evenodd" clipRule="evenodd" d="M10.168 17L8.285 12.232L13.054 10.349L14.937 15.117L10.168 17Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                      </svg>
+                      <Icon name="library-linear" className="h-5 w-5" />
                       {sidebarOpen && <span>Library</span>}
                     </div>
                     
@@ -336,11 +317,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   {authenticated && user?.wallet?.address && (
                     <div className="mb-2 bg-[#1E9BB9]/10 rounded-md p-2 text-center">
                       <div className="flex items-center justify-center gap-1 text-[#1E9BB9]">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#1E9BB9]">
-                          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-                          <path d="M8 14L12 7L16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M9 11H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
+                        <Icon name="solana-icon-outline" className="w-4 h-4 text-[#1E9BB9]" />
                         <span className="text-sm font-medium">
                           {solBalance !== null ? 
                             `${solBalance.toFixed(3)} SOL` : 

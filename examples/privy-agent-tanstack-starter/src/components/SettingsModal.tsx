@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { Settings, Bell, User, Speech, Database, FileCode, AppWindow, ShieldCheck, DollarSign, X } from "lucide-react";
+import { Icon } from "./ui/icon";
 import { Switch } from "./ui/switch";
 import { useTheme } from "~/utils/ThemeContext";
 import { usePrivy } from "@privy-io/react-auth";
@@ -105,7 +105,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("general")}
             >
-              <Settings size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="settings-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">General</span>
             </Button>
             <Button
@@ -113,7 +113,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("notifications")}
             >
-              <Bell size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="bell-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Notifications</span>
             </Button>
             <Button
@@ -121,7 +121,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("personalization")}
             >
-              <User size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="user-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Personalization</span>
             </Button>
             <Button
@@ -129,7 +129,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("speech")}
             >
-              <Speech size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="chat-round-like-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Speech</span>
             </Button>
             <Button
@@ -137,7 +137,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("data")}
             >
-              <Database size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="database-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Data controls</span>
             </Button>
             <Button
@@ -145,7 +145,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("developer")}
             >
-              <FileCode size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="file-code-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Builder profile</span>
             </Button>
             <Button
@@ -153,7 +153,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("apps")}
             >
-              <AppWindow size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="window-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Connected apps</span>
             </Button>
             <Button
@@ -161,7 +161,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("security")}
             >
-              <ShieldCheck size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="shield-check-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Security</span>
             </Button>
             <Button
@@ -169,7 +169,7 @@ export function SettingsModal() {
               className="md:w-full justify-start text-left px-2 py-1.5 text-sm"
               onClick={() => setActiveSection("subscription")}
             >
-              <DollarSign size={14} className="mr-2 flex-shrink-0" />
+              <Icon name="dollar-linear" className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">Subscription</span>
             </Button>
           </div>
@@ -207,18 +207,18 @@ export function SettingsModal() {
             <SettingItem 
               title="Enable notifications" 
               description="Receive updates about your account activity"
-              rightElement={<Switch size="sm" />} 
+              rightElement={<Switch className="h-5 w-9" />} 
             />
           </SettingsSection>
           
           <SettingsSection title="Personalization" visible={activeSection === "personalization"}>
             <SettingItem 
               title="Always show code when using data analyst" 
-              rightElement={<Switch size="sm" />} 
+              rightElement={<Switch className="h-5 w-9" />} 
             />
             <SettingItem 
               title="Show follow up suggestions in chats" 
-              rightElement={<Switch size="sm" defaultChecked />} 
+              rightElement={<Switch defaultChecked className="h-5 w-9" />} 
             />
           </SettingsSection>
           
@@ -278,7 +278,7 @@ export function SettingsModal() {
       onClick={() => setIsOpen(true)}
     >
       <span>Settings</span>
-      <Settings size={18} className="text-[#1E9BB9]" />
+      <Icon name="settings-linear" className="text-[#1E9BB9] w-4 h-4" />
     </Button>
   );
 
@@ -309,7 +309,7 @@ export function SettingsModal() {
                 <SheetTitle className="text-2xl font-bold">Settings</SheetTitle>
                 <SheetClose asChild>
                   <Button variant="ghost" size="icon" className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <X size={20} className="text-gray-500 dark:text-gray-400" />
+                    <Icon name="close-circle-linear" className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                   </Button>
                 </SheetClose>
               </div>
@@ -339,7 +339,7 @@ export function SettingsModal() {
               className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              <X size={20} className="text-gray-500 dark:text-gray-400" />
+              <Icon name="close-circle-linear" className="w-5 h-5 text-gray-500 dark:text-gray-400" />
             </Button>
           </div>
         </DialogHeader>

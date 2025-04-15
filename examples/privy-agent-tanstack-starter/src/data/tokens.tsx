@@ -33,14 +33,36 @@ export const tokenData: TokenData[] = [
     chartPath: chartPaths.positive[0],
     links: {
       dexscreener: "https://dexscreener.com/solana/sol",
-      twitter: "https://twitter.com/solana",
-      website: "https://solana.com"
+      twitter: "https://x.com/solana",
+      website: "https://solana.com",
     },
     logoUrl: "/token-logos/sol-logo.svg",
-    description: "Solana is a high-performance blockchain supporting builders around the world creating crypto apps that scale.",
+    description:
+      "Solana is a high-performance blockchain supporting builders around the world creating crypto apps that scale.",
     marketCap: "$58,900,000,000.00",
     volume24h: "$2,450,000,000.00",
     mintAddress: "So11111111111111111111111111111111111111112",
+  },
+  {
+    symbol: "SEND",
+    name: "Send",
+    price: "$0.009989",
+    change: "+21.00%",
+    isPositive: true,
+    iconGradient: gradients.BONK,
+    chartPath: chartPaths.positive[0],
+    links: {
+      dexscreener:
+        "https://dexscreener.com/solana/8l26hzxqegagbmlawydjxakivpinxcyym9u21s2tixu",
+      twitter: "https://x.com//thesendcoincom",
+      website: "https:/thesendcoin.com",
+    },
+    logoUrl: "/token-logos/send-logo.png",
+    description:
+      "Send is a community-driven meme token on Solana that has gained popularity for its fun approach to crypto.",
+    marketCap: "$9,935,000.00",
+    volume24h: "$1,456,000.00",
+    mintAddress: "SENDdRQtYMWaQrBroBrJ2Q53fgVuq95CV9UPGEvpCxa",
   },
   {
     symbol: "JUP",
@@ -52,11 +74,12 @@ export const tokenData: TokenData[] = [
     chartPath: chartPaths.positive[2],
     links: {
       dexscreener: "https://dexscreener.com/solana/jup",
-      twitter: "https://twitter.com/JupiterExchange",
-      website: "https://jup.ag"
+      twitter: "https://x.com/JupiterExchange",
+      website: "https://jup.ag",
     },
     logoUrl: "/token-logos/jup-logo.png",
-    description: "Jupiter is the key liquidity aggregator for Solana, offering the widest range of tokens and best route discovery.",
+    description:
+      "Jupiter is the key liquidity aggregator for Solana, offering the widest range of tokens and best route discovery.",
     marketCap: "$1,200,000,000.00",
     volume24h: "$75,000,000.00",
     mintAddress: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN",
@@ -71,11 +94,12 @@ export const tokenData: TokenData[] = [
     chartPath: chartPaths.negative[0],
     links: {
       dexscreener: "https://dexscreener.com/solana/bonk",
-      twitter: "https://twitter.com/bonk_inu",
-      website: "https://bonkcoin.com"
+      twitter: "https://x.com/bonk_inu",
+      website: "https://bonkcoin.com",
     },
     logoUrl: "/token-logos/bonk-logo.png",
-    description: "BONK is a community-driven meme token on Solana that has gained popularity for its fun approach to crypto.",
+    description:
+      "BONK is a community-driven meme token on Solana that has gained popularity for its fun approach to crypto.",
     marketCap: "$1,350,000,000.00",
     volume24h: "$65,000,000.00",
     mintAddress: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263",
@@ -90,15 +114,17 @@ export const tokenData: TokenData[] = [
     chartPath: chartPaths.positive[1],
     links: {
       dexscreener: "https://dexscreener.com/solana/pyth",
-      twitter: "https://twitter.com/PythNetwork",
-      website: "https://pyth.network"
+      twitter: "https://x.com/PythNetwork",
+      website: "https://pyth.network",
     },
     logoUrl: "/token-logos/pyth-logo.svg",
-    description: "Pyth is a first-party financial oracle network that publishes continuous real-world data on-chain.",
+    description:
+      "Pyth is a first-party financial oracle network that publishes continuous real-world data on-chain.",
     marketCap: "$750,000,000.00",
     volume24h: "$25,000,000.00",
     mintAddress: "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3",
   },
+
   {
     symbol: "JTO",
     name: "Jito",
@@ -109,13 +135,14 @@ export const tokenData: TokenData[] = [
     chartPath: chartPaths.positive[3],
     links: {
       dexscreener: "https://dexscreener.com/solana/jto",
-      twitter: "https://twitter.com/jito_sol",
-      website: "https://jito.network"
+      twitter: "https://x.com/jito_sol",
+      website: "https://jito.network",
     },
     logoUrl: "/token-logos/jito-logo.png",
-    description: "Jito is a suite of MEV infrastructure on Solana, including a liquid staking token and MEV-aware block engine.",
+    description:
+      "Jito is a suite of MEV infrastructure on Solana, including a liquid staking token and MEV-aware block engine.",
     marketCap: "$250,000,000.00",
     volume24h: "$15,000,000.00",
     mintAddress: "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn",
   },
-]; 
+];

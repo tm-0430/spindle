@@ -15,7 +15,7 @@ import {
 } from "~/functions/chats.js";
 import { convertToUIMessages, generateUUID, isValidUUID } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
-import { Home } from "lucide-react";
+import { Icon } from "~/components/ui/icon";
 
 export const Route = createFileRoute("/_authed/chats/$chatId")({
   loader: async ({ params: { chatId }, location }) => {
@@ -109,7 +109,7 @@ function PostErrorComponent({ error }: ErrorComponentProps) {
           onClick={goHome}
           className="bg-[#1E9BB9] hover:bg-[#1E9BB9]/80 text-white"
         >
-          <Home className="mr-2 h-4 w-4" />
+          <Icon name="home-linear" className="mr-2 h-4 w-4" />
           Go Home
         </Button>
       </div>

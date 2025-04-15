@@ -1,4 +1,3 @@
-import { CircleUser, Copy, LogOut, Wallet, Settings, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +14,7 @@ import { fetchSession, logoutFn, signupFn } from "~/functions/session";
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "./ui/button";
+import { Icon } from "./ui/icon";
 import { getLoginCallback, clearLoginCallback } from "~/utils/auth";
 
 export default function UserLoginButton() {
@@ -98,16 +98,12 @@ export default function UserLoginButton() {
                 className="w-full flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm bg-[#1E9BB9]/10 hover:bg-[#1E9BB9]/20 text-[#1E9BB9] transition-colors duration-200 font-['SF_Pro_Text',system-ui,sans-serif]"
               >
                 <div className="flex items-center gap-2 min-w-0">
-                  <Wallet size={16} className="flex-shrink-0" />
+                  <Icon name="wallet-money-linear" className="w-4 h-4 flex-shrink-0" />
                   <span className="truncate">{truncateAddress(user?.wallet?.address || "")}</span>
                 </div>
                 {balance !== null && (
                   <div className="flex items-center gap-1 ml-1 flex-shrink-0">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#1E9BB9]">
-                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-                      <path d="M8 14L12 7L16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M9 11H15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
+                    <Icon name="bitcoin-circle-linear" className="w-4 h-4 text-[#1E9BB9]" />
                     <span>{balance.toFixed(3)}</span>
                   </div>
                 )}
@@ -120,7 +116,7 @@ export default function UserLoginButton() {
                 className="flex justify-between items-center"
               >
                 <span>Profile</span>
-                <User size={16} className="ml-2" />
+                <Icon name="user-linear" className="w-4 h-4 ml-2" />
               </DropdownMenuItem>
               
               <DropdownMenuItem
@@ -128,7 +124,7 @@ export default function UserLoginButton() {
                 className="flex justify-between items-center"
               >
                 <span>Settings</span>
-                <Settings size={16} className="ml-2" />
+                <Icon name="settings-linear" className="w-4 h-4 ml-2" />
               </DropdownMenuItem>
               
               <DropdownMenuSeparator />
@@ -138,7 +134,7 @@ export default function UserLoginButton() {
                 className="flex justify-between items-center"
               >
                 <span>Copy Address</span>
-                <Copy size={16} className="ml-2" />
+                <Icon name="copy-linear" className="w-4 h-4 ml-2" />
               </DropdownMenuItem>
               
               <DropdownMenuSeparator />
@@ -161,7 +157,7 @@ export default function UserLoginButton() {
                 className="flex justify-between items-center text-red-500"
               >
                 <span>Disconnect Wallet</span>
-                <LogOut size={16} className="ml-2" />
+                <Icon name="logout-3-linear" className="w-4 h-4 ml-2" />
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -1,17 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Markdown } from "~/components/Markdown";
-import { readHomeMarkdownFile } from "~/functions/markdown";
-import { ArrowUpIcon, Globe, Link2, Send } from "lucide-react";
-import { Button } from "~/components/ui/button";
-import { useRef, useState, useEffect } from "react";
-import { toast } from "sonner";
 import { usePrivy } from "@privy-io/react-auth";
-import { useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import { TokenPriceSection } from "~/components/TokenPriceSection";
+import { Button } from "~/components/ui/button";
+import { Icon } from "~/components/ui/icon";
+import { readHomeMarkdownFile } from "~/functions/markdown";
 import { generateUUID } from "~/lib/utils";
 import { checkAuthAndShowModal } from "~/utils/auth";
-import { TokenCard } from "~/components/TokenCard";
-import { tokenData } from "~/data/tokens";
-import { TokenPriceSection } from "~/components/TokenPriceSection";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async () => {
@@ -138,7 +134,7 @@ function Home() {
                   size="icon"
                   className="h-8 w-8 rounded-md text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
                 >
-                  <Link2 className="h-4 w-4" />
+                  <Icon name="link-linear" className="h-4 w-4" />
                 </Button>
                 
                 {/* Solana Explorer Link Button */}
@@ -147,43 +143,45 @@ function Home() {
                     href={`https://explorer.solana.com/address/${user.wallet.address}`}
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="h-8 w-8 rounded-md flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
+                    className="h-8 px-2 rounded-md flex items-center justify-center gap-1 text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
+                    title="View on Solana Explorer"
                   >
-                    <svg className="h-4 w-4" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M93.94 42.63H13.78c-1.95 0-3.71 1.16-4.49 2.94-0.78 1.79-0.45 3.89 0.85 5.35l19.2 21.76c0.92 1.04 2.25 1.64 3.64 1.64h80.16c1.95 0 3.71-1.16 4.49-2.94 0.78-1.79 0.45-3.89-0.85-5.35l-19.2-21.76c-0.92-1.04-2.25-1.64-3.64-1.64Z" fill="currentColor"/>
-                      <path d="M93.94 74.31H13.78c-1.95 0-3.71 1.16-4.49 2.94-0.78 1.79-0.45 3.89 0.85 5.35l19.2 21.76c0.92 1.04 2.25 1.64 3.64 1.64h80.16c1.95 0 3.71-1.16 4.49-2.94 0.78-1.79 0.45-3.89-0.85-5.35l-19.2-21.76c-0.92-1.04-2.25-1.64-3.64-1.64Z" fill="currentColor"/>
-                      <path d="M13.78 58.47h80.16c1.95 0 3.71-1.16 4.49-2.94 0.78-1.79 0.45-3.89-0.85-5.35l-19.2-21.76c-0.92-1.04-2.25-1.64-3.64-1.64H13.78c-1.95 0-3.71 1.16-4.49 2.94-0.78 1.79-0.45 3.89 0.85 5.35l19.2 21.76c0.92 1.04 2.25 1.64 3.64 1.64Z" fill="currentColor"/>
-                    </svg>
+                    <img 
+                      src="https://solana.com/src/img/branding/solanaLogoMark.svg" 
+                      alt="Solana" 
+                      className="h-4 w-4" 
+                    />
+                    <Icon name="arrow-right-up-linear" className="h-3 w-3" />
                   </a>
                 ) : (
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 rounded-md flex items-center justify-center text-gray-400 dark:text-gray-600 cursor-not-allowed opacity-50"
+                    className="h-8 px-2 rounded-md flex items-center justify-center gap-1 text-gray-400 dark:text-gray-600 cursor-not-allowed opacity-50"
                     disabled
+                    title="Connect wallet to view on Explorer"
                   >
-                    <svg className="h-4 w-4" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M93.94 42.63H13.78c-1.95 0-3.71 1.16-4.49 2.94-0.78 1.79-0.45 3.89 0.85 5.35l19.2 21.76c0.92 1.04 2.25 1.64 3.64 1.64h80.16c1.95 0 3.71-1.16 4.49-2.94 0.78-1.79 0.45-3.89-0.85-5.35l-19.2-21.76c-0.92-1.04-2.25-1.64-3.64-1.64Z" fill="currentColor"/>
-                      <path d="M93.94 74.31H13.78c-1.95 0-3.71 1.16-4.49 2.94-0.78 1.79-0.45 3.89 0.85 5.35l19.2 21.76c0.92 1.04 2.25 1.64 3.64 1.64h80.16c1.95 0 3.71-1.16 4.49-2.94 0.78-1.79 0.45-3.89-0.85-5.35l-19.2-21.76c-0.92-1.04-2.25-1.64-3.64-1.64Z" fill="currentColor"/>
-                      <path d="M13.78 58.47h80.16c1.95 0 3.71-1.16 4.49-2.94 0.78-1.79 0.45-3.89-0.85-5.35l-19.2-21.76c-0.92-1.04-2.25-1.64-3.64-1.64H13.78c-1.95 0-3.71 1.16-4.49 2.94-0.78 1.79-0.45 3.89 0.85 5.35l19.2 21.76c0.92 1.04 2.25 1.64 3.64 1.64Z" fill="currentColor"/>
-                    </svg>
+                    <img 
+                      src="https://solana.com/src/img/branding/solanaLogoMark.svg" 
+                      alt="Solana" 
+                      className="h-4 w-4" 
+                    />
+                    <Icon name="arrow-right-up-linear" className="h-3 w-3" />
                   </Button>
                 )}
               </div>
 
               <div className="flex items-center">
                 <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full bg-[#1E9BB9] p-2 text-white hover:bg-[#1E9BB9]/80 transition-colors duration-200"
+                  type="submit"
+                  size="sm"
+                  variant="default"
+                  className="rounded-full bg-[#1E9BB9] hover:bg-[#1E9BB9]/90 dark:bg-[#1E9BB9] dark:hover:bg-[#1E9BB9]/90 text-white h-8 w-8 p-0"
+                  disabled={!inputValue.trim() || isSubmitting}
+                  aria-label="Send message"
                   onClick={handleSubmit}
-                  disabled={isSubmitting || !inputValue.trim()}
                 >
-                  {isSubmitting ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-r-transparent" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
+                  <Icon name="arrow-up-linear" className="h-4 w-4" />
                 </Button>
               </div>
             </div>
@@ -194,7 +192,7 @@ function Home() {
       {/* News Feed Section - Only this scrolls */}
       <div className="w-full max-w-3xl mt-4 overflow-y-auto scrollbar-hide max-h-[calc(100vh-320px)] pb-8">
         <h2 className="text-xl font-bold mb-4 sticky top-0 pt-2 pb-4 bg-white/80 dark:bg-black/80 backdrop-blur-sm z-10 font-['SF_Pro_Display',system-ui,sans-serif] bg-gradient-to-r from-gray-800 to-gray-600 dark:from-gray-300 dark:via-[#1E9BB9] dark:to-gray-400 bg-clip-text text-transparent transition-colors duration-200">
-          Solana Ecosystem Updates
+          Latest from the Solana Ecosystem
         </h2>
 
         {/* Token Prices - Enhanced with charts and horizontal scrolling */}
@@ -203,40 +201,40 @@ function Home() {
         {/* News Feed */}
         <div className="space-y-4">
           {/* News Item 1 */}
+
+
           <div className="overflow-hidden rounded-xl border border-[#1E9BB9]/30 bg-white dark:bg-gray-900 hover:bg-[#1E9BB9]/5 dark:hover:bg-[#1E9BB9]/10 cursor-pointer transition-all duration-200">
             <div className="p-4">
               <div className="flex items-start space-x-3">
-                <img
-                  src="https://solana.com/src/img/branding/solanaLogoMark.svg"
-                  alt="Solana"
-                  className="w-12 h-12 rounded-lg mt-1"
-                />
+                <div className="w-12 h-12 rounded-lg bg-[#1E9BB9]/20 flex items-center justify-center mt-1">
+                <img src="/logos/sendai-logo.png" alt="Solana" className="w-12 h-12 rounded-lg mt-1" />
+                </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <h3 className="font-medium text-gray-800 dark:text-white transition-colors duration-200 font-['SF_Pro_Display',system-ui,sans-serif]">
-                      Solana Ecosystem Growth Continues with Record DeFi TVL
+                      Solana Agent Kit 2.0 Released with Advanced AI Features
                     </h3>
                     <span className="text-xs text-gray-500 whitespace-nowrap ml-2">
-                      2h ago
+                      1d ago
                     </span>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-200">
-                    Solana's DeFi ecosystem hits new all-time high with over
-                    $20B in Total Value Locked, representing 150% growth since
-                    January.
+                    The latest version of Solana Agent Kit introduces powerful
+                   Plugin based structure and advanced MCP Adapters with embedded wallet support among all the major Solana Integrations.
                   </p>
                   <div className="flex items-center mt-3 space-x-2">
                     <span className="px-2 py-1 bg-[#1E9BB9]/10 dark:bg-[#1E9BB9]/20 text-[#1E9BB9] rounded-full text-xs">
-                      DeFi
+                      SDK
                     </span>
-                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full text-xs">
-                      Growth
+                    <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-full text-xs">
+                      AI
                     </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+  
 
           {/* News Item 2 */}
           <div className="overflow-hidden rounded-xl border border-[#1E9BB9]/30 bg-white dark:bg-gray-900 hover:bg-[#1E9BB9]/5 dark:hover:bg-[#1E9BB9]/10 cursor-pointer transition-all duration-200">
@@ -316,73 +314,35 @@ function Home() {
           </div>
 
           {/* News Item 3 */}
+        
           <div className="overflow-hidden rounded-xl border border-[#1E9BB9]/30 bg-white dark:bg-gray-900 hover:bg-[#1E9BB9]/5 dark:hover:bg-[#1E9BB9]/10 cursor-pointer transition-all duration-200">
             <div className="p-4">
               <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-lg bg-[#1E9BB9]/20 flex items-center justify-center mt-1">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="text-[#1E9BB9]"
-                  >
-                    <path
-                      d="M22 8.27V4.23C22 2.64 21.36 2 19.77 2H15.73C14.14 2 13.5 2.64 13.5 4.23V8.27C13.5 9.86 14.14 10.5 15.73 10.5H19.77C21.36 10.5 22 9.86 22 8.27Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M10.5 8.52V3.98C10.5 2.57 9.86 2 8.27 2H4.23C2.64 2 2 2.57 2 3.98V8.51C2 9.93 2.64 10.49 4.23 10.49H8.27C9.86 10.5 10.5 9.93 10.5 8.52Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M10.5 19.77V15.73C10.5 14.14 9.86 13.5 8.27 13.5H4.23C2.64 13.5 2 14.14 2 15.73V19.77C2 21.36 2.64 22 4.23 22H8.27C9.86 22 10.5 21.36 10.5 19.77Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M14.5 17.5H20.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M17.5 20.5V14.5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
+                <img
+                  src="https://solana.com/src/img/branding/solanaLogoMark.svg"
+                  alt="Solana"
+                  className="w-12 h-12 rounded-lg mt-1"
+                />
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <h3 className="font-medium text-gray-800 dark:text-white transition-colors duration-200 font-['SF_Pro_Display',system-ui,sans-serif]">
-                      Solana Agent Kit 2.0 Released with Advanced AI Features
+                      Solana Ecosystem Growth Continues with Record DeFi TVL
                     </h3>
                     <span className="text-xs text-gray-500 whitespace-nowrap ml-2">
-                      1d ago
+                      2h ago
                     </span>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors duration-200">
-                    The latest version of Solana Agent Kit introduces powerful
-                    AI assistants and enhanced data handling for blockchain
-                    developers.
+                    Solana's DeFi ecosystem hits new all-time high with over
+                    $20B in Total Value Locked, representing 150% growth since
+                    January.
                   </p>
                   <div className="flex items-center mt-3 space-x-2">
                     <span className="px-2 py-1 bg-[#1E9BB9]/10 dark:bg-[#1E9BB9]/20 text-[#1E9BB9] rounded-full text-xs">
-                      SDK
+                      DeFi
                     </span>
-                    <span className="px-2 py-1 bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-full text-xs">
-                      AI
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full text-xs">
+                      Growth
                     </span>
                   </div>
                 </div>

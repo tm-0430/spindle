@@ -13,10 +13,16 @@ import {
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
-import { ArrowUpIcon, PaperclipIcon, StopCircleIcon } from "lucide-react";
+import { Icon } from "./ui/icon";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { SuggestedActions } from "./SuggestedActions";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 import equal from "fast-deep-equal";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { cn } from "~/lib/utils";
@@ -240,17 +246,25 @@ function PureMultimodalInput({
 
       <div className="flex items-end gap-2 p-2 w-full rounded-xl">
         {/* Attachment Button */}
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          disabled={status === "streaming"}
-          className="rounded-full p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
-          onClick={() => fileInputRef.current?.click()}
-        >
-          <PaperclipIcon className="h-5 w-5" />
-          <span className="sr-only">Attach files</span>
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-md text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Icon name="paperclip-linear" className="h-4 w-4" />
+                <span className="sr-only">Attach files</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Attach files</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         {/* Input Area */}
         <Textarea
@@ -276,45 +290,56 @@ function PureMultimodalInput({
 
         {/* Control Buttons */}
         <div className="flex shrink-0 items-center">
-          {status === "streaming" ? (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="rounded-full bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700"
-              onClick={() => {
-                stop();
-                // Remove the last assistant message which is still streaming
-                setMessages((messages) => {
-                  const lastMessage = messages[messages.length - 1];
-                  if (lastMessage?.role === "assistant") {
-                    return messages.slice(0, -1);
-                  }
-                  return messages;
-                });
-              }}
-            >
-              <StopCircleIcon className="h-5 w-5" />
-              <span className="sr-only">Stop generating</span>
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              disabled={!input.trim() && uploadQueue.length === 0}
-              className={cn(
-                "rounded-full p-2",
-                input.trim()
-                  ? "bg-blue-600 text-white hover:bg-blue-700"
-                  : "text-gray-400 bg-gray-100"
-              )}
-              onClick={submitForm}
-            >
-              <ArrowUpIcon className="h-5 w-5" />
-              <span className="sr-only">Send message</span>
-            </Button>
-          )}
+          <TooltipProvider>
+            {status === "streaming" ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="default"
+                    size="sm"
+                    className="rounded-full bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 text-white h-8 w-8 p-0 flex items-center justify-center"
+                    onClick={() => {
+                      stop();
+                      // Remove the last assistant message which is still streaming
+                      setMessages((messages) => {
+                        const lastMessage = messages[messages.length - 1];
+                        if (lastMessage?.role === "assistant") {
+                          return messages.slice(0, -1);
+                        }
+                        return messages;
+                      });
+                    }}
+                  >
+                    <Icon name="stop-circle-linear" className="h-4 w-4" />
+                    <span className="sr-only">Stop generating</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Stop generating</p>
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="default"
+                    size="sm"
+                    disabled={!input.trim() && uploadQueue.length === 0}
+                    className="rounded-full bg-[#1E9BB9] hover:bg-[#1E9BB9]/90 dark:bg-[#1E9BB9] dark:hover:bg-[#1E9BB9]/90 text-white h-8 w-8 p-0 flex items-center justify-center"
+                    onClick={submitForm}
+                  >
+                    <Icon name="arrow-up-linear" className="h-4 w-4" />
+                    <span className="sr-only">Send message</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Send message</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </TooltipProvider>
         </div>
       </div>
     </div>
@@ -340,18 +365,28 @@ function PureAttachmentsButton({
   status: UseChatHelpers["status"];
 }) {
   return (
-    <Button
-      data-testid="attachments-button"
-      className="rounded-md rounded-bl-lg p-[7px] h-fit dark:border-zinc-700 hover:dark:bg-zinc-900 hover:bg-zinc-200"
-      onClick={(event) => {
-        event.preventDefault();
-        fileInputRef.current?.click();
-      }}
-      disabled={status !== "ready"}
-      variant="ghost"
-    >
-      <PaperclipIcon size={14} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            data-testid="attachments-button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-md text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
+            onClick={(event) => {
+              event.preventDefault();
+              fileInputRef.current?.click();
+            }}
+            disabled={status !== "ready"}
+          >
+            <Icon name="paperclip-linear" className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Attach files</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -365,17 +400,28 @@ function PureStopButton({
   setMessages: UseChatHelpers["setMessages"];
 }) {
   return (
-    <Button
-      data-testid="stop-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
-      onClick={(event) => {
-        event.preventDefault();
-        stop();
-        setMessages((messages) => messages);
-      }}
-    >
-      <StopCircleIcon size={14} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            data-testid="stop-button"
+            variant="default"
+            size="sm"
+            className="rounded-full bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 text-white h-8 w-8 p-0 flex items-center justify-center"
+            onClick={(event) => {
+              event.preventDefault();
+              stop();
+              setMessages((messages) => messages);
+            }}
+          >
+            <Icon name="stop-circle-linear" className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Stop generating</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -391,17 +437,28 @@ function PureSendButton({
   uploadQueue: Array<string>;
 }) {
   return (
-    <Button
-      data-testid="send-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
-      onClick={(event) => {
-        event.preventDefault();
-        submitForm();
-      }}
-      disabled={input.length === 0 || uploadQueue.length > 0}
-    >
-      <ArrowUpIcon size={14} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            data-testid="send-button"
+            variant="default"
+            size="sm"
+            className="rounded-full bg-[#1E9BB9] hover:bg-[#1E9BB9]/90 dark:bg-[#1E9BB9] dark:hover:bg-[#1E9BB9]/90 text-white h-8 w-8 p-0 flex items-center justify-center"
+            onClick={(event) => {
+              event.preventDefault();
+              submitForm();
+            }}
+            disabled={input.length === 0 || uploadQueue.length > 0}
+          >
+            <Icon name="arrow-up-linear" className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Send message</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 

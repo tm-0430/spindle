@@ -1,8 +1,14 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { Trash } from "lucide-react";
 import { useMemo } from "react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
+import { Icon } from "~/components/ui/icon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { formatDistance } from "date-fns";
 import { fetchChats } from "~/functions/chats.js";
 
@@ -56,38 +62,47 @@ function ChatHistoryComponent() {
                 })}
               </span>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                toast.promise(
-                  fetch(`/api/chat?id=${chat.id}`, {
-                    method: "DELETE",
-                  }),
-                  {
-                    loading: "Deleting chat...",
-                    success: () => {
-                      const path = window.location.pathname;
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      toast.promise(
+                        fetch(`/api/chat?id=${chat.id}`, {
+                          method: "DELETE",
+                        }),
+                        {
+                          loading: "Deleting chat...",
+                          success: () => {
+                            const path = window.location.pathname;
 
-                      if (path.includes(chat.id)) {
-                        window.location.href = "/chats";
-                      } else {
-                        window.location.reload();
-                      }
+                            if (path.includes(chat.id)) {
+                              window.location.href = "/chats";
+                            } else {
+                              window.location.reload();
+                            }
 
-                      return "Chat deleted";
-                    },
-                    error: (err) => {
-                      console.error(err);
-                      return `Failed to delete chat: ${err}`;
-                    },
-                  },
-                );
-              }}
-              className="ml-2"
-            >
-              <Trash className="h-4 w-4" />
-            </Button>
+                            return "Chat deleted";
+                          },
+                          error: (err) => {
+                            console.error(err);
+                            return `Failed to delete chat: ${err}`;
+                          },
+                        },
+                      );
+                    }}
+                    className="ml-2"
+                  >
+                    <Icon name="trash-bin-minimalistic-linear" className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Delete chat</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         ))}
       </div>

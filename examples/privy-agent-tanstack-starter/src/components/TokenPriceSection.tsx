@@ -1,7 +1,7 @@
 import { useTokenPrices } from "~/hooks/useTokenPrices";
 import { TokenCard } from "~/components/TokenCard";
-import { Loader2, Info } from "lucide-react";
 import { useState } from "react";
+import { Icon } from "./ui/icon";
 import {
   Tooltip,
   TooltipContent,
@@ -51,7 +51,7 @@ export function TokenPriceSection({ refreshInterval = 60000 }: TokenPriceSection
             <Tooltip>
               <TooltipTrigger asChild>
                 <button className="text-gray-400 hover:text-[#1E9BB9] transition-colors">
-                  <Info className="h-3.5 w-3.5" />
+                  <Icon name="info-circle-linear" className="h-3.5 w-3.5" />
                 </button>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
@@ -68,7 +68,7 @@ export function TokenPriceSection({ refreshInterval = 60000 }: TokenPriceSection
         </div>
         <div className="flex items-center space-x-2">
           {isLoading && (
-            <Loader2 className="h-4 w-4 animate-spin text-[#1E9BB9]" />
+            <Icon name="loader-linear" className="h-4 w-4 animate-spin text-[#1E9BB9]" />
           )}
           {error && (
             <span className="text-xs text-red-500">{error}</span>
