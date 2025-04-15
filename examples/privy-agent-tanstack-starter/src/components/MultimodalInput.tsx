@@ -189,7 +189,7 @@ function PureMultimodalInput({
   );
 
   return (
-    <div className="relative w-full flex flex-col gap-4">
+    <div className="relative w-full">
       {messages.length === 0 &&
         attachments.length === 0 &&
         uploadQueue.length === 0 && (
@@ -198,56 +198,124 @@ function PureMultimodalInput({
 
       <input
         type="file"
-        className="fixed -top-4 -left-4 size-0.5 opacity-0 pointer-events-none"
         ref={fileInputRef}
-        multiple
         onChange={handleFileChange}
-        tabIndex={-1}
+        className="hidden"
+        multiple
       />
 
-      <Textarea
-        data-testid="multimodal-input"
-        ref={textareaRef}
-        placeholder="Send a message..."
-        value={input}
-        onChange={handleInput}
-        className={cn(
-          "min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl !text-base bg-muted pb-10 dark:border-zinc-700",
-          className,
-        )}
-        rows={2}
-        autoFocus
-        onKeyDown={(event) => {
-          if (
-            event.key === "Enter" &&
-            !event.shiftKey &&
-            !event.nativeEvent.isComposing
-          ) {
-            event.preventDefault();
+      {/* Attachments Display */}
+      {(attachments.length > 0 || uploadQueue.length > 0) && (
+        <div className="mb-2 flex flex-wrap gap-2">
+          {uploadQueue.map((filename) => (
+            <div
+              key={filename}
+              className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs"
+            >
+              <span>{filename}</span>
+              <span>Uploading...</span>
+            </div>
+          ))}
+          {attachments.map((attachment, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs"
+            >
+              <span>{attachment.name}</span>
+              <button
+                type="button"
+                className="text-blue-600 hover:text-blue-800"
+                onClick={() => {
+                  setAttachments((currentAttachments) =>
+                    currentAttachments.filter((_, index) => index !== i),
+                  );
+                }}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
-            if (status !== "ready" && status !== "error") {
-              toast.error("Please wait for the model to finish its response!");
-            } else {
+      <div className="flex items-end gap-2 p-2 w-full rounded-xl">
+        {/* Attachment Button */}
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          disabled={status === "streaming"}
+          className="rounded-full p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <PaperclipIcon className="h-5 w-5" />
+          <span className="sr-only">Attach files</span>
+        </Button>
+
+        {/* Input Area */}
+        <Textarea
+          ref={textareaRef}
+          tabIndex={0}
+          placeholder="Ask anything..."
+          value={input}
+          onChange={handleInput}
+          onKeyDown={(e) => {
+            if (
+              e.key === "Enter" &&
+              !e.shiftKey &&
+              input.trim() &&
+              status !== "streaming"
+            ) {
+              e.preventDefault();
               submitForm();
             }
-          }
-        }}
-      />
+          }}
+          className="min-h-[48px] w-full resize-none border-0 p-2 shadow-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+          disabled={status === "streaming"}
+        />
 
-      <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
-        <AttachmentsButton fileInputRef={fileInputRef} status={status} />
-      </div>
-
-      <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
-        {status === "submitted" ? (
-          <StopButton stop={stop} setMessages={setMessages} />
-        ) : (
-          <SendButton
-            input={input}
-            submitForm={submitForm}
-            uploadQueue={uploadQueue}
-          />
-        )}
+        {/* Control Buttons */}
+        <div className="flex shrink-0 items-center">
+          {status === "streaming" ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700"
+              onClick={() => {
+                stop();
+                // Remove the last assistant message which is still streaming
+                setMessages((messages) => {
+                  const lastMessage = messages[messages.length - 1];
+                  if (lastMessage?.role === "assistant") {
+                    return messages.slice(0, -1);
+                  }
+                  return messages;
+                });
+              }}
+            >
+              <StopCircleIcon className="h-5 w-5" />
+              <span className="sr-only">Stop generating</span>
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              disabled={!input.trim() && uploadQueue.length === 0}
+              className={cn(
+                "rounded-full p-2",
+                input.trim()
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "text-gray-400 bg-gray-100"
+              )}
+              onClick={submitForm}
+            >
+              <ArrowUpIcon className="h-5 w-5" />
+              <span className="sr-only">Send message</span>
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
