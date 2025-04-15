@@ -1,9 +1,9 @@
 import { createCollectionImp, createSingleImp } from "@3land/listings-sdk";
-import {
+import type {
   CreateCollectionOptions,
-  CreateSingleOptions,
   StoreInitOptions,
-} from "@3land/listings-sdk/dist/types/implementation/implementationTypes";
+  CreateSingleOptions,
+} from "../types";
 
 /**
  * Create a collection on 3Land
