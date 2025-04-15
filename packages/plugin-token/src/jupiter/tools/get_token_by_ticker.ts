@@ -2,7 +2,7 @@ import type { JupiterTokenData } from "../types";
 
 /**
  * Fetches token data by ticker
- * @param ticker Thea token ticker
+ * @param ticker of the token
  */
 export async function getTokenByTicker(
   ticker: string,
