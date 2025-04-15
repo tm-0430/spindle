@@ -55,9 +55,9 @@ export interface BaseWallet {
    * @template T - Transaction type (Transaction or VersionedTransaction)
    * @param {T} transaction - The transaction to be signed and sent
    */
-  sendTransaction<T extends Transaction | VersionedTransaction>(
+  sendTransaction?: <T extends Transaction | VersionedTransaction>(
     transaction: T,
-  ): Promise<string>;
+  ) => Promise<string>;
 
   /**
    * Signs and sends a transaction to the network
@@ -66,7 +66,7 @@ export interface BaseWallet {
    * @param {SendOptions} [options] - Optional transaction send configuration
    * @returns {Promise<{signature: TransactionSignature}>} Promise resolving to the transaction signature
    */
-  signAndSendTransaction?: <T extends Transaction | VersionedTransaction>(
+  signAndSendTransaction: <T extends Transaction | VersionedTransaction>(
     transaction: T,
     options?: SendOptions,
   ) => Promise<{ signature: TransactionSignature }>;
