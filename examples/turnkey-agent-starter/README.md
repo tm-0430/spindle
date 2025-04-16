@@ -2,6 +2,8 @@
 
 A modern web application built with NextJs and Solana integration, featuring authentication via Turnkey and AI capabilities.
 
+<video controls src="public/video/TurnkeyDemo.mp4" title="Title"></video>
+
 ## 🚀 Features
 
 - **Authentication**: Secure user authentication powered by Turnkey
