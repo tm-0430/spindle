@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import axios, { type Response } from "redaxios";
 import type {
   CancelJupiterOrderRequest,
   CancelJupiterOrderResponse,
@@ -16,22 +16,18 @@ const jupiterApi = axios.create({
 });
 
 async function handleApiRequest<T>(
-  apiCall: () => Promise<AxiosResponse<T>>,
+  apiCall: () => Promise<Response<T>>,
 ): Promise<T> {
   try {
     const { data } = await apiCall();
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        `Jupiter API error: ${
-          error.response?.data
-            ? JSON.stringify(error.response.data)
-            : error.message
-        }`,
-      );
-    }
-    throw error;
+    throw new Error(
+      `Jupiter API error: ${
+        // @ts-expect-error - Redaxios error type mismatch
+        error.message
+      }`,
+    );
   }
 }
 
