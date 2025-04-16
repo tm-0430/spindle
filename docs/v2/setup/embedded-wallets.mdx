@@ -1,60 +1,244 @@
+---
+title: "Embedded Wallet Integration"
+description: "Connect Solana Agent Kit with embedded wallets for secure and user-friendly interfaces"
+---
 
-## Embedded Wallet Integration
+# Embedded Wallet Integration
 
-For a better user experience, you can integrate with embedded wallets like Privy instead of directly handling private keys. Here's how to use Solana Agent Kit with the Solana wallet adapter:
+Embedded wallets provide a simplified onboarding experience for your users while maintaining security. This guide explains how to integrate Solana Agent Kit with popular embedded wallet solutions.
+
+## What Are Embedded Wallets?
+
+Embedded wallets allow you to integrate wallet functionality directly into your application's interface, providing a seamless user experience without requiring users to install browser extensions or manage private keys directly. These solutions typically handle key management, transaction signing, and blockchain interactions behind the scenes.
+
+## Benefits of Embedded Wallets
+
+- **Improved User Experience**: No extension installations required
+- **Simplified Onboarding**: Email, social login, or passwordless authentication
+- **Enhanced Security**: Keys are properly managed by specialized providers
+- **Cross-Platform Compatibility**: Works across browsers and devices
+- **Developer Friendly**: Abstractions that simplify blockchain interactions
+
+## Prerequisites
+
+Before integrating embedded wallets, ensure you have:
+
+- Installed the Solana Agent Kit and required plugins
+- Set up an account with your chosen wallet provider (Privy, Crossmint, Magic, etc.)
+- Configured your application's authentication flow
+
+## Installation
+
+Install the required dependencies:
+
+```bash
+npm install solana-agent-kit @solana-agent-kit/plugin-token @solana-agent-kit/plugin-defi @solana-agent-kit/plugin-blinks @solana-agent-kit/plugin-misc @solana/web3.js
+```
+
+## Basic Integration
+
+Here's a comprehensive example of integrating Solana Agent Kit with an embedded wallet solution:
 
 ```javascript
-import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
-import TokenPlugin from "@solana-agent-kit/plugin-token";
-import DefiPlugin from "@solana-agent-kit/plugin-defi";
-import BlinksPlugin from "@solana-agent-kit/plugin-blinks";
-import MiscPlugin from "@solana-agent-kit/plugin-misc";
+import { SolanaAgentKit } from "solana-agent-kit";
+import { TokenPlugin } from "@solana-agent-kit/plugin-token";
+import { DefiPlugin } from "@solana-agent-kit/plugin-defi";
+import { BlinksPlugin } from "@solana-agent-kit/plugin-blinks";
+import { MiscPlugin } from "@solana-agent-kit/plugin-misc";
 import { Connection, PublicKey } from "@solana/web3.js";
 
-// Assuming you have a wallet from Privy or another wallet adapter
-const wallet = wallets[0]; // From useSolanaWallets() or similar
+// Step 1: Get the wallet from your wallet provider
+// This example assumes you're using a React hook like useSolanaWallets()
+const { wallets, connected } = useSolanaWallets();
+const wallet = wallets[0]; // Primary wallet from your provider
 
-// Create an agent with the wallet adapter
-const agent = new SolanaAgentKit(
-  {
-    publicKey: new PublicKey(wallet.address),
+// Step 2: Create a wallet adapter for Solana Agent Kit
+const walletAdapter = {
+  publicKey: new PublicKey(wallet.address),
+  
+  // Sign a single transaction
+  signTransaction: async (tx) => {
+    return await wallet.signTransaction(tx);
+  },
+  
+  // Sign multiple transactions in batch
+  signAllTransactions: async (txs) => {
+    return await wallet.signAllTransactions(txs);
+  },
+  
+  // Sign an arbitrary message (for authentication, etc.)
+  signMessage: async (msg) => {
+    return await wallet.signMessage(msg);
+  },
+  
+  // Send a signed transaction to the network
+  sendTransaction: async (tx) => {
+    const connection = new Connection(
+      process.env.SOLANA_RPC_URL || "https://api.mainnet-beta.solana.com",
+      "confirmed"
+    );
+    return await wallet.sendTransaction(tx, connection);
+  },
+  
+  // Helper method to sign and send in one operation
+  signAndSendTransaction: async (tx) => {
+    const signed = await wallet.signTransaction(tx);
+    const connection = new Connection(
+      process.env.SOLANA_RPC_URL || "https://api.mainnet-beta.solana.com",
+      "confirmed"
+    );
+    const signature = await connection.sendRawTransaction(signed.serialize());
+    await connection.confirmTransaction(signature, "confirmed");
+    return { signature };
+  },
+};
+
+// Step 3: Initialize the Solana Agent Kit with your wallet adapter
+const agent = new SolanaAgentKit({
+  wallet: walletAdapter,
+  rpcEndpoint: process.env.SOLANA_RPC_URL || "https://api.mainnet-beta.solana.com",
+  config: {
+    commitment: "confirmed",
+    preflightChecks: true,
+    autoRetry: true,
+  },
+  plugins: [
+    new TokenPlugin(),
+    new DefiPlugin(),
+    new BlinksPlugin(),
+    new MiscPlugin()
+  ]
+});
+
+// Step 4: Now you can use the agent to interact with Solana
+async function makeTransaction() {
+  if (!connected) {
+    console.error("Wallet not connected");
+    return;
+  }
+  
+  try {
+    // Example: Transfer USDC tokens
+    const signature = await agent.methods.transferToken(
+      "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", // USDC token mint
+      "10.5", // Amount to transfer
+      "recipient_wallet_address" // Recipient address
+    );
+    
+    console.log("Transaction successful:", signature);
+    return signature;
+  } catch (error) {
+    console.error("Transaction failed:", error);
+    throw error;
+  }
+}
+```
+
+## Integration with Popular Providers
+
+### Privy Integration
+
+[Privy](https://privy.io/) provides user authentication and embedded wallets with social logins:
+
+```javascript
+import { PrivyProvider, usePrivy, useWallets } from '@privy-io/react-auth';
+import { SolanaAgentKit } from "solana-agent-kit";
+import { TokenPlugin } from "@solana-agent-kit/plugin-token";
+
+// In your component
+function MyComponent() {
+  const { user, authenticated } = usePrivy();
+  const { wallets } = useWallets();
+  
+  // Find Solana wallet in Privy wallets
+  const solanaWallet = wallets.find(wallet => 
+    wallet.walletClientType === 'solana'
+  );
+  
+  // Create agent when wallet is available
+  useEffect(() => {
+    if (solanaWallet) {
+      const agent = new SolanaAgentKit({
+        wallet: {
+          publicKey: new PublicKey(solanaWallet.address),
+          signTransaction: async (tx) => await solanaWallet.signTransaction(tx),
+          signMessage: async (msg) => await solanaWallet.signMessage(msg),
+          // ... other methods
+        },
+        rpcEndpoint: "https://api.mainnet-beta.solana.com",
+        plugins: [new TokenPlugin()]
+      });
+      
+      // Store agent in state or context for use in your app
+      setAgent(agent);
+    }
+  }, [solanaWallet]);
+  
+  // Rest of your component
+}
+```
+
+### Magic Integration
+
+[Magic](https://magic.link/) provides passwordless authentication:
+
+```javascript
+import { Magic } from 'magic-sdk';
+import { SolanaExtension } from '@magic-ext/solana';
+import { SolanaAgentKit } from "solana-agent-kit";
+import { TokenPlugin } from "@solana-agent-kit/plugin-token";
+
+// Initialize Magic instance
+const magic = new Magic('YOUR_MAGIC_PUBLISHABLE_KEY', {
+  extensions: [new SolanaExtension({
+    rpcUrl: 'https://api.mainnet-beta.solana.com'
+  })]
+});
+
+// After user login, create wallet adapter
+const publicKey = new PublicKey((await magic.solana.getAccount()));
+
+const agent = new SolanaAgentKit({
+  wallet: {
+    publicKey,
     signTransaction: async (tx) => {
-      const signed = await wallet.signTransaction(tx);
-      return signed;
+      return await magic.solana.signTransaction(tx);
     },
     signMessage: async (msg) => {
-      const signed = await wallet.signMessage(msg);
-      return signed;
+      return await magic.solana.signMessage(msg);
     },
-    sendTransaction: async (tx) => {
-      const connection = new Connection(
-        "YOUR_RPC_URL",
-        "confirmed"
-      );
-      return await wallet.sendTransaction(tx, connection);
-    },
-    signAllTransactions: async (txs) => {
-      const signed = await wallet.signAllTransactions(txs);
-      return signed;
-    },
-    signAndSendTransaction: async (tx) => {
-      const signed = await wallet.signTransaction(tx);
-      const connection = new Connection(
-        "YOUR_RPC_URL",
-        "confirmed"
-      );
-      const sig = await wallet.sendTransaction(signed, connection);
-      return { signature: sig };
-    },
+    // ... other methods
   },
-  "YOUR_RPC_URL",
-  {}
-)
-  .use(TokenPlugin)
-  .use(DefiPlugin)
-  .use(BlinksPlugin)
-  .use(MiscPlugin);
-
-// Create tools for your AI model
-const tools = createVercelAITools(agent, agent.actions);
+  rpcEndpoint: "https://api.mainnet-beta.solana.com",
+  plugins: [new TokenPlugin()]
+});
 ```
+
+## Security Considerations
+
+When using embedded wallets, consider these security best practices:
+
+1. **Implement proper authentication** to protect user accounts
+2. **Use secure connection protocols** (HTTPS) for all API communications
+3. **Set transaction limits** to protect users from potential exploits
+4. **Implement multi-factor authentication** when possible
+5. **Provide clear transaction information** to users before signing
+6. **Test thoroughly** on devnet before deploying to mainnet
+
+## Troubleshooting
+
+Common issues and solutions:
+
+- **Wallet Connection Errors**: Ensure the wallet is properly initialized and connected
+- **Transaction Signature Failures**: Check that the wallet has sufficient permissions
+- **RPC Errors**: Consider using a dedicated RPC provider for production applications
+- **Unsupported Methods**: Verify that your wallet provider supports all required methods
+
+## Next Steps
+
+Now that you've integrated an embedded wallet, you can:
+
+- [Deploy a token collection](../integrations/token-operations/deploy_spl_metaplex.md)
+- [Create a swap interface](../integrations/defi-integration/jupiter_exchange_swaps.md)
+- [Integrate with AI assistants](../adapters/mcp/mcp-adapter-intro.md)
+- [Explore keypair-based wallets](./keypair.md) for server-side applications

@@ -1,110 +1,462 @@
+---
+title: "React Native Integration"
+description: "Integrate Solana Agent Kit with React Native for mobile blockchain applications"
+---
 
-## React Native Integration
+# React Native Integration
 
-For React Native applications, you can integrate Solana Agent Kit with wallet adapters that work in a mobile environment. Here's a simplified example using a custom wallet hook:
+This guide explains how to integrate Solana Agent Kit in React Native applications, enabling you to build mobile-first Solana dApps with AI-powered capabilities.
+
+## Understanding Mobile Blockchain Development
+
+Mobile blockchain development presents unique challenges compared to web development:
+
+- Different authentication patterns
+- Mobile-specific UI/UX considerations 
+- Background process handling
+- Platform-specific APIs and capabilities
+- Lower computational resources
+
+Solana Agent Kit can be configured to work optimally in React Native environments while addressing these challenges.
+
+## Prerequisites
+
+Before integrating with React Native, ensure you have:
+
+- Basic understanding of React Native development
+- A React Native project set up
+- A wallet solution for React Native (Mobile Wallet Adapter, custodial wallet SDK, etc.)
+- Solana Agent Kit and required plugins installed
+
+## Installation
+
+First, install the necessary dependencies:
+
+```bash
+# Install core dependencies
+npm install solana-agent-kit @solana-agent-kit/plugin-token @solana/web3.js
+
+# For AI integrations (if needed)
+npm install ai
+
+# If using Mobile Wallet Adapter
+npm install @solana-mobile/mobile-wallet-adapter-protocol-web3js @solana-mobile/mobile-wallet-adapter-protocol
+```
+
+## Mobile Wallet Integration
+
+There are several approaches to wallet integration in React Native:
+
+1. **Mobile Wallet Adapter** - Connect to external wallets like Phantom, Solflare
+2. **Embedded Wallets** - Use solutions like Magic.link, Privy, Crossmint
+3. **Custom Wallet Implementation** - Build your own with secure storage
+
+Here's an example using a custom wallet hook:
 
 ```javascript
-import { useCallback, useMemo, useState } from "react";
-import { generateText, type Message } from "ai";
-import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
-import TokenPlugin from "@solana-agent-kit/plugin-token";
-import { Connection, PublicKey } from "@solana/web3.js";
-import { useWallet } from "@/walletProviders"; // Your wallet provider hook
+// src/hooks/useMobileWallet.js
+import { useState, useEffect } from 'react';
+import { PublicKey } from '@solana/web3.js';
+import * as SecureStore from 'expo-secure-store';
+import nacl from 'tweetnacl';
+import bs58 from 'bs58';
 
-export function useChat({ id, initialMessages = [] }) {
-  const [messages, setMessages] = useState(initialMessages);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+export function useMobileWallet() {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [publicKey, setPublicKey] = useState(null);
+  const [privateKey, setPrivateKey] = useState(null);
   
-  // Get wallet functionality from your custom wallet hook
-  const { connected, address, signTransaction, signMessage, sendTransaction } = useWallet();
-
-  // Initialize Solana tools with the connected wallet
-  const solanaTools = useMemo(() => {
-    if (connected && address) {
-      const agent = new SolanaAgentKit(
-        {
-          publicKey: new PublicKey(address),
-          signTransaction: async (tx) => await signTransaction(tx),
-          signMessage: async (msg) => await signMessage(msg),
-          sendTransaction: async (tx) => {
-            const connection = new Connection("YOUR_RPC_URL", "confirmed");
-            return await sendTransaction(tx, connection);
-          },
-          signAndSendTransaction: async (tx) => {
-            const connection = new Connection("YOUR_RPC_URL", "confirmed");
-            const signature = await sendTransaction(tx, connection);
-            return { signature };
-          },
-        },
-        "YOUR_RPC_URL",
-        {}
-      ).use(TokenPlugin);
-      
-      return createVercelAITools(agent, agent.actions);
-    }
-  }, [connected, address, signTransaction, signMessage, sendTransaction]);
-
-  // Send a message to the AI assistant
-  const sendMessage = useCallback(async (newMessage) => {
-    if (!connected) {
-      setError("You must be connected to your wallet to send messages");
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-    
-    // Update UI with user message
-    setMessages((prev) => [...prev, newMessage]);
-
-    try {
-      // Generate AI response
-      const res = await generateText({
-        model: myProvider.languageModel("chat-model"),
-        system: `You're a helpful Solana assistant that helps people carry out transactions. Connected wallet: ${address}`,
-        messages: [...messages, newMessage],
-        tools: solanaTools,
-      });
-
-      // Process and display assistant response
-      const assistantMessage = res.response.messages.find(m => m.role === "assistant");
-      if (assistantMessage) {
-        setMessages((prev) => [...prev, {
-          id: assistantMessage.id,
-          content: assistantMessage.content,
-          role: "assistant",
-          parts: assistantMessage.parts,
-        }]);
+  // Initialize wallet from secure storage or create new one
+  useEffect(() => {
+    async function initWallet() {
+      try {
+        // Try to load existing keypair
+        const storedPrivateKey = await SecureStore.getItemAsync('solana_private_key');
+        
+        if (storedPrivateKey) {
+          // Use existing keypair
+          const decodedKey = bs58.decode(storedPrivateKey);
+          const keyPair = nacl.sign.keyPair.fromSecretKey(decodedKey);
+          setPublicKey(new PublicKey(keyPair.publicKey));
+          setPrivateKey(decodedKey);
+        } else {
+          // Generate new keypair
+          const keyPair = nacl.sign.keyPair();
+          const publicKeyObj = new PublicKey(keyPair.publicKey);
+          
+          // Store in secure storage
+          await SecureStore.setItemAsync(
+            'solana_private_key',
+            bs58.encode(keyPair.secretKey)
+          );
+          
+          setPublicKey(publicKeyObj);
+          setPrivateKey(keyPair.secretKey);
+        }
+        
+        setIsInitialized(true);
+      } catch (error) {
+        console.error('Wallet initialization failed:', error);
       }
-    } catch (err) {
-      setError(err.message || "An error occurred");
-    } finally {
-      setIsLoading(false);
     }
-  }, [messages, solanaTools, connected, address]);
-
+    
+    initWallet();
+  }, []);
+  
+  // Implement wallet methods
+  const signTransaction = async (transaction) => {
+    if (!isInitialized) throw new Error('Wallet not initialized');
+    // Implementation of transaction signing with nacl
+    // ...
+    return signedTransaction;
+  };
+  
+  const signMessage = async (message) => {
+    if (!isInitialized) throw new Error('Wallet not initialized');
+    // Sign message implementation
+    // ...
+    return signature;
+  };
+  
+  // Other wallet methods...
+  
   return {
-    messages,
-    isLoading,
-    error,
-    sendMessage,
+    connected: isInitialized,
+    publicKey,
+    address: publicKey?.toString(),
+    signTransaction,
+    signMessage,
+    // Other methods...
   };
 }
 ```
 
-## Using with Vercel AI SDK
+## Creating a Chat Interface with AI and Solana
 
-Once you've set up your agent and tools, you can use them with the Vercel AI SDK:
+Here's a comprehensive example of creating an AI-powered Solana assistant in React Native:
 
 ```javascript
+import { useCallback, useEffect, useState } from "react";
+import { Text, View, TextInput, Button, ScrollView, StyleSheet } from 'react-native';
 import { generateText } from "ai";
+import { SolanaAgentKit } from "solana-agent-kit";
+import { TokenPlugin } from "@solana-agent-kit/plugin-token";
+import { Connection, PublicKey } from "@solana/web3.js";
+import { useMobileWallet } from "@/hooks/useMobileWallet"; // Your custom wallet hook
 
-// Generate a response with your AI provider
-const res = await generateText({
-  model: myProvider.languageModel("your-model"),
-  system: "You're a helpful Solana assistant that helps people carry out transactions on the Solana blockchain.",
-  messages: messages, // Your chat messages
-  tools: solanaTools, // The tools created above
+export default function SolanaChatScreen() {
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [agent, setAgent] = useState(null);
+  
+  // Get wallet functionality from your custom wallet hook
+  const { connected, publicKey, address, signTransaction, signMessage } = useMobileWallet();
+
+  // Initialize Solana Agent Kit when wallet is connected
+  useEffect(() => {
+    if (connected && publicKey) {
+      // Create wallet adapter
+      const walletAdapter = {
+        publicKey,
+        signTransaction: async (tx) => await signTransaction(tx),
+        signMessage: async (msg) => await signMessage(msg),
+        sendTransaction: async (tx) => {
+          const connection = new Connection(
+            "https://api.devnet.solana.com", // Use devnet for testing
+            "confirmed"
+          );
+          const signature = await connection.sendRawTransaction(tx.serialize());
+          await connection.confirmTransaction(signature, "confirmed");
+          return signature;
+        },
+      };
+
+      // Initialize agent with wallet adapter
+      const solanaAgent = new SolanaAgentKit({
+        wallet: walletAdapter,
+        rpcEndpoint: "https://api.devnet.solana.com",
+        config: {
+          commitment: "confirmed",
+          preflightChecks: true,
+        },
+        plugins: [new TokenPlugin()]
+      });
+      
+      setAgent(solanaAgent);
+      
+      // Add system message introducing the assistant
+      setMessages([
+        {
+          id: 'system-1',
+          role: 'assistant',
+          content: `Hello! I'm your Solana assistant. I can help you check balances, transfer tokens, and more. Your connected wallet is ${address.slice(0,4)}...${address.slice(-4)}.`
+        }
+      ]);
+    }
+  }, [connected, publicKey, address]);
+
+  // Create Solana tools for AI
+  const solanaTools = useCallback(() => {
+    if (!agent) return [];
+    
+    return [
+      {
+        name: "check_balance",
+        description: "Check SOL or token balance",
+        parameters: {
+          type: "object",
+          properties: {
+            token: {
+              type: "string",
+              description: "Token mint address or 'SOL' for native balance"
+            }
+          },
+          required: ["token"]
+        },
+        execute: async ({ token }) => {
+          if (token.toLowerCase() === 'sol') {
+            return await agent.methods.getBalance();
+          } else {
+            return await agent.methods.getTokenBalance(token);
+          }
+        }
+      },
+      {
+        name: "transfer_tokens",
+        description: "Transfer tokens or SOL to another wallet",
+        parameters: {
+          type: "object",
+          properties: {
+            token: { type: "string", description: "Token mint address or 'SOL'" },
+            amount: { type: "string", description: "Amount to transfer" },
+            recipient: { type: "string", description: "Recipient wallet address" }
+          },
+          required: ["token", "amount", "recipient"]
+        },
+        execute: async ({ token, amount, recipient }) => {
+          if (token.toLowerCase() === 'sol') {
+            return await agent.methods.transfer(amount, recipient);
+          } else {
+            return await agent.methods.transferToken(token, amount, recipient);
+          }
+        }
+      }
+      // Add more tools as needed
+    ];
+  }, [agent]);
+
+  // Send a message to the AI assistant
+  const sendMessage = async () => {
+    if (!inputText.trim() || !connected) return;
+    
+    const userMessage = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      content: inputText
+    };
+    
+    setMessages(prev => [...prev, userMessage]);
+    setInputText('');
+    setIsLoading(true);
+
+    try {
+      // Use AI model to generate response with Solana tools
+      const response = await generateText({
+        model: "claude-3-opus-20240229", // Or your preferred model
+        system: `You are a helpful Solana blockchain assistant. The user's wallet address is ${address}.
+                You can help with checking balances, sending tokens, and explaining Solana concepts.
+                Be concise and clear in your responses.`,
+        messages: [...messages, userMessage],
+        tools: solanaTools(),
+        temperature: 0.7,
+      });
+      
+      // Add AI response to messages
+      setMessages(prev => [
+        ...prev, 
+        {
+          id: `assistant-${Date.now()}`,
+          role: 'assistant',
+          content: response.text
+        }
+      ]);
+    } catch (error) {
+      console.error("Error generating response:", error);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: `error-${Date.now()}`,
+          role: 'assistant',
+          content: "Sorry, I encountered an error while processing your request."
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.messagesContainer}>
+        {messages.map((message) => (
+          <View 
+            key={message.id} 
+            style={[
+              styles.messageBubble,
+              message.role === 'user' ? styles.userBubble : styles.assistantBubble
+            ]}
+          >
+            <Text style={styles.messageText}>{message.content}</Text>
+          </View>
+        ))}
+        {isLoading && (
+          <View style={[styles.messageBubble, styles.assistantBubble]}>
+            <Text style={styles.messageText}>Thinking...</Text>
+          </View>
+        )}
+      </ScrollView>
+      
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder="Ask about Solana..."
+          placeholderTextColor="#888"
+          multiline
+        />
+        <Button
+          title="Send"
+          onPress={sendMessage}
+          disabled={!connected || isLoading || !inputText.trim()}
+        />
+      </View>
+      
+      {!connected && (
+        <View style={styles.warningBanner}>
+          <Text style={styles.warningText}>
+            Wallet not connected. Please connect your wallet to use the Solana assistant.
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 10,
+  },
+  messagesContainer: {
+    flex: 1,
+    marginBottom: 10,
+  },
+  messageBubble: {
+    padding: 12,
+    borderRadius: 20,
+    marginVertical: 5,
+    maxWidth: '80%',
+  },
+  userBubble: {
+    backgroundColor: '#dcf8c6',
+    alignSelf: 'flex-end',
+    marginLeft: '20%',
+  },
+  assistantBubble: {
+    backgroundColor: '#fff',
+    alignSelf: 'flex-start',
+    marginRight: '20%',
+  },
+  messageText: {
+    fontSize: 16,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 20,
+    padding: 10,
+    marginRight: 10,
+    backgroundColor: '#fff',
+  },
+  warningBanner: {
+    padding: 10,
+    backgroundColor: '#ffcccc',
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  warningText: {
+    color: 'red',
+  },
 });
-```
+
+## Platform-Specific Considerations
+
+### Android
+
+On Android, ensure you:
+
+1. Add necessary permissions in the `AndroidManifest.xml`:
+   ```xml
+   <uses-permission android:name="android.permission.INTERNET" />
+   ```
+
+2. Configure ProGuard rules if you're building for release:
+   ```
+   -keep class org.bouncycastle.** { *; }
+   -keep class nacl.** { *; }
+   ```
+
+### iOS
+
+On iOS, be aware of:
+
+1. Security APIs may require entitlements in your app configuration
+2. Memory constraints for complex cryptographic operations
+3. Background task limitations
+
+## Performance Optimization
+
+For optimal performance on mobile:
+
+1. **Implement transaction batching** to reduce API calls
+2. **Use local caching** for frequently accessed data
+3. **Implement wallet connection persistence** to preserve sessions
+4. **Consider offline capabilities** for basic functionality
+5. **Debounce balance updates** and other resource-intensive operations
+
+## Troubleshooting
+
+Common issues in React Native integration:
+
+- **Native Module Linking**: If using libraries with native dependencies, make sure they're properly linked
+- **Crypto Library Incompatibilities**: Some crypto libraries may require special configuration
+- **Memory Issues**: Watch for memory leaks with long-lived connections
+- **Connectivity Handling**: Implement proper error handling for network issues
+
+## Security Best Practices
+
+When implementing Solana functionality in mobile apps:
+
+1. **Use secure storage** like `expo-secure-store` for any sensitive information
+2. **Implement biometric authentication** for transaction signing
+3. **Add transaction confirmation screens** with clear information
+4. **Set appropriate transaction limits**
+5. **Implement session timeouts** for wallet connections
+6. **Never store private keys** in regular app storage
+
+## Next Steps
+
+Now that you've set up your React Native app with Solana Agent Kit, you can:
+
+- [Learn about DeFi integrations](../integrations/defi-integration/jupiter_exchange_swaps.md)
+- [Explore NFT functionality](../integrations/nft-management/mint_nft.md)
+- [Implement token transfers](../integrations/token-operations/transfer_assets.md)
+- [Add secure authentication flows](./embedded-wallets.md) with embedded wallets
