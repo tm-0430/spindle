@@ -21,7 +21,6 @@
           {
             "group": "Quickstart",
             "pages": [
-              "docs/v2/quickstart",
               "docs/v2/setup/quickstart",
               "docs/v2/setup/embedded-wallets",
               "docs/v2/setup/keypair",
