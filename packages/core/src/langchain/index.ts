@@ -1,7 +1,7 @@
+import { tool } from "@langchain/core/tools";
 import { SolanaAgentKit } from "../agent";
 import { Action } from "../types";
 import { transformToZodObject } from "../utils/zod";
-import { tool } from "@langchain/core/tools";
 
 export function createLangchainTools(
   solanaAgentKit: SolanaAgentKit,

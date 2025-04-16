@@ -1,25 +1,14 @@
 import { CompressedTokenProgram } from "@lightprotocol/compressed-token";
 import {
-  Rpc,
-  buildAndSignTx,
   buildTx,
   calculateComputeUnitPrice,
-  sendAndConfirmTx,
-  sleep,
 } from "@lightprotocol/stateless.js";
 import {
   createAssociatedTokenAccountInstruction,
   getAssociatedTokenAddress,
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
-import {
-  AddressLookupTableAccount,
-  ComputeBudgetProgram,
-  Keypair,
-  PublicKey,
-  Transaction,
-  TransactionInstruction,
-} from "@solana/web3.js";
+import { ComputeBudgetProgram, PublicKey, Transaction } from "@solana/web3.js";
 import { SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
 
 // arbitrary
@@ -204,52 +193,4 @@ async function processAll(
   );
 
   return await signOrSendTX(agent, tx);
-}
-
-async function sendTransactionWithRetry(
-  connection: Rpc,
-  instructions: TransactionInstruction[],
-  payer: Keypair,
-  lookupTableAccount: AddressLookupTableAccount,
-  batchIndex: number,
-): Promise<string> {
-  const MAX_RETRIES = 3;
-  const INITIAL_BACKOFF = 500; // ms
-
-  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-    try {
-      const { blockhash } = await connection.getLatestBlockhash();
-      const tx = buildAndSignTx(
-        instructions,
-        payer,
-        blockhash,
-        [],
-        [lookupTableAccount],
-      );
-
-      const signature = await sendAndConfirmTx(connection, tx);
-
-      return signature;
-    } catch (error: any) {
-      const isRetryable =
-        error.message?.includes("blockhash not found") ||
-        error.message?.includes("timeout") ||
-        error.message?.includes("rate limit") ||
-        error.message?.includes("too many requests");
-
-      if (!isRetryable || attempt === MAX_RETRIES - 1) {
-        throw new Error(
-          `Batch ${batchIndex} failed after ${attempt + 1} attempts: ${
-            error.message
-          }`,
-        );
-      }
-
-      const backoff =
-        INITIAL_BACKOFF * Math.pow(2, attempt) * (0.5 + Math.random());
-      await sleep(backoff);
-    }
-  }
-
-  throw new Error("Unreachable");
 }

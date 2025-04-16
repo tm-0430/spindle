@@ -8,9 +8,7 @@ import {
   TransactionSignature,
   VersionedTransaction,
 } from "@solana/web3.js";
-import bs58 from "bs58";
 import nacl from "tweetnacl";
-import type { TransactionOrVersionedTransaction } from "../types";
 import type { BaseWallet } from "../types/wallet";
 
 /**
@@ -48,12 +46,9 @@ export class KeypairWallet implements BaseWallet {
     commitment: "processed",
   };
 
-  async signTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(transaction: T): Promise<T> {
+  async signTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<T> {
     if (isVersionedTransaction(transaction)) {
       transaction.sign([this.payer]);
     } else {
@@ -63,12 +58,9 @@ export class KeypairWallet implements BaseWallet {
     return transaction;
   }
 
-  async signAllTransactions<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(txs: T[]): Promise<T[]> {
+  async signAllTransactions<T extends Transaction | VersionedTransaction>(
+    txs: T[],
+  ): Promise<T[]> {
     return txs.map((t) => {
       if (isVersionedTransaction(t)) {
         t.sign([this.payer]);
@@ -79,12 +71,9 @@ export class KeypairWallet implements BaseWallet {
     });
   }
 
-  async sendTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(transaction: T): Promise<string> {
+  async sendTransaction<T extends Transaction | VersionedTransaction>(
+    transaction: T,
+  ): Promise<string> {
     const connection = new Connection(this.rpcUrl);
 
     if (transaction instanceof VersionedTransaction) {
@@ -101,12 +90,7 @@ export class KeypairWallet implements BaseWallet {
     return signature;
   }
 
-  async signAndSendTransaction<
-    T extends
-      | Transaction
-      | VersionedTransaction
-      | TransactionOrVersionedTransaction,
-  >(
+  async signAndSendTransaction<T extends Transaction | VersionedTransaction>(
     transaction: T,
     options?: SendOptions,
   ): Promise<{ signature: TransactionSignature }> {
