@@ -6,7 +6,7 @@
 
 # Interface: HeliusWebhookIdResponse
 
-Defined in: [packages/core/src/types/index.ts:188](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L188)
+Defined in: [packages/core/src/types/index.ts:188](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L188)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:188](https://github.com/michaeless
 
 > **accountAddresses**: `string`[]
 
-Defined in: [packages/core/src/types/index.ts:192](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L192)
+Defined in: [packages/core/src/types/index.ts:192](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L192)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types/index.ts:192](https://github.com/michaeless
 
 > **transactionTypes**: `string`[]
 
-Defined in: [packages/core/src/types/index.ts:191](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L191)
+Defined in: [packages/core/src/types/index.ts:191](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L191)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types/index.ts:191](https://github.com/michaeless
 
 > **wallet**: `string`
 
-Defined in: [packages/core/src/types/index.ts:189](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L189)
+Defined in: [packages/core/src/types/index.ts:189](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L189)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types/index.ts:189](https://github.com/michaeless
 
 > **webhookType**: `string`
 
-Defined in: [packages/core/src/types/index.ts:193](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L193)
+Defined in: [packages/core/src/types/index.ts:193](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L193)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [packages/core/src/types/index.ts:193](https://github.com/michaeless
 
 > **webhookURL**: `string`
 
-Defined in: [packages/core/src/types/index.ts:190](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L190)
+Defined in: [packages/core/src/types/index.ts:190](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L190)

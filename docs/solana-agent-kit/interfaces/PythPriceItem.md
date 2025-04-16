@@ -6,7 +6,7 @@
 
 # Interface: PythPriceItem
 
-Defined in: [packages/core/src/types/index.ts:155](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L155)
+Defined in: [packages/core/src/types/index.ts:155](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L155)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:155](https://github.com/michaeless
 
 > **binary**: `object`
 
-Defined in: [packages/core/src/types/index.ts:156](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L156)
+Defined in: [packages/core/src/types/index.ts:156](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L156)
 
 #### data
 
@@ -30,4 +30,4 @@ Defined in: [packages/core/src/types/index.ts:156](https://github.com/michaeless
 
 > **parsed**: \[`object`[]\]
 
-Defined in: [packages/core/src/types/index.ts:160](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L160)
+Defined in: [packages/core/src/types/index.ts:160](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L160)

@@ -6,7 +6,7 @@
 
 # Interface: PumpFunTokenOptions
 
-Defined in: [packages/core/src/types/index.ts:33](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L33)
+Defined in: [packages/core/src/types/index.ts:33](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L33)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:33](https://github.com/michaelessi
 
 > `optional` **initialLiquiditySOL**: `number`
 
-Defined in: [packages/core/src/types/index.ts:37](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L37)
+Defined in: [packages/core/src/types/index.ts:37](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L37)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types/index.ts:37](https://github.com/michaelessi
 
 > `optional` **priorityFee**: `number`
 
-Defined in: [packages/core/src/types/index.ts:39](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L39)
+Defined in: [packages/core/src/types/index.ts:39](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L39)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types/index.ts:39](https://github.com/michaelessi
 
 > `optional` **slippageBps**: `number`
 
-Defined in: [packages/core/src/types/index.ts:38](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L38)
+Defined in: [packages/core/src/types/index.ts:38](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L38)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types/index.ts:38](https://github.com/michaelessi
 
 > `optional` **telegram**: `string`
 
-Defined in: [packages/core/src/types/index.ts:35](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L35)
+Defined in: [packages/core/src/types/index.ts:35](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L35)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/core/src/types/index.ts:35](https://github.com/michaelessi
 
 > `optional` **twitter**: `string`
 
-Defined in: [packages/core/src/types/index.ts:34](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L34)
+Defined in: [packages/core/src/types/index.ts:34](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L34)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [packages/core/src/types/index.ts:34](https://github.com/michaelessi
 
 > `optional` **website**: `string`
 
-Defined in: [packages/core/src/types/index.ts:36](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L36)
+Defined in: [packages/core/src/types/index.ts:36](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L36)

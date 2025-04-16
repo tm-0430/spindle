@@ -6,7 +6,7 @@
 
 # Interface: BaseWallet
 
-Defined in: [packages/core/src/types/wallet.ts:27](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L27)
+Defined in: [packages/core/src/types/wallet.ts:27](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L27)
 
 Interface representing a Solana wallet implementation
 
@@ -21,7 +21,7 @@ including transaction signing, message signing, and connection status.
 
 > `readonly` **publicKey**: `PublicKey`
 
-Defined in: [packages/core/src/types/wallet.ts:32](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L32)
+Defined in: [packages/core/src/types/wallet.ts:32](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L32)
 
 The public key of the connected wallet
 
@@ -31,7 +31,7 @@ The public key of the connected wallet
 
 > `optional` **sendTransaction**: \<`T`\>(`transaction`) => `Promise`\<`string`\>
 
-Defined in: [packages/core/src/types/wallet.ts:59](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L59)
+Defined in: [packages/core/src/types/wallet.ts:59](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L59)
 
 Sends a transaction on chain
 
@@ -61,7 +61,7 @@ The transaction to be signed and sent
 
 > **signAndSendTransaction**: \<`T`\>(`transaction`, `options?`) => `Promise`\<\{ `signature`: `string`; \}\>
 
-Defined in: [packages/core/src/types/wallet.ts:70](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L70)
+Defined in: [packages/core/src/types/wallet.ts:70](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L70)
 
 Signs and sends a transaction to the network
 
@@ -99,7 +99,7 @@ Promise resolving to the transaction signature
 
 > **signAllTransactions**\<`T`\>(`transactions`): `Promise`\<`T`[]\>
 
-Defined in: [packages/core/src/types/wallet.ts:50](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L50)
+Defined in: [packages/core/src/types/wallet.ts:50](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L50)
 
 Signs multiple transactions in batch
 
@@ -131,7 +131,7 @@ Promise resolving to an array of signed transactions
 
 > **signMessage**(`message`): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
-Defined in: [packages/core/src/types/wallet.ts:79](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L79)
+Defined in: [packages/core/src/types/wallet.ts:79](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L79)
 
 Signs a message
 
@@ -153,7 +153,7 @@ The message to be signed
 
 > **signTransaction**\<`T`\>(`transaction`): `Promise`\<`T`\>
 
-Defined in: [packages/core/src/types/wallet.ts:40](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/wallet.ts#L40)
+Defined in: [packages/core/src/types/wallet.ts:40](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/wallet.ts#L40)
 
 Signs a single transaction
 

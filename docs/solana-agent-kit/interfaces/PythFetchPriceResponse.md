@@ -6,7 +6,7 @@
 
 # Interface: PythFetchPriceResponse
 
-Defined in: [packages/core/src/types/index.ts:72](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L72)
+Defined in: [packages/core/src/types/index.ts:72](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L72)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:72](https://github.com/michaelessi
 
 > `optional` **code**: `string`
 
-Defined in: [packages/core/src/types/index.ts:78](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L78)
+Defined in: [packages/core/src/types/index.ts:78](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L78)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types/index.ts:78](https://github.com/michaelessi
 
 > `optional` **message**: `string`
 
-Defined in: [packages/core/src/types/index.ts:77](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L77)
+Defined in: [packages/core/src/types/index.ts:77](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L77)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types/index.ts:77](https://github.com/michaelessi
 
 > `optional` **price**: `string`
 
-Defined in: [packages/core/src/types/index.ts:76](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L76)
+Defined in: [packages/core/src/types/index.ts:76](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L76)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types/index.ts:76](https://github.com/michaelessi
 
 > `optional` **priceFeedID**: `string`
 
-Defined in: [packages/core/src/types/index.ts:75](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L75)
+Defined in: [packages/core/src/types/index.ts:75](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L75)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/core/src/types/index.ts:75](https://github.com/michaelessi
 
 > **status**: `"success"` \| `"error"`
 
-Defined in: [packages/core/src/types/index.ts:73](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L73)
+Defined in: [packages/core/src/types/index.ts:73](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L73)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [packages/core/src/types/index.ts:73](https://github.com/michaelessi
 
 > **tokenSymbol**: `string`
 
-Defined in: [packages/core/src/types/index.ts:74](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L74)
+Defined in: [packages/core/src/types/index.ts:74](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L74)

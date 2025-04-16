@@ -6,7 +6,7 @@
 
 # Interface: PumpfunLaunchResponse
 
-Defined in: [packages/core/src/types/index.ts:42](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L42)
+Defined in: [packages/core/src/types/index.ts:42](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L42)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:42](https://github.com/michaelessi
 
 > `optional` **error**: `string`
 
-Defined in: [packages/core/src/types/index.ts:46](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L46)
+Defined in: [packages/core/src/types/index.ts:46](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L46)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types/index.ts:46](https://github.com/michaelessi
 
 > `optional` **metadataUri**: `string`
 
-Defined in: [packages/core/src/types/index.ts:45](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L45)
+Defined in: [packages/core/src/types/index.ts:45](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L45)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types/index.ts:45](https://github.com/michaelessi
 
 > **mint**: `string`
 
-Defined in: [packages/core/src/types/index.ts:44](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L44)
+Defined in: [packages/core/src/types/index.ts:44](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L44)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [packages/core/src/types/index.ts:44](https://github.com/michaelessi
 
 > **signature**: `string`
 
-Defined in: [packages/core/src/types/index.ts:43](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L43)
+Defined in: [packages/core/src/types/index.ts:43](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L43)

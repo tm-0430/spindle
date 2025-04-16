@@ -6,7 +6,7 @@
 
 # Class: SolanaAgentKit\<TPlugins\>
 
-Defined in: [packages/core/src/agent/index.ts:43](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L43)
+Defined in: [packages/core/src/agent/index.ts:43](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L43)
 
 Main class for interacting with Solana blockchain.
 
@@ -58,7 +58,7 @@ agentWithPlugins.methods.transferToken("SomePublicKey", 100);
 
 > **new SolanaAgentKit**\<`TPlugins`\>(`wallet`, `rpc_url`, `config`): `SolanaAgentKit`\<`TPlugins`\>
 
-Defined in: [packages/core/src/agent/index.ts:52](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L52)
+Defined in: [packages/core/src/agent/index.ts:52](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L52)
 
 #### Parameters
 
@@ -84,7 +84,7 @@ Defined in: [packages/core/src/agent/index.ts:52](https://github.com/michaelessi
 
 > **actions**: [`Action`](../interfaces/Action.md)[] = `[]`
 
-Defined in: [packages/core/src/agent/index.ts:50](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L50)
+Defined in: [packages/core/src/agent/index.ts:50](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L50)
 
 ***
 
@@ -92,7 +92,7 @@ Defined in: [packages/core/src/agent/index.ts:50](https://github.com/michaelessi
 
 > **config**: [`Config`](../interfaces/Config.md)
 
-Defined in: [packages/core/src/agent/index.ts:45](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L45)
+Defined in: [packages/core/src/agent/index.ts:45](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L45)
 
 ***
 
@@ -100,7 +100,7 @@ Defined in: [packages/core/src/agent/index.ts:45](https://github.com/michaelessi
 
 > **connection**: `Connection`
 
-Defined in: [packages/core/src/agent/index.ts:44](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L44)
+Defined in: [packages/core/src/agent/index.ts:44](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L44)
 
 ***
 
@@ -108,7 +108,7 @@ Defined in: [packages/core/src/agent/index.ts:44](https://github.com/michaelessi
 
 > **methods**: `TPlugins`
 
-Defined in: [packages/core/src/agent/index.ts:49](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L49)
+Defined in: [packages/core/src/agent/index.ts:49](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L49)
 
 ***
 
@@ -116,7 +116,7 @@ Defined in: [packages/core/src/agent/index.ts:49](https://github.com/michaelessi
 
 > **wallet**: [`BaseWallet`](../interfaces/BaseWallet.md)
 
-Defined in: [packages/core/src/agent/index.ts:46](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L46)
+Defined in: [packages/core/src/agent/index.ts:46](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L46)
 
 ## Methods
 
@@ -124,7 +124,7 @@ Defined in: [packages/core/src/agent/index.ts:46](https://github.com/michaelessi
 
 > **use**\<`P`\>(`plugin`): `SolanaAgentKit`\<`TPlugins` & `PluginMethods`\<`P`\>\>
 
-Defined in: [packages/core/src/agent/index.ts:61](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/agent/index.ts#L61)
+Defined in: [packages/core/src/agent/index.ts:61](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/agent/index.ts#L61)
 
 Adds a plugin and registers its methods inside `methods`
 

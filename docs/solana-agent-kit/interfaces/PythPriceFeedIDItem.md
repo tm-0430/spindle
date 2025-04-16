@@ -6,7 +6,7 @@
 
 # Interface: PythPriceFeedIDItem
 
-Defined in: [packages/core/src/types/index.ts:147](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L147)
+Defined in: [packages/core/src/types/index.ts:147](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L147)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:147](https://github.com/michaeless
 
 > **attributes**: `object`
 
-Defined in: [packages/core/src/types/index.ts:149](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L149)
+Defined in: [packages/core/src/types/index.ts:149](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L149)
 
 #### asset\_type
 
@@ -30,4 +30,4 @@ Defined in: [packages/core/src/types/index.ts:149](https://github.com/michaeless
 
 > **id**: `string`
 
-Defined in: [packages/core/src/types/index.ts:148](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L148)
+Defined in: [packages/core/src/types/index.ts:148](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L148)

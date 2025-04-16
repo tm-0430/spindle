@@ -8,7 +8,7 @@
 
 > `const` **default**: `object`
 
-Defined in: [packages/plugin-defi/src/index.ts:195](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/plugin-defi/src/index.ts#L195)
+Defined in: [packages/plugin-defi/src/index.ts:195](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/plugin-defi/src/index.ts#L195)
 
 ## Type declaration
 
@@ -288,7 +288,7 @@ Redeem period in seconds
 
 `Promise`\<`string`\>
 
-Promise<anchor.Web3.TransactionSignature> - The transaction signature of the vault creation
+Promise\<anchor.Web3.TransactionSignature\> - The transaction signature of the vault creation
 
 #### methods.createMeteoraDlmmPool()
 
@@ -1226,7 +1226,7 @@ the position's mint address.
 A `Promise` that resolves to a `string` containing the transaction ID of the transaction
 
 ## Notes
-- The function uses Orca’s SDK to interact with the specified Whirlpool and close the liquidity position.
+- The function uses Orca's SDK to interact with the specified Whirlpool and close the liquidity position.
 - A maximum slippage of 1% is assumed for liquidity provision during the position closing.
 - The function automatically fetches the associated Whirlpool address and position details using the provided mint address.
 

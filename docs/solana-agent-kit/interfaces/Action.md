@@ -6,7 +6,7 @@
 
 # Interface: Action
 
-Defined in: [packages/core/src/types/index.ts:102](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L102)
+Defined in: [packages/core/src/types/index.ts:102](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L102)
 
 Main Action interface inspired by ELIZA
 This interface makes it easier to implement actions across different frameworks
@@ -17,7 +17,7 @@ This interface makes it easier to implement actions across different frameworks
 
 > **description**: `string`
 
-Defined in: [packages/core/src/types/index.ts:116](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L116)
+Defined in: [packages/core/src/types/index.ts:116](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L116)
 
 Detailed description of what the action does
 
@@ -27,7 +27,7 @@ Detailed description of what the action does
 
 > **examples**: [`ActionExample`](ActionExample.md)[][]
 
-Defined in: [packages/core/src/types/index.ts:122](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L122)
+Defined in: [packages/core/src/types/index.ts:122](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L122)
 
 Array of example inputs and outputs for the action
 Each inner array represents a group of related examples
@@ -38,7 +38,7 @@ Each inner array represents a group of related examples
 
 > **handler**: [`Handler`](../type-aliases/Handler.md)
 
-Defined in: [packages/core/src/types/index.ts:132](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L132)
+Defined in: [packages/core/src/types/index.ts:132](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L132)
 
 Function that executes the action
 
@@ -48,7 +48,7 @@ Function that executes the action
 
 > **name**: `string`
 
-Defined in: [packages/core/src/types/index.ts:106](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L106)
+Defined in: [packages/core/src/types/index.ts:106](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L106)
 
 Unique name of the action
 
@@ -58,7 +58,7 @@ Unique name of the action
 
 > **schema**: `ZodType`\<`any`\>
 
-Defined in: [packages/core/src/types/index.ts:127](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L127)
+Defined in: [packages/core/src/types/index.ts:127](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L127)
 
 Zod schema for input validation
 
@@ -68,6 +68,6 @@ Zod schema for input validation
 
 > **similes**: `string`[]
 
-Defined in: [packages/core/src/types/index.ts:111](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L111)
+Defined in: [packages/core/src/types/index.ts:111](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L111)
 
 Alternative names/phrases that can trigger this action

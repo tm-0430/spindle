@@ -6,7 +6,7 @@
 
 # Interface: PriorityFeeResponse
 
-Defined in: [packages/core/src/types/index.ts:196](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L196)
+Defined in: [packages/core/src/types/index.ts:196](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L196)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:196](https://github.com/michaeless
 
 > **id**: `string`
 
-Defined in: [packages/core/src/types/index.ts:198](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L198)
+Defined in: [packages/core/src/types/index.ts:198](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L198)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types/index.ts:198](https://github.com/michaeless
 
 > **jsonrpc**: `string`
 
-Defined in: [packages/core/src/types/index.ts:197](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L197)
+Defined in: [packages/core/src/types/index.ts:197](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L197)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types/index.ts:197](https://github.com/michaeless
 
 > **method**: `string`
 
-Defined in: [packages/core/src/types/index.ts:199](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L199)
+Defined in: [packages/core/src/types/index.ts:199](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L199)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types/index.ts:199](https://github.com/michaeless
 
 > **params**: `object`[]
 
-Defined in: [packages/core/src/types/index.ts:200](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L200)
+Defined in: [packages/core/src/types/index.ts:200](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L200)
 
 #### options
 

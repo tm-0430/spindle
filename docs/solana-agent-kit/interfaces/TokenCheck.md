@@ -6,7 +6,7 @@
 
 # Interface: TokenCheck
 
-Defined in: [packages/core/src/types/index.ts:135](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L135)
+Defined in: [packages/core/src/types/index.ts:135](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L135)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:135](https://github.com/michaeless
 
 > **risks**: `object`[]
 
-Defined in: [packages/core/src/types/index.ts:138](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L138)
+Defined in: [packages/core/src/types/index.ts:138](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L138)
 
 #### description
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types/index.ts:138](https://github.com/michaeless
 
 > **score**: `number`
 
-Defined in: [packages/core/src/types/index.ts:144](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L144)
+Defined in: [packages/core/src/types/index.ts:144](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L144)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [packages/core/src/types/index.ts:144](https://github.com/michaeless
 
 > **tokenProgram**: `string`
 
-Defined in: [packages/core/src/types/index.ts:136](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L136)
+Defined in: [packages/core/src/types/index.ts:136](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L136)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [packages/core/src/types/index.ts:136](https://github.com/michaeless
 
 > **tokenType**: `string`
 
-Defined in: [packages/core/src/types/index.ts:137](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L137)
+Defined in: [packages/core/src/types/index.ts:137](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L137)

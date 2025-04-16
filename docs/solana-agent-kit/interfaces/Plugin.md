@@ -6,7 +6,7 @@
 
 # Interface: Plugin
 
-Defined in: [packages/core/src/types/index.ts:5](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L5)
+Defined in: [packages/core/src/types/index.ts:5](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L5)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [packages/core/src/types/index.ts:5](https://github.com/michaelessie
 
 > **actions**: [`Action`](Action.md)[]
 
-Defined in: [packages/core/src/types/index.ts:8](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L8)
+Defined in: [packages/core/src/types/index.ts:8](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L8)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [packages/core/src/types/index.ts:8](https://github.com/michaelessie
 
 > **methods**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/core/src/types/index.ts:7](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L7)
+Defined in: [packages/core/src/types/index.ts:7](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L7)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [packages/core/src/types/index.ts:7](https://github.com/michaelessie
 
 > **name**: `string`
 
-Defined in: [packages/core/src/types/index.ts:6](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L6)
+Defined in: [packages/core/src/types/index.ts:6](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L6)
 
 ## Methods
 
@@ -38,7 +38,7 @@ Defined in: [packages/core/src/types/index.ts:6](https://github.com/michaelessie
 
 > **initialize**(`agent`): `void`
 
-Defined in: [packages/core/src/types/index.ts:9](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L9)
+Defined in: [packages/core/src/types/index.ts:9](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L9)
 
 #### Parameters
 

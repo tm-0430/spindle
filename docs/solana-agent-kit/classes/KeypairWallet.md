@@ -6,7 +6,7 @@
 
 # Class: KeypairWallet
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:29](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L29)
+Defined in: [packages/core/src/utils/keypairWallet.ts:29](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L29)
 
 A wallet implementation using a Keypair for signing transactions
 
@@ -20,7 +20,7 @@ A wallet implementation using a Keypair for signing transactions
 
 > **new KeypairWallet**(`keypair`, `rpcUrl`): `KeypairWallet`
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:38](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L38)
+Defined in: [packages/core/src/utils/keypairWallet.ts:38](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L38)
 
 Constructs a KeypairWallet with a given Keypair
 
@@ -46,7 +46,7 @@ The Keypair to use for signing transactions
 
 > **defaultOptions**: `ConfirmOptions`
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:44](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L44)
+Defined in: [packages/core/src/utils/keypairWallet.ts:44](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L44)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [packages/core/src/utils/keypairWallet.ts:44](https://github.com/mic
 
 > **publicKey**: `PublicKey`
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:30](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L30)
+Defined in: [packages/core/src/utils/keypairWallet.ts:30](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L30)
 
 The public key of the connected wallet
 
@@ -68,7 +68,7 @@ The public key of the connected wallet
 
 > **rpcUrl**: `string`
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:32](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L32)
+Defined in: [packages/core/src/utils/keypairWallet.ts:32](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L32)
 
 ## Methods
 
@@ -76,7 +76,7 @@ Defined in: [packages/core/src/utils/keypairWallet.ts:32](https://github.com/mic
 
 > **sendTransaction**\<`T`\>(`transaction`): `Promise`\<`string`\>
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:74](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L74)
+Defined in: [packages/core/src/utils/keypairWallet.ts:74](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L74)
 
 Sends a transaction on chain
 
@@ -110,7 +110,7 @@ The transaction to be signed and sent
 
 > **signAllTransactions**\<`T`\>(`txs`): `Promise`\<`T`[]\>
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:61](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L61)
+Defined in: [packages/core/src/utils/keypairWallet.ts:61](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L61)
 
 Signs multiple transactions in batch
 
@@ -144,7 +144,7 @@ Promise resolving to an array of signed transactions
 
 > **signAndSendTransaction**\<`T`\>(`transaction`, `options?`): `Promise`\<\{ `signature`: `string`; \}\>
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:93](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L93)
+Defined in: [packages/core/src/utils/keypairWallet.ts:93](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L93)
 
 Signs and sends a transaction to the network
 
@@ -186,7 +186,7 @@ Promise resolving to the transaction signature
 
 > **signMessage**(`message`): `Promise`\<`Uint8Array`\<`ArrayBufferLike`\>\>
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:88](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L88)
+Defined in: [packages/core/src/utils/keypairWallet.ts:88](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L88)
 
 Signs a message
 
@@ -212,7 +212,7 @@ The message to be signed
 
 > **signTransaction**\<`T`\>(`transaction`): `Promise`\<`T`\>
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:49](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L49)
+Defined in: [packages/core/src/utils/keypairWallet.ts:49](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L49)
 
 Signs a single transaction
 

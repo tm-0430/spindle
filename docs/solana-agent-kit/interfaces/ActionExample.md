@@ -6,7 +6,7 @@
 
 # Interface: ActionExample
 
-Defined in: [packages/core/src/types/index.ts:84](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L84)
+Defined in: [packages/core/src/types/index.ts:84](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L84)
 
 Example of an action with input and output
 
@@ -16,7 +16,7 @@ Example of an action with input and output
 
 > **explanation**: `string`
 
-Defined in: [packages/core/src/types/index.ts:87](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L87)
+Defined in: [packages/core/src/types/index.ts:87](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L87)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/core/src/types/index.ts:87](https://github.com/michaelessi
 
 > **input**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/core/src/types/index.ts:85](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L85)
+Defined in: [packages/core/src/types/index.ts:85](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L85)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [packages/core/src/types/index.ts:85](https://github.com/michaelessi
 
 > **output**: `Record`\<`string`, `any`\>
 
-Defined in: [packages/core/src/types/index.ts:86](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L86)
+Defined in: [packages/core/src/types/index.ts:86](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L86)

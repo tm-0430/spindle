@@ -8,7 +8,7 @@
 
 > **createVercelAITools**(`solanaAgentKit`, `actions`): `Record`\<`string`, `CoreTool`\>
 
-Defined in: [packages/core/src/vercel-ai/index.ts:6](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/vercel-ai/index.ts#L6)
+Defined in: [packages/core/src/vercel-ai/index.ts:6](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/vercel-ai/index.ts#L6)
 
 ## Parameters
 

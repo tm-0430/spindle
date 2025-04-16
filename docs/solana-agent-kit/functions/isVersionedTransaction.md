@@ -8,7 +8,7 @@
 
 > **isVersionedTransaction**(`tx`): `tx is VersionedTransaction`
 
-Defined in: [packages/core/src/utils/keypairWallet.ts:20](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/utils/keypairWallet.ts#L20)
+Defined in: [packages/core/src/utils/keypairWallet.ts:20](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/utils/keypairWallet.ts#L20)
 
 Check if a transaction object is a VersionedTransaction or not
 

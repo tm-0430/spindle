@@ -6,7 +6,7 @@
 
 # Interface: LuloAccountDetailsResponse
 
-Defined in: [packages/core/src/types/index.ts:52](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L52)
+Defined in: [packages/core/src/types/index.ts:52](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L52)
 
 Lulo Account Details response format
 
@@ -16,7 +16,7 @@ Lulo Account Details response format
 
 > **interestEarned**: `number`
 
-Defined in: [packages/core/src/types/index.ts:54](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L54)
+Defined in: [packages/core/src/types/index.ts:54](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L54)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [packages/core/src/types/index.ts:54](https://github.com/michaelessi
 
 > **realtimeApy**: `number`
 
-Defined in: [packages/core/src/types/index.ts:55](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L55)
+Defined in: [packages/core/src/types/index.ts:55](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L55)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [packages/core/src/types/index.ts:55](https://github.com/michaelessi
 
 > **settings**: `object`
 
-Defined in: [packages/core/src/types/index.ts:56](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L56)
+Defined in: [packages/core/src/types/index.ts:56](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L56)
 
 #### allowedProtocols
 
@@ -56,4 +56,4 @@ Defined in: [packages/core/src/types/index.ts:56](https://github.com/michaelessi
 
 > **totalValue**: `number`
 
-Defined in: [packages/core/src/types/index.ts:53](https://github.com/michaelessiet/solana-agent-kit/blob/d01565d8314c89261231d701336a71dcba5f4bf6/packages/core/src/types/index.ts#L53)
+Defined in: [packages/core/src/types/index.ts:53](https://github.com/scriptscrypt/solana-agent-kit/blob/8d48a57968ef71c6851a44a8efa685e80e815610/packages/core/src/types/index.ts#L53)

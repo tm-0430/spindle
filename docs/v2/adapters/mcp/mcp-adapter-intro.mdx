@@ -1,0 +1,178 @@
+---
+title: 'MCP Adapter'
+description: 'Create a Model Context Protocol server for the Solana Agent Kit'
+icon: 'server'
+---
+
+# MCP Adapter
+
+The `@solana-agent-kit/util-mcp` adapter provides a framework for creating a Model Context Protocol (MCP) server to handle protocol operations on the Solana blockchain using the Solana Agent Kit.
+
+## Installation
+
+Install the adapter alongside the core Solana Agent Kit and your desired plugins:
+
+```bash
+npm install solana-agent-kit @solana-agent-kit/util-mcp @solana-agent-kit/plugin-token dotenv
+```
+
+## Features
+
+- Supports all actions from the Solana Agent Kit
+- MCP server implementation for standardized interactions with Claude Desktop
+- Environment-based configuration
+- Selective action exposure
+
+## Prerequisites
+
+- Node.js (v16 or higher recommended)
+- pnpm, yarn, or npm
+- Solana wallet with private key
+- Solana RPC URL
+- Claude Desktop application
+
+## Basic Setup
+
+Create a new project for your MCP server:
+
+```bash
+mkdir solana-agent-mcp
+cd solana-agent-mcp
+npm init -y
+```
+
+Install the required dependencies:
+
+```bash
+npm install solana-agent-kit @solana-agent-kit/util-mcp @solana-agent-kit/plugin-token dotenv
+```
+
+Create a `.env` file in your project root:
+
+```env
+SOLANA_PRIVATE_KEY=your_private_key_here
+RPC_URL=your_solana_rpc_url_here
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+Create an `index.js` file with the following code:
+
+```javascript
+import { SolanaAgentKit, KeypairWallet } from "solana-agent-kit";
+import { startMcpServer } from '@solana-agent-kit/util-mcp';
+import TokenPlugin from '@solana-agent-kit/plugin-token';
+import * as dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
+
+// Initialize wallet with private key from environment
+const wallet = new KeypairWallet(process.env.SOLANA_PRIVATE_KEY);
+
+// Create agent with plugin
+const agent = new SolanaAgentKit(
+  wallet,
+  process.env.RPC_URL,
+  {
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+  }
+).use(TokenPlugin);
+
+// Select which actions to expose to the MCP server
+const finalActions = {
+  BALANCE_ACTION: agent.actions.find((action) => action.name === "BALANCE_ACTION"),
+  TOKEN_BALANCE_ACTION: agent.actions.find((action) => action.name === "TOKEN_BALANCE_ACTION"),
+  GET_WALLET_ADDRESS_ACTION: agent.actions.find((action) => action.name === "GET_WALLET_ADDRESS_ACTION"),
+};
+
+// Start the MCP server
+startMcpServer(finalActions, agent, { name: "solana-agent", version: "0.0.1" });
+```
+
+Update your `package.json` to add the `type` field:
+
+```json
+{
+  "name": "solana-agent-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+```
+
+## Claude Desktop Configuration
+
+1. Open the Claude Desktop configuration file:
+
+   **MacOS:**
+   ```bash
+   code ~/Library/Application\ Support/Claude/claude_desktop_config.json
+   ```
+
+   **Windows:**
+   ```bash
+   code $env:AppData\Claude\claude_desktop_config.json
+   ```
+
+2. Add your MCP server configuration:
+
+   ```json
+   {
+       "mcpServers": {
+           "agent-kit": {
+               "command": "node",
+               "env": {
+                   "RPC_URL": "your_solana_rpc_url_here",
+                   "SOLANA_PRIVATE_KEY": "your_private_key_here",
+                   "OPENAI_API_KEY": "your_openai_api_key_here"
+               },
+               "args": [
+                   "/ABSOLUTE/PATH/TO/YOUR/solana-agent-mcp/index.js"
+               ]
+           }
+       }
+   }
+   ```
+
+   Replace the path with the absolute path to your `index.js` file.
+
+3. Restart Claude Desktop after updating the configuration.
+
+## Customizing Available Actions
+
+You can customize which actions are available to Claude by modifying the `finalActions` object:
+
+```javascript
+// Example of adding more actions from different plugins
+const finalActions = {
+  // Basic wallet actions
+  BALANCE_ACTION: agent.actions.find((action) => action.name === "BALANCE_ACTION"),
+  GET_WALLET_ADDRESS_ACTION: agent.actions.find((action) => action.name === "GET_WALLET_ADDRESS_ACTION"),
+  
+  // Token actions
+  TOKEN_BALANCE_ACTION: agent.actions.find((action) => action.name === "TOKEN_BALANCE_ACTION"),
+  TRANSFER_ACTION: agent.actions.find((action) => action.name === "TRANSFER_ACTION"),
+  
+  // Trading actions
+  TRADE_ACTION: agent.actions.find((action) => action.name === "TRADE_ACTION"),
+};
+```
+
+## Testing the Integration
+
+1. Start your MCP server (if running manually):
+   ```bash
+   node index.js
+   ```
+
+2. Open Claude Desktop and ask questions about Solana, like:
+   - "What's my SOL balance?"
+   - "Show me my token balances"
+   - "What's my wallet address?"
+
+Claude will use your MCP server to interact with the Solana blockchain and provide responses based on the available actions.
+
+For more detailed information, please refer to the full documentation at [docs.sendai.fun](https://docs.sendai.fun).
