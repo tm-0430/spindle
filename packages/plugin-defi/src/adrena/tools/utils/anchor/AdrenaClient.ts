@@ -3,7 +3,6 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import type { SolanaAgentKit } from "solana-agent-kit";
 import { IDL as ADRENA_IDL, Adrena } from "./adrena";
 
-import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   TOKEN_PROGRAM_ID,

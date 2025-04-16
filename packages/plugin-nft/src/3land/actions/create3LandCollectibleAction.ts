@@ -1,13 +1,10 @@
-import type {
-  CreateCollectionOptions,
-  CreateSingleOptions,
-} from "@3land/listings-sdk/dist/types/implementation/implementationTypes";
 import type { Action } from "solana-agent-kit";
 import { z } from "zod";
 import {
   createCollection,
   createSingle,
 } from "../tools/create_3land_collectible";
+import type { CreateCollectionOptions, CreateSingleOptions } from "../types";
 
 const create3LandCollectibleAction: Action = {
   name: "CREATE_3LAND_COLLECTIBLE",
