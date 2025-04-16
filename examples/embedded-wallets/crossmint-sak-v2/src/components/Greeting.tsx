@@ -1,10 +1,10 @@
 import { motion } from "motion/react";
-import { usePrivy } from "@privy-io/react-auth";
 import { Button } from "./ui/button";
 import { checkAuthAndShowModal } from "~/utils/auth";
-
+import { useAuth } from "@crossmint/client-sdk-react-ui";
 export const Greeting = () => {
-  const { authenticated } = usePrivy();
+  const { user } = useAuth();
+  const authenticated = user !== null;
 
   const handleConnectClick = () => {
     checkAuthAndShowModal();

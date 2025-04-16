@@ -18,10 +18,10 @@ import { Button } from "./ui/button";
 import { Icon } from "./ui/icon";
 import { Switch } from "./ui/switch";
 import { useTheme } from "~/utils/ThemeContext";
-import { usePrivy } from "@privy-io/react-auth";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { logoutFn } from "~/functions/session";
+import { useAuth } from "@crossmint/client-sdk-react-ui";
 
 type SettingsSectionProps = {
   children: React.ReactNode;
@@ -63,7 +63,7 @@ const SettingItem = ({ title, description, rightElement }: SettingItemProps) => 
 export function SettingsModal() {
   const [activeSection, setActiveSection] = useState<string>("general");
   const { theme, toggleTheme } = useTheme();
-  const { logout } = usePrivy();
+  const { logout } = useAuth();
   const nav = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { usePrivy } from "@privy-io/react-auth";
+import { useAuth, useWallet } from "@crossmint/client-sdk-react-ui";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -35,8 +35,10 @@ function Home() {
   const [researchMode, setResearchMode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { authenticated, user } = usePrivy();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { wallet } = useWallet();
+  const authenticated = user !== null;
 
   // Store authentication status for real-time checks
   useEffect(() => {
@@ -138,9 +140,9 @@ function Home() {
                 </Button>
                 
                 {/* Solana Explorer Link Button */}
-                {authenticated && user?.wallet ? (
+                {authenticated && wallet?.address ? (
                   <a 
-                    href={`https://explorer.solana.com/address/${user.wallet.address}`}
+                    href={`https://explorer.solana.com/address/${wallet.address}`}
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="h-8 px-2 rounded-md flex items-center justify-center gap-1 text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"

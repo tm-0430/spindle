@@ -16,11 +16,10 @@ import { Button } from "./ui/button";
 import { Icon } from "./ui/icon";
 import { Switch } from "./ui/switch";
 import { useTheme } from "~/utils/ThemeContext";
-import { usePrivy } from "@privy-io/react-auth";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { logoutFn } from "~/functions/session";
-
+import { useAuth } from "@crossmint/client-sdk-react-ui";
 type SettingsSectionProps = {
   children: React.ReactNode;
   title: string;
@@ -62,10 +61,9 @@ export function SettingsButton({ sidebarOpen }: { sidebarOpen: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("general");
   const { theme, toggleTheme } = useTheme();
-  const { logout } = usePrivy();
   const nav = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
-  
+  const { logout } = useAuth();
   // Check if we're on mobile
   React.useEffect(() => {
     const checkIfMobile = () => {
