@@ -19,7 +19,9 @@ export async function sanctumGetLSTTVL(
         lst: inputs,
       },
       paramsSerializer: (params) => {
-        return params.lst.map((value: string) => `lst=${value}`).join("&");
+        return (params as Record<string, string[]>).lst
+          .map((value: string) => `lst=${value}`)
+          .join("&");
       },
     });
 

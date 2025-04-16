@@ -42,7 +42,9 @@ export async function sanctumGetOwnedLST(
         lst: addresses,
       },
       paramsSerializer: (params) => {
-        return params.lst.map((value: string) => `lst=${value}`).join("&");
+        return (params as Record<string, string[]>).lst
+          .map((value: string) => `lst=${value}`)
+          .join("&");
       },
     });
 
