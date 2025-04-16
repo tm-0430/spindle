@@ -1,3 +1,9 @@
+[**Documentation v2.0.0-beta.11**](../../README.md)
+
+***
+
+[Documentation](../../README.md) / @solana-agent-kit/adapter-mcp
+
 # Solana Agent Kit MCP Server Utility
 
 This utility provides a framework for creating a Model Context Protocol (MCP) server to handle protocol operations on the Solana blockchain using the Solana Agent Kit.
@@ -131,4 +137,14 @@ This will start the server once you start up Claude. You can add actions by simp
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. Refer to [CONTRIBUTING.md](../../CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.
+Contributions are welcome! Please feel free to submit a Pull Request. Refer to [CONTRIBUTING.md](../../_media/CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.
+
+## Type Aliases
+
+- [MCPSchemaShape](type-aliases/MCPSchemaShape.md)
+
+## Functions
+
+- [createMcpServer](functions/createMcpServer.md)
+- [startMcpServer](functions/startMcpServer.md)
+- [zodToMCPShape](functions/zodToMCPShape.md)

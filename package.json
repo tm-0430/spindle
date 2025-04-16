@@ -1,7 +1,9 @@
 {
   "name": "solana-agent-kit",
   "description": "connect any ai agents to solana protocols",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "clean": "turbo run clean",
     "build": "turbo run build",
@@ -13,7 +15,7 @@
     "build:plugin-blinks": "turbo run build --filter=@solana-agent-kit/plugin-blinks",
     "build:adapter-mcp": "turbo run build --filter=@solana-agent-kit/adapter-mcp",
     "test": "npx tsx test/index.ts",
-    "docs": "typedoc src --out docs",
+    "docs": "typedoc",
     "generate": "tsx src/utils/keypair.ts",
     "lint": "biome check",
     "lint:fix": "biome check --write --unsafe",
@@ -26,7 +28,13 @@
     "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
-  "keywords": ["solana", "agent", "ai", "solana agent kit", "sendai"],
+  "keywords": [
+    "solana",
+    "agent",
+    "ai",
+    "solana agent kit",
+    "sendai"
+  ],
   "author": "sendaifun",
   "license": "Apache-2.0",
   "devDependencies": {
@@ -50,6 +58,8 @@
     "tsup": "^8.4.0",
     "tsx": "^4.19.2",
     "turbo": "^2.3.4",
+    "typedoc": "^0.28.2",
+    "typedoc-plugin-markdown": "^4.6.2",
     "typescript": "^5.7.2"
   },
   "packageManager": "pnpm@9.15.3",
