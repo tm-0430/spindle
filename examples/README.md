@@ -15,7 +15,7 @@ This directory contains a collection of examples demonstrating various implement
 - **[crossmint-sak-v2](embedded-wallets/crossmint-sak-v2)** - Implementation using Crossmint's wallet infrastructure
 - **[para-plugin-example](embedded-wallets/para-plugin-example)** - Example demonstrating Para wallet plugin integration
 
-### MCP (Modular Conversation Prompting)
+### MCP (Model Context Provider)
 - **[agent-kit-mcp-server](mcp/agent-kit-mcp-server)** - Server implementation for Modular Conversation Prompting with Solana Agent Kit
 
 ### Miscellaneous
