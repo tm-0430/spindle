@@ -4,9 +4,9 @@ import { askMessariAi } from "../tools";
 
 const getMessariAiAction: Action = {
   name: "GET_MESSARI_AI",
-  description: `This tool queries Messari AI for comprehensive crypto research across these datasets: 
-  Latest crypto news, CEX/DEX volumes, market share, transaction fees, total transactions, Asset prices, 
-  trading volume, market cap, TVL, and historical performance, Investment data, Technical analysis of how protocols work, 
+  description: `This tool queries Messari AI for comprehensive crypto research across these datasets:
+  Latest crypto news, CEX/DEX volumes, market share, transaction fees, total transactions, Asset prices,
+  trading volume, market cap, TVL, and historical performance, Investment data, Technical analysis of how protocols work,
   tokenomics, and yield mechanisms, Twitter followers and Reddit subscribers metrics, growth trends`,
   similes: [
     "Using Messari: What is the average TPS and total fee revenue last month for Solana? ",
@@ -32,6 +32,8 @@ const getMessariAiAction: Action = {
   examples: [
     [
       {
+        explanation:
+          "This example shows how to ask Messari AI about Solana's TPS and fee revenue.",
         input: {
           question:
             "How did ethereum performed over the last month in terms of its price and trading volume?",

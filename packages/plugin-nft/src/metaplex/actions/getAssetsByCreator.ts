@@ -91,7 +91,6 @@ const getAssetsByCreatorAction: Action = {
     agent,
     input: z.infer<typeof getAssetsByCreatorAction.schema>,
   ) => {
-    // @ts-expect-error - unnecessary type mismatch
     const result = await get_assets_by_creator(agent, input);
 
     return {

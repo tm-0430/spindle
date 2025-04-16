@@ -18,10 +18,11 @@ import {
 
 /**
  * Interface representing a Solana wallet implementation
+
+ * Defines the standard interface for interacting with a Solana wallet,
+ * including transaction signing, message signing, and connection status.
  *
  * @interface Wallet
- * @description Defines the standard interface for interacting with a Solana wallet,
- * including transaction signing, message signing, and connection status.
  */
 export interface BaseWallet {
   /**
