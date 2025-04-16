@@ -4,6 +4,7 @@ const BASE_URL = "https://api.rugcheck.xyz/v1";
 
 /**
  * Fetches a summary report for a specific token.
+ * @async
  * @param {string} mint - The mint address of the token.
  * @returns {Promise<TokenCheck>} The token summary report.
  * @throws {Error} If the API call fails.
@@ -28,6 +29,7 @@ export async function fetchTokenReportSummary(
 
 /**
  * Fetches a detailed report for a specific token.
+ * @async
  * @param {string} mint - The mint address of the token.
  * @returns {Promise<TokenCheck>} The detailed token report.
  * @throws {Error} If the API call fails.
