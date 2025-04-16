@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import { toast as sonnerToast } from "sonner";
-import { CheckCircle2Icon, MessageCircleWarningIcon } from "lucide-react";
+import { Icon } from "./ui/icon";
 
 const iconsByType: Record<"success" | "error", ReactNode> = {
-  success: <CheckCircle2Icon />,
-  error: <MessageCircleWarningIcon />,
+  success: <Icon name="check-circle-linear" />,
+  error: <Icon name="chat-round-warning-linear" />,
 };
 
 export function toast(props: Omit<ToastProps, "id">) {

@@ -101,3 +101,54 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Note
 
 This is a starter template and may not include all features or optimizations for production use (e.g the use of the OpenAI API key on the client). Please review and modify as necessary for your specific use case.
+
+# Solana Token Price Tracker
+
+This application includes a feature to display real-time Solana token prices with interactive UI components.
+
+## Token Price Implementation
+
+The token price feature is implemented with the following components:
+
+### Data Structure
+
+- `TokenData` interface in `src/types/token.ts` defines the structure for token data
+- Initial token data is stored in `src/data/tokens.tsx` with static values
+- Live price updates are fetched from the Raydium API
+
+### Components
+
+- `TokenCard.tsx`: Renders an individual token card with price, change, and chart
+- `TokenPriceSection.tsx`: Container component that fetches and updates prices
+- Price data is managed using the `useTokenPrices` React hook
+
+### Real-time Updates
+
+- Token prices are updated every minute using the Raydium API
+- Users can manually refresh prices with the "Refresh" button
+- The UI shows loading and error states during price updates
+
+## Adding New Tokens
+
+To add a new token:
+
+1. Edit `src/data/tokens.tsx` and add a new entry to the `tokenData` array
+2. Follow the `TokenData` interface structure
+3. Add appropriate SVG icon and styling
+
+## Customizing the UI
+
+- Token cards use Tailwind CSS for styling
+- The gradient colors for token icons can be customized in the `tokenData` array
+- Chart paths are SVG paths that can be customized for each token
+
+## API Integration
+
+The application uses the Raydium API for price data:
+
+```typescript
+// API endpoint
+const PRICE_ENDPOINT = "https://api.raydium.io/v2/main/price";
+```
+
+Price updates are handled by the `tokenPrices.ts` module in `src/lib/api/`.

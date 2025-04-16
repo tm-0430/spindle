@@ -64,9 +64,14 @@ export async function getUser(
 export async function createUser(
   walletAddress: string,
   email?: string,
-): Promise<Array<User>> {
+): Promise<User> {
   try {
-    return await db.insert(user).values({ email, walletAddress });
+    await db.insert(user).values({ email, walletAddress });
+    const [createdUser] = await db
+      .select()
+      .from(user)
+      .where(eq(user.walletAddress, walletAddress));
+    return createdUser;
   } catch (error) {
     console.error("Failed to create user in database");
     throw error;

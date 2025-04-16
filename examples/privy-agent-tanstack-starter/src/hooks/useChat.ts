@@ -14,7 +14,7 @@ import {
 } from "ai";
 import { myProvider } from "~/lib/ai/providers";
 import type { UseChatHelpers } from "@ai-sdk/react";
-import { useSolanaWallets } from "@privy-io/react-auth";
+import { usePrivy, useSolanaWallets } from "@privy-io/react-auth";
 import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
 import { Connection, PublicKey } from "@solana/web3.js";
@@ -71,6 +71,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
   const [input, setInput] = useState<string>("");
   const [status, setStatus] = useState<Status>("ready");
   const { wallets, ready } = useSolanaWallets();
+  const { user } = usePrivy();
 
   useEffect(() => {
     setMessages(initialMessages);
@@ -111,6 +112,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
             return { signature: sig };
           },
         },
+
         import.meta.env.VITE_RPC_URL as string,
         {},
       ).use(TokenPlugin);
@@ -300,8 +302,11 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
   }, [initialMessages]);
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e?.preventDefault();
+    async (e?: React.FormEvent<HTMLFormElement>) => {
+      if (e && typeof e.preventDefault === 'function') {
+        e.preventDefault();
+      }
+      
       const messageContent = input;
       if (!messageContent) {
         setError("Message cannot be empty");
@@ -314,7 +319,9 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
         parts: [{ type: "text", text: messageContent }],
       };
       sendMessage(newMessage);
-      e?.currentTarget.reset();
+      if (e?.currentTarget) {
+        e.currentTarget.reset();
+      }
     },
     [sendMessage, input],
   );

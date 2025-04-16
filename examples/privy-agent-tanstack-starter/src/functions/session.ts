@@ -82,7 +82,7 @@ export const signupFn = createServerFn({ method: "POST" })
       // Store the user's email in the session
       await session.update({
         email: data.email,
-        id: user[0].id,
+        id: user?.id,
         walletAddress: data.walletAddress,
       });
 
@@ -91,6 +91,7 @@ export const signupFn = createServerFn({ method: "POST" })
         message: "User created",
       };
     } catch (e) {
+      console.error(e);
       return {
         error: true,
         message: "Error creating user",
