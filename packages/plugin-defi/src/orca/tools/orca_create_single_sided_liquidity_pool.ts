@@ -18,12 +18,6 @@ import {
   increaseLiquidityQuoteByInputTokenWithParams,
 } from "@orca-so/whirlpools-sdk";
 import {
-  increaseLiquidityIx,
-  increaseLiquidityV2Ix,
-  initTickArrayIx,
-  openPositionWithTokenExtensionsIx,
-} from "@orca-so/whirlpools-sdk/dist/instructions";
-import {
   TOKEN_2022_PROGRAM_ID,
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
@@ -232,7 +226,7 @@ export async function orcaCreateSingleSidedLiquidityPool(
     );
     txBuilder.addInstruction(initPoolIx);
     txBuilder.addInstruction(
-      initTickArrayIx(ctx.program, {
+      WhirlpoolIx.initTickArrayIx(ctx.program, {
         startTick: initialTickArrayStartTick,
         tickArrayPda: initialTickArrayPda,
         whirlpool: whirlpoolPda.publicKey,
@@ -311,11 +305,14 @@ export async function orcaCreateSingleSidedLiquidityPool(
       tickLowerIndex: tickLowerInitializableIndex,
       tickUpperIndex: tickUpperInitializableIndex,
     };
-    const positionIx = openPositionWithTokenExtensionsIx(ctx.program, {
-      ...params,
-      positionMint: positionMintPubkey,
-      withTokenMetadataExtension: true,
-    });
+    const positionIx = WhirlpoolIx.openPositionWithTokenExtensionsIx(
+      ctx.program,
+      {
+        ...params,
+        positionMint: positionMintPubkey,
+        withTokenMetadataExtension: true,
+      },
+    );
 
     txBuilder.addInstruction(positionIx);
     txBuilder.addSigner(positionMintKeypair);
@@ -360,7 +357,7 @@ export async function orcaCreateSingleSidedLiquidityPool(
     if (tickArrayUpperStartIndex !== tickArrayLowerStartIndex) {
       if (isCorrectMintOrder) {
         txBuilder.addInstruction(
-          initTickArrayIx(ctx.program, {
+          WhirlpoolIx.initTickArrayIx(ctx.program, {
             startTick: tickArrayUpperStartIndex,
             tickArrayPda: tickArrayUpperPda,
             whirlpool: whirlpoolPda.publicKey,
@@ -369,7 +366,7 @@ export async function orcaCreateSingleSidedLiquidityPool(
         );
       } else {
         txBuilder.addInstruction(
-          initTickArrayIx(ctx.program, {
+          WhirlpoolIx.initTickArrayIx(ctx.program, {
             startTick: tickArrayLowerStartIndex,
             tickArrayPda: tickArrayLowerPda,
             whirlpool: whirlpoolPda.publicKey,
@@ -398,8 +395,8 @@ export async function orcaCreateSingleSidedLiquidityPool(
     const liquidityIx = !TokenExtensionUtil.isV2IxRequiredPool(
       tokenExtensionCtx,
     )
-      ? increaseLiquidityIx(ctx.program, baseParamsLiquidity)
-      : increaseLiquidityV2Ix(ctx.program, {
+      ? WhirlpoolIx.increaseLiquidityIx(ctx.program, baseParamsLiquidity)
+      : WhirlpoolIx.increaseLiquidityV2Ix(ctx.program, {
           ...baseParamsLiquidity,
           tokenMintA: mintA,
           tokenMintB: mintB,
