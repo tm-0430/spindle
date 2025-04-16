@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "redaxios";
 import { SANCTUM_STAT_API_URI } from "../constants";
 
 /**
@@ -19,7 +19,9 @@ export async function sanctumGetLSTAPY(
         lst: inputs,
       },
       paramsSerializer: (params) => {
-        return params.lst.map((value: string) => `lst=${value}`).join("&");
+        return (params as Record<string, string[]>).lst
+          .map((value: string) => `lst=${value}`)
+          .join("&");
       },
     });
 

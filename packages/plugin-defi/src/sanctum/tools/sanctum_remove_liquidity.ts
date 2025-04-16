@@ -3,7 +3,7 @@ import {
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
-import axios from "axios";
+import axios from "redaxios";
 import { SolanaAgentKit, signOrSendTX } from "solana-agent-kit";
 import { SANCTUM_TRADE_API_URI } from "../constants";
 
