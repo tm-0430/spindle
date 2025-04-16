@@ -288,7 +288,7 @@ Redeem period in seconds
 
 `Promise`\<`string`\>
 
-Promise\<anchor.Web3.TransactionSignature\> - The transaction signature of the vault creation
+Promise&lt;anchor.Web3.TransactionSignature&gt; - The transaction signature of the vault creation
 
 #### methods.createMeteoraDlmmPool()
 
@@ -411,7 +411,7 @@ Parameters to create Dynamic AMM pool
        activationType (enum): Should be ActivationType.Timestamp or ActivationType.Slot
        activationPoint (BN | null): Activation point depending on activation type, or null if pool doesn't have an activation point
        hasAlphaVault (boolean): Whether the pool has Meteora alpha vault or not
-       padding (Array<number>): Should be set to value Array(90).fill(0)
+       padding (Array&lt;number&gt;): Should be set to value Array(90).fill(0)
 
 ##### Returns
 
@@ -449,7 +449,7 @@ Vault address
 
 `Promise`\<`string`\>
 
-Promise<anchor.Web3.TransactionSignature> - The transaction signature of the deposit
+Promise&lt;anchor.Web3.TransactionSignature&gt; - The transaction signature of the deposit
 
 #### methods.depositToDriftUserAccount()
 
@@ -2165,7 +2165,7 @@ Redeem period in seconds
 
 `Promise`\<`string`\>
 
-Promise<anchor.Web3.TransactionSignature> - The transaction signature of the vault update
+Promise&lt;anchor.Web3.TransactionSignature&gt; - The transaction signature of the vault update
 
 #### methods.validateAndEncodeDriftAddress()
 
@@ -2363,7 +2363,7 @@ Vault address
 
 `Promise`\<`string`\>
 
-Promise<anchor.Web3.TransactionSignature> - The transaction signature of the redemption
+Promise&lt;anchor.Web3.TransactionSignature&gt; - The transaction signature of the redemption
 
 ### name
 

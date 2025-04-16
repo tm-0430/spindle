@@ -89,7 +89,6 @@
                   "docs/v2/integrations/token-operations/stake_sol",
                   "docs/v2/integrations/token-operations/deploy_spl_metaplex",
                   "docs/v2/integrations/token-operations/balance_check",
-                  "docs/v2/integrations/token-operations/compressed_airdrop",
                   "docs/v2/integrations/token-operations/rugcheck_token_retrieval",
                   "docs/v2/integrations/token-operations/tiplink_operations",
                   "docs/v2/integrations/token-operations/coingecko"
@@ -159,7 +158,6 @@
           {
             "group": "References",
             "pages": [
-              "docs/v2/references/overview"
             ]
           }
         ]
@@ -215,7 +213,6 @@
                   "docs/v1/features/token-operations/stake_sol",
                   "docs/v1/features/token-operations/deploy_spl_metaplex",
                   "docs/v1/features/token-operations/balance_check",
-                  "docs/v1/features/token-operations/compressed_airdrop",
                   "docs/v1/features/token-operations/rugcheck_token_retrieval",
                   "docs/v1/features/token-operations/tiplink_operations",
                   "docs/v1/features/token-operations/coingecko"
@@ -285,8 +282,6 @@
           {
             "group": "Utilities",
             "pages": [
-              "docs/v1/utilities/transaction_utils",
-              "docs/v1/utilities/helius_utils"
             ]
           },
           {

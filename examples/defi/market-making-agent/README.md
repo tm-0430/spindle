@@ -29,6 +29,7 @@ Enter total USDC allowance: 3
 Enter update interval in seconds: 20
 
 === Configuration Summary ===
+```json
 {
   "marketId": "2Uj8277fkaVBtTU6Wp2GPRbQC86SkSdgQ2mp1Q5N2LHc",
   "baseToken": "SEND",
@@ -44,6 +45,7 @@ Enter update interval in seconds: 20
   },
   "intervalSeconds": 20
 }
+```
 
 Is this configuration correct? (yes/no): yes
 
