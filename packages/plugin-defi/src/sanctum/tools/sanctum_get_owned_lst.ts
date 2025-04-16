@@ -1,5 +1,5 @@
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import axios from "axios";
+import axios from "redaxios";
 import { SolanaAgentKit } from "solana-agent-kit";
 import { SANCTUM_STAT_API_URI } from "../constants";
 

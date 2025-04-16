@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "redaxios";
 import { SolanaAgentKit } from "solana-agent-kit";
 
-function createAxiosInstance(apiKey: string | undefined): AxiosInstance {
+function createAxiosInstance(apiKey: string | undefined) {
   if (!apiKey) {
     throw new Error(
       "ELFA_AI_API_KEY is not configured in SolanaAgentKit config.",

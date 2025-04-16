@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "redaxios";
 import { SANCTUM_STAT_API_URI } from "../constants";
 
 /**

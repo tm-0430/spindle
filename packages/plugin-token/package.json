@@ -4,7 +4,9 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -47,9 +49,9 @@
     "@solana/spl-token": "^0.4.9",
     "@solutiofi/sdk": "^1.0.2",
     "@types/bn.js": "^5.1.6",
-    "axios": "^1.7.9",
     "bn.js": "^5.2.1",
     "ethers": "^6.13.5",
+    "redaxios": "^0.5.1",
     "rpc-websockets": "^10.0.0",
     "solana-agent-kit": "workspace:*",
     "zod": "^3.24.1"
