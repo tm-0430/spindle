@@ -1,6 +1,6 @@
 <div align="center">
    
-# Privy Solana App Kit - React Native
+# Privy App Kit - React Native
 
 A mobile chat application that enables interaction with Solana blockchain through natural language conversation. Built with React Native, Expo, and integrated with AI for Solana transaction capabilities.
 ### Demo
