@@ -13,10 +13,16 @@ import {
 import { toast } from "sonner";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
-import { ArrowUpIcon, PaperclipIcon, StopCircleIcon } from "lucide-react";
+import { Icon } from "./ui/icon";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { SuggestedActions } from "./SuggestedActions";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 import equal from "fast-deep-equal";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { cn } from "~/lib/utils";
@@ -189,7 +195,7 @@ function PureMultimodalInput({
   );
 
   return (
-    <div className="relative w-full flex flex-col gap-4">
+    <div className="relative w-full">
       {messages.length === 0 &&
         attachments.length === 0 &&
         uploadQueue.length === 0 && (
@@ -198,56 +204,143 @@ function PureMultimodalInput({
 
       <input
         type="file"
-        className="fixed -top-4 -left-4 size-0.5 opacity-0 pointer-events-none"
         ref={fileInputRef}
-        multiple
         onChange={handleFileChange}
-        tabIndex={-1}
+        className="hidden"
+        multiple
       />
 
-      <Textarea
-        data-testid="multimodal-input"
-        ref={textareaRef}
-        placeholder="Send a message..."
-        value={input}
-        onChange={handleInput}
-        className={cn(
-          "min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl !text-base bg-muted pb-10 dark:border-zinc-700",
-          className,
-        )}
-        rows={2}
-        autoFocus
-        onKeyDown={(event) => {
-          if (
-            event.key === "Enter" &&
-            !event.shiftKey &&
-            !event.nativeEvent.isComposing
-          ) {
-            event.preventDefault();
+      {/* Attachments Display */}
+      {(attachments.length > 0 || uploadQueue.length > 0) && (
+        <div className="mb-2 flex flex-wrap gap-2">
+          {uploadQueue.map((filename) => (
+            <div
+              key={filename}
+              className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs"
+            >
+              <span>{filename}</span>
+              <span>Uploading...</span>
+            </div>
+          ))}
+          {attachments.map((attachment, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs"
+            >
+              <span>{attachment.name}</span>
+              <button
+                type="button"
+                className="text-blue-600 hover:text-blue-800"
+                onClick={() => {
+                  setAttachments((currentAttachments) =>
+                    currentAttachments.filter((_, index) => index !== i),
+                  );
+                }}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
-            if (status !== "ready" && status !== "error") {
-              toast.error("Please wait for the model to finish its response!");
-            } else {
+      <div className="flex items-end gap-2 p-2 w-full rounded-xl">
+        {/* Attachment Button */}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 rounded-md text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Icon name="paperclip-linear" className="h-4 w-4" />
+                <span className="sr-only">Attach files</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Attach files</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        {/* Input Area */}
+        <Textarea
+          ref={textareaRef}
+          tabIndex={0}
+          placeholder="Ask anything..."
+          value={input}
+          onChange={handleInput}
+          onKeyDown={(e) => {
+            if (
+              e.key === "Enter" &&
+              !e.shiftKey &&
+              input.trim() &&
+              status !== "streaming"
+            ) {
+              e.preventDefault();
               submitForm();
             }
-          }
-        }}
-      />
+          }}
+          className="min-h-[48px] w-full resize-none border-0 p-2 shadow-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent"
+          disabled={status === "streaming"}
+        />
 
-      <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
-        <AttachmentsButton fileInputRef={fileInputRef} status={status} />
-      </div>
-
-      <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
-        {status === "submitted" ? (
-          <StopButton stop={stop} setMessages={setMessages} />
-        ) : (
-          <SendButton
-            input={input}
-            submitForm={submitForm}
-            uploadQueue={uploadQueue}
-          />
-        )}
+        {/* Control Buttons */}
+        <div className="flex shrink-0 items-center">
+          <TooltipProvider>
+            {status === "streaming" ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="default"
+                    size="sm"
+                    className="rounded-full bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 text-white h-8 w-8 p-0 flex items-center justify-center"
+                    onClick={() => {
+                      stop();
+                      // Remove the last assistant message which is still streaming
+                      setMessages((messages) => {
+                        const lastMessage = messages[messages.length - 1];
+                        if (lastMessage?.role === "assistant") {
+                          return messages.slice(0, -1);
+                        }
+                        return messages;
+                      });
+                    }}
+                  >
+                    <Icon name="stop-circle-linear" className="h-4 w-4" />
+                    <span className="sr-only">Stop generating</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Stop generating</p>
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="default"
+                    size="sm"
+                    disabled={!input.trim() && uploadQueue.length === 0}
+                    className="rounded-full bg-[#1E9BB9] hover:bg-[#1E9BB9]/90 dark:bg-[#1E9BB9] dark:hover:bg-[#1E9BB9]/90 text-white h-8 w-8 p-0 flex items-center justify-center"
+                    onClick={submitForm}
+                  >
+                    <Icon name="arrow-up-linear" className="h-4 w-4" />
+                    <span className="sr-only">Send message</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Send message</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </TooltipProvider>
+        </div>
       </div>
     </div>
   );
@@ -272,18 +365,28 @@ function PureAttachmentsButton({
   status: UseChatHelpers["status"];
 }) {
   return (
-    <Button
-      data-testid="attachments-button"
-      className="rounded-md rounded-bl-lg p-[7px] h-fit dark:border-zinc-700 hover:dark:bg-zinc-900 hover:bg-zinc-200"
-      onClick={(event) => {
-        event.preventDefault();
-        fileInputRef.current?.click();
-      }}
-      disabled={status !== "ready"}
-      variant="ghost"
-    >
-      <PaperclipIcon size={14} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            data-testid="attachments-button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-md text-gray-500 dark:text-gray-400 hover:bg-[#1E9BB9]/20 transition-colors duration-200"
+            onClick={(event) => {
+              event.preventDefault();
+              fileInputRef.current?.click();
+            }}
+            disabled={status !== "ready"}
+          >
+            <Icon name="paperclip-linear" className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Attach files</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -297,17 +400,28 @@ function PureStopButton({
   setMessages: UseChatHelpers["setMessages"];
 }) {
   return (
-    <Button
-      data-testid="stop-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
-      onClick={(event) => {
-        event.preventDefault();
-        stop();
-        setMessages((messages) => messages);
-      }}
-    >
-      <StopCircleIcon size={14} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            data-testid="stop-button"
+            variant="default"
+            size="sm"
+            className="rounded-full bg-red-500 hover:bg-red-600 dark:bg-red-500 dark:hover:bg-red-600 text-white h-8 w-8 p-0 flex items-center justify-center"
+            onClick={(event) => {
+              event.preventDefault();
+              stop();
+              setMessages((messages) => messages);
+            }}
+          >
+            <Icon name="stop-circle-linear" className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Stop generating</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -323,17 +437,28 @@ function PureSendButton({
   uploadQueue: Array<string>;
 }) {
   return (
-    <Button
-      data-testid="send-button"
-      className="rounded-full p-1.5 h-fit border dark:border-zinc-600"
-      onClick={(event) => {
-        event.preventDefault();
-        submitForm();
-      }}
-      disabled={input.length === 0 || uploadQueue.length > 0}
-    >
-      <ArrowUpIcon size={14} />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            data-testid="send-button"
+            variant="default"
+            size="sm"
+            className="rounded-full bg-[#1E9BB9] hover:bg-[#1E9BB9]/90 dark:bg-[#1E9BB9] dark:hover:bg-[#1E9BB9]/90 text-white h-8 w-8 p-0 flex items-center justify-center"
+            onClick={(event) => {
+              event.preventDefault();
+              submitForm();
+            }}
+            disabled={input.length === 0 || uploadQueue.length > 0}
+          >
+            <Icon name="arrow-up-linear" className="w-4 h-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Send message</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 

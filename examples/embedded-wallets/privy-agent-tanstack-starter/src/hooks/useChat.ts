@@ -14,9 +14,10 @@ import {
 } from "ai";
 import { myProvider } from "~/lib/ai/providers";
 import type { UseChatHelpers } from "@ai-sdk/react";
-import { useSolanaWallets } from "@privy-io/react-auth";
+import { usePrivy, useSolanaWallets } from "@privy-io/react-auth";
 import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
+
 import { Connection, PublicKey } from "@solana/web3.js";
 import { generateUUID } from "~/lib/utils";
 import { fetchChat, saveChatFn, saveMessagesFn } from "~/functions/chats";
@@ -71,6 +72,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
   const [input, setInput] = useState<string>("");
   const [status, setStatus] = useState<Status>("ready");
   const { wallets, ready } = useSolanaWallets();
+  const { user } = usePrivy();
 
   useEffect(() => {
     setMessages(initialMessages);
@@ -93,7 +95,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
           sendTransaction: async (tx) => {
             const connection = new Connection(
               import.meta.env.VITE_RPC_URL as string,
-              "confirmed",
+              "confirmed"
             );
             return await wallet.sendTransaction(tx, connection);
           },
@@ -105,14 +107,15 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
             const signed = await wallet.signTransaction(tx);
             const connection = new Connection(
               import.meta.env.VITE_RPC_URL as string,
-              "confirmed",
+              "confirmed"
             );
             const sig = await wallet.sendTransaction(signed, connection);
             return { signature: sig };
           },
         },
+
         import.meta.env.VITE_RPC_URL as string,
-        {},
+        {}
       ).use(TokenPlugin);
 
       const tools = createVercelAITools(agent, agent.actions);
@@ -125,7 +128,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       return newMessage.content;
     },
-    [setMessages],
+    [setMessages]
   );
 
   const reload: Reload = async (chatOptions) => {
@@ -142,7 +145,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
       setStatus("submitted");
       const session = await fetchSession();
 
-      if (!session.id) {
+      if (!session || !session.walletAddress) {
         setError("You must be logged in to send messages");
         return;
       }
@@ -172,7 +175,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
               title,
             },
           });
-        } else if (chat.userId !== session.id) {
+        } else if (chat.userId !== session.walletAddress) {
           throw new Error("Unauthorized");
         }
 
@@ -195,7 +198,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
         }
 
         // Generate response
-        if (session.id) {
+        if (session && session.walletAddress) {
           if (!ready) {
             setError("Privy wallet not connected");
             return;
@@ -214,7 +217,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
           try {
             const assistantId = getTrailingMessageId({
               messages: res.response.messages.filter(
-                (message) => message.role === "assistant",
+                (message) => message.role === "assistant"
               ),
             });
 
@@ -281,13 +284,13 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
         setError(
           err instanceof Error
             ? err.message
-            : "An error occurred while processing your request",
+            : "An error occurred while processing your request"
         );
       } finally {
         setIsLoading(false);
       }
     },
-    [id, messages, solanaTools],
+    [id, messages, solanaTools]
   );
 
   useLayoutEffect(() => {
@@ -300,8 +303,11 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
   }, [initialMessages]);
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e?.preventDefault();
+    async (e?: React.FormEvent<HTMLFormElement>) => {
+      if (e && typeof e.preventDefault === "function") {
+        e.preventDefault();
+      }
+
       const messageContent = input;
       if (!messageContent) {
         setError("Message cannot be empty");
@@ -314,14 +320,16 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
         parts: [{ type: "text", text: messageContent }],
       };
       sendMessage(newMessage);
-      e?.currentTarget.reset();
+      if (e?.currentTarget) {
+        e.currentTarget.reset();
+      }
     },
-    [sendMessage, input],
+    [sendMessage, input]
   );
 
   const deleteChat = useCallback(async () => {
     const session = await fetchSession();
-    if (!session.id) {
+    if (!session || !session.walletAddress) {
       setError("You must be logged in to delete chats");
       return;
     }
@@ -329,7 +337,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
     try {
       const chat = await fetchChat({ data: { id } });
 
-      if (chat?.userId !== session.id) {
+      if (chat?.userId !== session.walletAddress) {
         throw new Error("Unauthorized");
       }
 
@@ -340,7 +348,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
       setError(
         err instanceof Error
           ? err.message
-          : "An error occurred while deleting the chat",
+          : "An error occurred while deleting the chat"
       );
       return false;
     }

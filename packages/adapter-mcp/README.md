@@ -131,4 +131,4 @@ This will start the server once you start up Claude. You can add actions by simp
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. Refer to [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.
+Contributions are welcome! Please feel free to submit a Pull Request. Refer to [CONTRIBUTING.md](../../CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.

@@ -1,8 +1,8 @@
 import type { Message } from "ai";
 import { useCopyToClipboard } from "usehooks-ts";
 
-import { CopyIcon } from "lucide-react";
 import { Button } from "./ui/button";
+import { Icon } from "./ui/icon";
 import {
   Tooltip,
   TooltipContent,
@@ -48,7 +48,7 @@ export function PureMessageActions({
                 toast.success("Copied to clipboard!");
               }}
             >
-              <CopyIcon />
+              <Icon name="copy-linear" className="w-4 h-4" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>Copy</TooltipContent>
