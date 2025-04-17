@@ -1,8 +1,15 @@
+<div align="center">
+    
 # Turnkey Agent Starter
 
 A modern web application built with NextJs and Solana integration, featuring authentication via Turnkey and AI capabilities.
 
-<video controls src="public/video/TurnkeyDemo.mp4" title="Title"></video>
+### Demo
+<a href="https://vimeo.com/1076325238">
+   <img src="https://github.com/user-attachments/assets/41211dae-79c8-4b0a-82d4-19cc3ac261b8" alt="Watch the video" width="600">
+</a>
+
+</div>
 
 ## 🚀 Features
 
