@@ -1,6 +1,14 @@
+<div align="center">
+
 # n8n-nodes-solana-agent
 
 This is an n8n community node for integrating the Solana Agent Kit with n8n workflows. It provides a seamless way to interact with the Solana blockchain using AI-powered tools.
+
+### Demo
+
+<video src="https://github.com/user-attachments/assets/95b16640-1188-45fc-8b37-9bd2ecccf9b6">'
+
+</div>
 
 ## Features
 
