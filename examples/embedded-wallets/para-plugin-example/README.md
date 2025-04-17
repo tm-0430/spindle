@@ -1,10 +1,12 @@
+<div align="center">
+  
 # Para Plugin Example
 
 This repository demonstrates how to integrate and use Solana Agent Kit v2 with Para plugins in your application.
 
-## 🎥 Demo
+https://github.com/user-attachments/assets/e4f6b64a-4829-4528-bd83-bee1c8db6cce
 
-Watch our implementation demo: [YouTube Video](https://www.youtube.com/watch?v=qItH-SnOcr8)
+</div>
 
 ## 🚀 Features
 
