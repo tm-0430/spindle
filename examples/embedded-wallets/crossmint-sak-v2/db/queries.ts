@@ -73,7 +73,7 @@ export async function createUser(
       .where(eq(user.walletAddress, walletAddress));
     return createdUser;
   } catch (error) {
-    console.error("Failed to create user in database");
+    console.error("Failed to create user in database: ", error.message);
     throw error;
   }
 }

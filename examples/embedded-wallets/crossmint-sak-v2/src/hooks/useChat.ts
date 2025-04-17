@@ -17,7 +17,13 @@ import type { UseChatHelpers } from "@ai-sdk/react";
 import { useWallet } from "@crossmint/client-sdk-react-ui";
 import { SolanaAgentKit, createVercelAITools } from "solana-agent-kit";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
-import { Connection, PublicKey, Transaction, VersionedTransaction, TransactionMessage } from "@solana/web3.js";
+import {
+  Connection,
+  PublicKey,
+  Transaction,
+  VersionedTransaction,
+  TransactionMessage,
+} from "@solana/web3.js";
 import { generateUUID } from "~/lib/utils";
 import { fetchChat, saveChatFn, saveMessagesFn } from "~/functions/chats";
 import { fetchSession } from "~/functions/session";
@@ -78,7 +84,8 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
 
   const solanaTools = useMemo(() => {
     if (wallet) {
-      const walletAddress = (wallet as any).address || (wallet as any).publicKey?.toString();
+      const walletAddress =
+        (wallet as any).address || (wallet as any).publicKey?.toString();
       if (!walletAddress) return;
 
       const agent = new SolanaAgentKit(
@@ -92,14 +99,11 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
             return signed;
           },
           sendTransaction: async (tx) => {
-            const connection = new Connection(
-              import.meta.env.VITE_RPC_URL as string,
-              "confirmed",
-            );
-            const serializedTx = tx instanceof Transaction 
-              ? tx.serialize().toString('hex')
-              : Buffer.from(tx.serialize()).toString('hex');
-            
+            const serializedTx =
+              tx instanceof Transaction
+                ? tx.serialize().toString("hex")
+                : Buffer.from(tx.serialize()).toString("hex");
+
             return await (wallet as any).sendTransaction({
               ...tx,
               to: import.meta.env.VITE_RPC_URL, // Using RPC URL as the 'to' address
@@ -108,7 +112,6 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
             });
           },
           signAllTransactions: async (txs) => {
-           
             return txs;
           },
           signAndSendTransaction: async (tx) => {
@@ -116,19 +119,19 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
               import.meta.env.VITE_RPC_URL as string,
               "confirmed",
             );
-            
+
             if (tx instanceof Transaction) {
               const message = tx.compileMessage();
               const versionedTx = new VersionedTransaction(message);
-              const sig = await (wallet).sendTransaction({
+              const sig = await wallet.sendTransaction({
                 transaction: versionedTx,
-                to: import.meta.env.VITE_RPC_URL
+                to: import.meta.env.VITE_RPC_URL,
               });
               return { signature: sig };
             } else {
-              const sig = await (wallet).sendTransaction({
+              const sig = await wallet.sendTransaction({
                 transaction: tx,
-                to: import.meta.env.VITE_RPC_URL
+                to: import.meta.env.VITE_RPC_URL,
               });
               return { signature: sig };
             }
@@ -136,7 +139,7 @@ export function useChat({ id, initialMessages = [] }: UseChatOptions) {
         },
         import.meta.env.VITE_RPC_URL as string,
         {
-          signOnly : false
+          signOnly: false,
         },
       ).use(TokenPlugin);
 
