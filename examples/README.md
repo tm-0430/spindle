@@ -23,6 +23,7 @@ This directory contains a collection of examples demonstrating various implement
 - **[agent-kit-nextjs-langchain](misc/agent-kit-nextjs-langchain)** - Integration of Agent Kit with Next.js and LangChain
 - **[orbofi-personality-engine](misc/orbofi-personality-engine)** - Example using OrboFi personality engine
 - **[agent-kit-langgraph](misc/agent-kit-langgraph)** - Integration with LangGraph for agent workflows
+- **[privy-server-wallet-agent](misc/privy-server-wallet-agent)** - Example of a server wallet agent using Privy
 
 ### Social
 - **[discord-bot-starter](social/discord-bot-starter)** - Starter template for building Discord bots with Agent Kit
@@ -45,6 +46,20 @@ Most examples require:
 - Node.js (version specified in each example)
 - npm, yarn, or pnpm (as specified)
 - Basic understanding of Solana and blockchain concepts
+
+## Cloning
+
+To clone an example, you can make use of gitpick, like so:
+
+```bash
+npx gitpick sendaifun/solana-agent-kit/examples/<example-category>/<example-name>
+```
+
+For example:
+
+```bash
+npx gitpick sendaifun/solana-agent-kit/examples/defi/market-making-agent
+```
 
 ## Contributing
 
