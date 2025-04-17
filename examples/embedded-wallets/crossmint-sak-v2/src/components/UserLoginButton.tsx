@@ -14,19 +14,24 @@ import { useNavigate } from "@tanstack/react-router";
 import { Button } from "./ui/button";
 import { useAuth, useWallet } from "@crossmint/client-sdk-react-ui";
 import { useState, useEffect } from "react";
+import { fetchSession, signupFn } from "~/functions/session";
 
 interface UserLoginButtonProps {
-  context?: 'sidebar' | 'modal';
+  context?: "sidebar" | "modal";
 }
 
-export default function UserLoginButton({ context = 'sidebar' }: UserLoginButtonProps) {
-  const { login, logout, jwt } = useAuth();
+export default function UserLoginButton({
+  context = "sidebar",
+}: UserLoginButtonProps) {
+  const { login, logout, jwt, status: crossMintAuthStatus, user } = useAuth();
   const { wallet, status } = useWallet();
   const nav = useNavigate();
   const [_, copyToClipboard] = useCopyToClipboard();
   const [isOpen, setIsOpen] = useState(false);
 
-  const walletAddress = wallet ? (wallet as any).address || (wallet as any).publicKey?.toString() : null;
+  const walletAddress = wallet
+    ? (wallet as any).address || (wallet as any).publicKey?.toString()
+    : null;
 
   // Clean up dropdown when component unmounts
   useEffect(() => {
@@ -34,6 +39,30 @@ export default function UserLoginButton({ context = 'sidebar' }: UserLoginButton
       setIsOpen(false);
     };
   }, []);
+
+  useEffect(() => {
+    if (crossMintAuthStatus === "logged-in") {
+      fetchSession().then((v) => {
+        if (v?.email || v?.walletAddress) {
+          return;
+        }
+
+        signupFn({
+          data: {
+            walletAddress: wallet?.address as string,
+            email: user?.email,
+            redirectUrl: "/chats",
+          },
+        }).then((v) => {
+          if (v.error) {
+            return sonnerToast.error(v.message);
+          }
+
+          nav({ href: "/chats" });
+        });
+      });
+    }
+  }, [crossMintAuthStatus, user, wallet]);
 
   if (status === "loading-error") {
     return <div className="text-rose-500">Error loading wallet</div>;
@@ -43,16 +72,16 @@ export default function UserLoginButton({ context = 'sidebar' }: UserLoginButton
     return <div className="text-amber-500">Loading...</div>;
   }
 
-  const isSidebar = context === 'sidebar';
+  const isSidebar = context === "sidebar";
 
   return (
     <>
       {jwt ? (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
           <DropdownMenuTrigger asChild>
-            <Button 
-              variant="ghost" 
-              size={isSidebar ? "sm" : "default"} 
+            <Button
+              variant="ghost"
+              size={isSidebar ? "sm" : "default"}
               className={`${isSidebar ? "p-0 w-full flex justify-start" : "p-2"}`}
             >
               <CircleUser className={isSidebar ? "h-5 w-5 mr-2" : "h-6 w-6"} />
@@ -63,7 +92,7 @@ export default function UserLoginButton({ context = 'sidebar' }: UserLoginButton
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem disabled>
-              {walletAddress && walletAddress.length > 12 
+              {walletAddress && walletAddress.length > 12
                 ? `${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 4)}`
                 : walletAddress || "No wallet address"}
             </DropdownMenuItem>
@@ -90,12 +119,12 @@ export default function UserLoginButton({ context = 'sidebar' }: UserLoginButton
                 setIsOpen(false);
                 sonnerToast.promise(
                   async () => {
-                    await logout();
+                    logout();
                     nav({ href: "/", replace: true });
                   },
                   {
                     description: "Disconnecting wallet...",
-                  }
+                  },
                 );
               }}
             >
@@ -104,7 +133,7 @@ export default function UserLoginButton({ context = 'sidebar' }: UserLoginButton
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button 
+        <Button
           onClick={login}
           variant="default"
           className={`${isSidebar ? "w-full" : ""} flex items-center gap-2`}
