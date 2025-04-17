@@ -63,8 +63,8 @@ importers:
         specifier: ^2.5.1
         version: 2.6.1(react-redux@9.2.0(@types/react@18.3.20)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
       '@solana-agent-kit/plugin-token':
-        specifier: ^2.0.0-beta.5
-        version: 2.0.0-beta.5(@noble/hashes@1.7.2)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(solana-agent-kit@2.0.0-beta.11(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(typescript@5.8.3)(utf-8-validate@5.0.10)
+        specifier: ^2.0.1
+        version: 2.0.1(@noble/hashes@1.7.2)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(solana-agent-kit@2.0.1(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(typescript@5.8.3)(utf-8-validate@5.0.10)
       '@solana/spl-token':
         specifier: ^0.4.13
         version: 0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(utf-8-validate@5.0.10)
@@ -201,8 +201,8 @@ importers:
         specifier: ^9.2.0
         version: 9.2.0(@types/react@18.3.20)(react@18.3.1)(redux@5.0.1)
       solana-agent-kit:
-        specifier: 2.0.0-beta.11
-        version: 2.0.0-beta.11(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)
+        specifier: 2.0.1
+        version: 2.0.1(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)
       stream-browserify:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1792,11 +1792,11 @@ packages:
   '@sinonjs/fake-timers@10.3.0':
     resolution: {integrity: sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==}
 
-  '@solana-agent-kit/plugin-token@2.0.0-beta.5':
+  '@solana-agent-kit/plugin-token@2.0.1':
     resolution: {integrity: sha512-Do9cro0RkxlY8LNtEXOnGBMu8NNIOq1icj50Phjg/9CCyYzFM86ExQ8MaR9upaxinrsvHDvnDY8wzYvfxymMTg==}
     peerDependencies:
       '@solana/web3.js': ^1.98.0
-      solana-agent-kit: 2.0.0-beta.5
+      solana-agent-kit: 2.0.1
 
   '@solana/buffer-layout-utils@0.2.0':
     resolution: {integrity: sha512-szG4sxgJGktbuZYDg2FfNmkMi0DYQoVjN2h7ta1W1hPrwzarcFLBq9UpX1UjNXsNpT9dn+chgprtWGioUAr4/g==}
@@ -5443,7 +5443,7 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
-  solana-agent-kit@2.0.0-beta.11:
+  solana-agent-kit@2.0.1:
     resolution: {integrity: sha512-JP/1PFeHR2aQB9FkZnjK1O5pfQ/3izU6/HUtAFELW9S/esCSjOA386bfNhXPbu5xWJUxx26diD/84nlXjjoJpw==}
     engines: {node: '>=22.0.0', pnpm: '>=8.0.0'}
 
@@ -8547,7 +8547,7 @@ snapshots:
     dependencies:
       '@sinonjs/commons': 3.0.1
 
-  '@solana-agent-kit/plugin-token@2.0.0-beta.5(@noble/hashes@1.7.2)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(solana-agent-kit@2.0.0-beta.11(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(typescript@5.8.3)(utf-8-validate@5.0.10)':
+  '@solana-agent-kit/plugin-token@2.0.1(@noble/hashes@1.7.2)(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(solana-agent-kit@2.0.1(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10))(typescript@5.8.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@lightprotocol/compressed-token': 0.20.9(@lightprotocol/stateless.js@0.20.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)))(@solana/spl-token@0.4.13(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.8.3)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
       '@lightprotocol/stateless.js': 0.20.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))
@@ -8566,7 +8566,7 @@ snapshots:
       '@types/bn.js': 5.1.6
       bn.js: 5.2.1
       ethers: 6.13.5(bufferutil@4.0.9)(utf-8-validate@5.0.10)
-      solana-agent-kit: 2.0.0-beta.11(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)
+      solana-agent-kit: 2.0.1(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10)
       zod: 3.24.2
     transitivePeerDependencies:
       - '@gql.tada/svelte-support'
@@ -12985,7 +12985,7 @@ snapshots:
       dot-case: 3.0.4
       tslib: 2.8.1
 
-  solana-agent-kit@2.0.0-beta.11(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10):
+  solana-agent-kit@2.0.1(bufferutil@4.0.9)(react@18.3.1)(utf-8-validate@5.0.10):
     dependencies:
       '@langchain/core': 0.3.44
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)

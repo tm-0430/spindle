@@ -1,8 +1,8 @@
-**Documentation v2.0.0-beta.11**
+**Documentation v2**
 
 ***
 
-# Documentation v2.0.0-beta.11
+# Documentation v2
 
 ## Packages
 

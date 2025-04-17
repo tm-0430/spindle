@@ -6,7 +6,7 @@
 
 - Fixes rpc url requirment for KeypairWallet
 
-## 2.0.0-beta.1
+## 2.0.1
 
 ### Major Changes
 

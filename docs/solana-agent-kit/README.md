@@ -1,4 +1,4 @@
-[**Documentation v2.0.0-beta.11**](../README.md)
+[**Documentation v2**](../README.md)
 
 ***
 

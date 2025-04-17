@@ -9,4 +9,4 @@
 ### Patch Changes
 
 - Updated dependencies
-  - solana-agent-kit@2.0.0-beta.1
+  - solana-agent-kit@2.0.1
