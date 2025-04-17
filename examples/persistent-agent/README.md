@@ -29,7 +29,7 @@ Agent: I'm sorry, but I don't have access to personal data about users unless it
 You: i, My name is Arpit
 Agent: Hello Arpit! How can I assist you today?
 You: ^С
-$ npm run dev
+$ pnpm run dev
 You: Do you know my name?
 Agent: Yes, you just mentioned that your name is Arpit. How can I help you today?
 ```
