@@ -65,8 +65,7 @@
           {
             "group": "Adapters",
             "pages": [
-              "docs/v2/adapters/mcp/mcp-adapter-intro",
-              "docs/v2/adapters/n8n/n8n-adapter-intro"
+              "docs/v2/adapters/mcp/mcp-adapter-intro"
             ]
           },
           {
@@ -76,7 +75,11 @@
               "docs/v2/examples/embedded-wallets/privy",
               "docs/v2/examples/embedded-wallets/turnkey",
               "docs/v2/examples/embedded-wallets/crossmint",
-              "docs/v2/examples/embedded-wallets/para"
+              "docs/v2/examples/embedded-wallets/para",
+              "docs/v2/examples/embedded-wallets/privy-server-wallet",
+              "docs/v2/examples/embedded-wallets/phantom",
+              "docs/v2/examples/embedded-wallets/react-native",
+              "docs/v2/adapters/n8n/n8n-adapter-intro"
             ]
           },
           {
