@@ -1,6 +1,6 @@
 import { z } from "zod";
+import type { Action } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
-import { Action } from "solana-agent-kit";
 
 export const withdrawBalanceSchema = z.object({
   fee_payer: z.string(),
@@ -11,6 +11,10 @@ export const withdrawBalanceSchema = z.object({
 });
 
 export type WithdrawBalanceInput = z.infer<typeof withdrawBalanceSchema>;
+
+interface WithdrawBalanceContext {
+  apiKey: string;
+}
 
 export const withdrawBalanceAction: Action = {
   name: "WITHDRAW_BALANCE",
@@ -36,7 +40,11 @@ export const withdrawBalanceAction: Action = {
     ],
   ],
   schema: withdrawBalanceSchema,
-  handler: async (_agent, input, { apiKey }) => {
+  handler: async (
+    _agent: unknown,
+    input: WithdrawBalanceInput,
+    { apiKey }: WithdrawBalanceContext
+  ) => {
     const response = await fetch(`${RANGER_SOR_API_BASE}/v1/withdraw_balance`, {
       method: "POST",
       headers: {

@@ -1,6 +1,6 @@
 import { z } from "zod";
+import type { Action } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
-import { Action } from "solana-agent-kit";
 
 export const withdrawCollateralSchema = z.object({
   fee_payer: z.string(),
@@ -16,6 +16,10 @@ export const withdrawCollateralSchema = z.object({
 });
 
 export type WithdrawCollateralInput = z.infer<typeof withdrawCollateralSchema>;
+
+interface WithdrawCollateralContext {
+  apiKey: string;
+}
 
 export const withdrawCollateralAction: Action = {
   name: "WITHDRAW_COLLATERAL",
@@ -40,7 +44,11 @@ export const withdrawCollateralAction: Action = {
     ],
   ],
   schema: withdrawCollateralSchema,
-  handler: async (_agent, input, { apiKey }) => {
+  handler: async (
+    _agent: unknown,
+    input: WithdrawCollateralInput,
+    { apiKey }: WithdrawCollateralContext
+  ) => {
     const response = await fetch(
       `${RANGER_SOR_API_BASE}/v1/withdraw_collateral`,
       {
