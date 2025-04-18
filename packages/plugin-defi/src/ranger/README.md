@@ -1,6 +1,6 @@
-# Ranger Finance MCP Server Plugin
+# Ranger Finance Plugin for Solana Agent Kit
 
-This package provides a Meta Controller Plugin (MCP) server implementation for interacting with the [Ranger Finance API](https://www.ranger.finance/). It allows agents or other systems to access Ranger's Smart Order Router (SOR) and Data API functionalities.
+This package provides a plugin implementation for the **Solana Agent Kit**, enabling seamless interaction with the [Ranger Finance API](https://www.ranger.finance/). It allows Solana agents or plugins to access Ranger's Smart Order Router (SOR) and Data API functionalities for DeFi trading and analytics.
 
 ## Features
 
@@ -37,7 +37,7 @@ This package provides a Meta Controller Plugin (MCP) server implementation for i
    export RANGER_API_KEY="your-api-key-here"
    # Or use a .env file
    ```
-3. **Integration:** Import and use the exported actions/tools in your agent or MCP framework.
+3. **Integration:** Import and use the exported actions/tools in your Solana Agent Kit agent or plugin.
 
 ## API Documentation
 
