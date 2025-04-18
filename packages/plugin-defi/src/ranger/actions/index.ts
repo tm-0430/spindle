@@ -18,4 +18,3 @@ export * from "./getBorrowRatesAccumulated";
 export * from "./getFundingRatesExtreme";
 export * from "./getFundingRatesOiWeighted";
 export * from "./getFundingRatesTrend";
-// Add more exports as you implement additional actions

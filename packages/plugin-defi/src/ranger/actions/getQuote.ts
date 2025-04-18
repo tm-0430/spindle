@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { RANGER_SOR_API_BASE } from "../index";
+import { Action } from "solana-agent-kit";
 
 export const getQuoteSchema = z.object({
   fee_payer: z.string().describe("The public key of the fee payer account."),
@@ -42,18 +43,48 @@ export const getQuoteSchema = z.object({
 
 export type GetQuoteInput = z.infer<typeof getQuoteSchema>;
 
-export async function getQuote(input: GetQuoteInput, apiKey: string) {
-  const response = await fetch(`${RANGER_SOR_API_BASE}/v1/order_metadata`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify(input),
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`Quote request failed: ${error.message}`);
-  }
-  return response.json();
-}
+export const getQuoteAction: Action = {
+  name: "GET_QUOTE",
+  similes: ["get quote", "fetch quote", "quote perp"],
+  description:
+    "Get a trade quote for a perp position using the Ranger SOR API.",
+  examples: [
+    [
+      {
+        input: {
+          fee_payer: "YOUR_PUBLIC_KEY",
+          symbol: "SOL",
+          side: "Long",
+          size: 1.0,
+          collateral: 10.0,
+          size_denomination: "SOL",
+          collateral_denomination: "USDC",
+          adjustment_type: "Increase",
+        },
+        output: {
+          venues: [],
+          total_collateral: 10.0,
+          total_size: 1.0,
+          average_price: 20.625,
+        },
+        explanation: "Get a quote for opening a long SOL position.",
+      },
+    ],
+  ],
+  schema: getQuoteSchema,
+  handler: async (_agent, input, { apiKey }) => {
+    const response = await fetch(`${RANGER_SOR_API_BASE}/v1/order_metadata`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+      body: JSON.stringify(input),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Quote request failed: ${error.message}`);
+    }
+    return response.json();
+  },
+};

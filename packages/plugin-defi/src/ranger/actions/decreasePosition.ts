@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { RANGER_SOR_API_BASE } from "../index";
+import { Action } from "solana-agent-kit";
 
 export const decreasePositionSchema = z.object({
   fee_payer: z.string(),
@@ -23,21 +24,45 @@ export const decreasePositionSchema = z.object({
 
 export type DecreasePositionInput = z.infer<typeof decreasePositionSchema>;
 
-export async function decreasePosition(
-  input: DecreasePositionInput,
-  apiKey: string
-) {
-  const response = await fetch(`${RANGER_SOR_API_BASE}/v1/decrease_position`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify(input),
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`Decrease position request failed: ${error.message}`);
-  }
-  return response.json();
-}
+export const decreasePositionAction: Action = {
+  name: "DECREASE_POSITION",
+  similes: ["reduce position", "decrease position", "partial close perp"],
+  description: "Decrease a perp position using the Ranger SOR API.",
+  examples: [
+    [
+      {
+        input: {
+          fee_payer: "YOUR_PUBLIC_KEY",
+          symbol: "SOL",
+          side: "Long",
+          size: 0.5,
+          collateral: 5.0,
+          size_denomination: "SOL",
+          collateral_denomination: "USDC",
+          adjustment_type: "DecreaseFlash",
+        },
+        output: { message: "...", meta: { venues: [] } },
+        explanation: "Decrease a long SOL position via Flash venue.",
+      },
+    ],
+  ],
+  schema: decreasePositionSchema,
+  handler: async (_agent, input, { apiKey }) => {
+    const response = await fetch(
+      `${RANGER_SOR_API_BASE}/v1/decrease_position`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+        },
+        body: JSON.stringify(input),
+      }
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`Decrease position request failed: ${error.message}`);
+    }
+    return response.json();
+  },
+};
