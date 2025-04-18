@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getFundingRatesAccumulatedSchema = z.object({
   symbol: z.string().optional(),
@@ -11,8 +12,7 @@ export type GetFundingRatesAccumulatedInput = z.infer<
 
 export async function getFundingRatesAccumulated(
   input: GetFundingRatesAccumulatedInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
   const params = new URLSearchParams();
   if (input.symbol) params.set("symbol", input.symbol);
@@ -20,7 +20,7 @@ export async function getFundingRatesAccumulated(
   if (input.platform) params.set("platform", input.platform);
 
   const response = await fetch(
-    `${baseUrl}/v1/funding_rates/accumulated?${params.toString()}`,
+    `${RANGER_DATA_API_BASE}/v1/funding_rates/accumulated?${params.toString()}`,
     {
       method: "GET",
       headers: {

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getLiquidationsHeatmapSchema = z.object({
   granularity: z.string().optional(),
@@ -9,14 +10,13 @@ export type GetLiquidationsHeatmapInput = z.infer<
 
 export async function getLiquidationsHeatmap(
   input: GetLiquidationsHeatmapInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
   const params = new URLSearchParams();
   if (input.granularity) params.set("granularity", input.granularity);
 
   const response = await fetch(
-    `${baseUrl}/v1/liquidations/heatmap?${params.toString()}`,
+    `${RANGER_DATA_API_BASE}/v1/liquidations/heatmap?${params.toString()}`,
     {
       method: "GET",
       headers: {

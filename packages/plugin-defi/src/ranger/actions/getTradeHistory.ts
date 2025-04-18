@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getTradeHistorySchema = z.object({
   public_key: z.string(),
@@ -12,8 +13,7 @@ export type GetTradeHistoryInput = z.infer<typeof getTradeHistorySchema>;
 
 export async function getTradeHistory(
   input: GetTradeHistoryInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
   const params = new URLSearchParams();
   params.set("public_key", input.public_key);
@@ -22,7 +22,7 @@ export async function getTradeHistory(
   if (input.start_time) params.set("start_time", input.start_time);
   if (input.end_time) params.set("end_time", input.end_time);
 
-  const response = await fetch(`${baseUrl}/v1/trade_history?${params.toString()}", {
+  const response = await fetch(`${RANGER_DATA_API_BASE}/v1/trade_history?${params.toString()}", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

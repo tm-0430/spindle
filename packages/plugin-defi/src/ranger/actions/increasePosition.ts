@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_SOR_API_BASE } from "../index";
 
 export const increasePositionSchema = z.object({
   fee_payer: z.string(),
@@ -19,10 +20,9 @@ export type IncreasePositionInput = z.infer<typeof increasePositionSchema>;
 
 export async function increasePosition(
   input: IncreasePositionInput,
-  apiKey: string,
-  baseUrl = "https://staging-sor-api-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
-  const response = await fetch(`${baseUrl}/v1/increase_position`, {
+  const response = await fetch(`${RANGER_SOR_API_BASE}/v1/increase_position`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

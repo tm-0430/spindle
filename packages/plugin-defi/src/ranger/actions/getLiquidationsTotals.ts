@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getLiquidationsTotalsSchema = z.object({});
 export type GetLiquidationsTotalsInput = z.infer<
@@ -7,16 +8,18 @@ export type GetLiquidationsTotalsInput = z.infer<
 
 export async function getLiquidationsTotals(
   _input: GetLiquidationsTotalsInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
-  const response = await fetch(`${baseUrl}/v1/liquidations/totals`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-    },
-  });
+  const response = await fetch(
+    `${RANGER_DATA_API_BASE}/v1/liquidations/totals`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+    }
+  );
   if (!response.ok) {
     const error = await response.json();
     throw new Error(`Get liquidations totals request failed: ${error.message}`);

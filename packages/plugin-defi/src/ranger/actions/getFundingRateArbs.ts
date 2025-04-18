@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getFundingRateArbsSchema = z.object({
   min_diff: z.number().optional(),
@@ -7,15 +8,14 @@ export type GetFundingRateArbsInput = z.infer<typeof getFundingRateArbsSchema>;
 
 export async function getFundingRateArbs(
   input: GetFundingRateArbsInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
   const params = new URLSearchParams();
   if (input.min_diff !== undefined)
     params.set("min_diff", input.min_diff.toString());
 
   const response = await fetch(
-    `${baseUrl}/v1/funding_rates/arbs?${params.toString()}`,
+    `${RANGER_DATA_API_BASE}/v1/funding_rates/arbs?${params.toString()}`,
     {
       method: "GET",
       headers: {

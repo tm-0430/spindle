@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getLiquidationsCapitulationSchema = z.object({
   granularity: z.string().optional(),
@@ -10,8 +11,7 @@ export type GetLiquidationsCapitulationInput = z.infer<
 
 export async function getLiquidationsCapitulation(
   input: GetLiquidationsCapitulationInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
   const params = new URLSearchParams();
   if (input.granularity) params.set("granularity", input.granularity);
@@ -19,7 +19,7 @@ export async function getLiquidationsCapitulation(
     params.set("threshold", input.threshold.toString());
 
   const response = await fetch(
-    `${baseUrl}/v1/liquidations/capitulation?${params.toString()}`,
+    `${RANGER_DATA_API_BASE}/v1/liquidations/capitulation?${params.toString()}`,
     {
       method: "GET",
       headers: {

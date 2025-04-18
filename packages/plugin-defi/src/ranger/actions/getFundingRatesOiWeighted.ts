@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getFundingRatesOiWeightedSchema = z.object({});
 export type GetFundingRatesOiWeightedInput = z.infer<
@@ -7,16 +8,18 @@ export type GetFundingRatesOiWeightedInput = z.infer<
 
 export async function getFundingRatesOiWeighted(
   _input: GetFundingRatesOiWeightedInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
-  const response = await fetch(`${baseUrl}/v1/funding_rates/oi_weighted`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-    },
-  });
+  const response = await fetch(
+    `${RANGER_DATA_API_BASE}/v1/funding_rates/oi_weighted`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+    }
+  );
   if (!response.ok) {
     const error = await response.json();
     throw new Error(

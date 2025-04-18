@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_DATA_API_BASE } from "../index";
 
 export const getBorrowRatesAccumulatedSchema = z.object({
   symbol: z.string().optional(),
@@ -11,8 +12,7 @@ export type GetBorrowRatesAccumulatedInput = z.infer<
 
 export async function getBorrowRatesAccumulated(
   input: GetBorrowRatesAccumulatedInput,
-  apiKey: string,
-  baseUrl = "https://data-api-staging-437363704888.asia-northeast1.run.app"
+  apiKey: string
 ) {
   const params = new URLSearchParams();
   if (input.symbol) params.set("symbol", input.symbol);
@@ -20,7 +20,7 @@ export async function getBorrowRatesAccumulated(
   if (input.platform) params.set("platform", input.platform);
 
   const response = await fetch(
-    `${baseUrl}/v1/borrow_rates/accumulated?${params.toString()}`,
+    `${RANGER_DATA_API_BASE}/v1/borrow_rates/accumulated?${params.toString()}`,
     {
       method: "GET",
       headers: {

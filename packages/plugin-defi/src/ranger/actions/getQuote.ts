@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RANGER_SOR_API_BASE } from "../index";
 
 export const getQuoteSchema = z.object({
   fee_payer: z.string().describe("The public key of the fee payer account."),
@@ -41,12 +42,8 @@ export const getQuoteSchema = z.object({
 
 export type GetQuoteInput = z.infer<typeof getQuoteSchema>;
 
-export async function getQuote(
-  input: GetQuoteInput,
-  apiKey: string,
-  baseUrl = "https://staging-sor-api-437363704888.asia-northeast1.run.app"
-) {
-  const response = await fetch(`${baseUrl}/v1/order_metadata`, {
+export async function getQuote(input: GetQuoteInput, apiKey: string) {
+  const response = await fetch(`${RANGER_SOR_API_BASE}/v1/order_metadata`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
