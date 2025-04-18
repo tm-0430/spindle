@@ -1,6 +1,6 @@
 import { z } from "zod";
+import type { Action } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
-import { Action } from "solana-agent-kit";
 
 export const decreasePositionSchema = z.object({
   fee_payer: z.string(),
@@ -23,6 +23,10 @@ export const decreasePositionSchema = z.object({
 });
 
 export type DecreasePositionInput = z.infer<typeof decreasePositionSchema>;
+
+interface DecreasePositionContext {
+  apiKey: string;
+}
 
 export const decreasePositionAction: Action = {
   name: "DECREASE_POSITION",
@@ -47,7 +51,11 @@ export const decreasePositionAction: Action = {
     ],
   ],
   schema: decreasePositionSchema,
-  handler: async (_agent, input, { apiKey }) => {
+  handler: async (
+    _agent: unknown,
+    input: DecreasePositionInput,
+    { apiKey }: DecreasePositionContext
+  ) => {
     const response = await fetch(
       `${RANGER_SOR_API_BASE}/v1/decrease_position`,
       {

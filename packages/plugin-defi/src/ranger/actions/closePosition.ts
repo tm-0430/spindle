@@ -1,6 +1,6 @@
 import { z } from "zod";
+import type { Action } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
-import { Action } from "solana-agent-kit";
 
 export const closePositionSchema = z.object({
   fee_payer: z.string(),
@@ -19,6 +19,10 @@ export const closePositionSchema = z.object({
 });
 
 export type ClosePositionInput = z.infer<typeof closePositionSchema>;
+
+interface ClosePositionContext {
+  apiKey: string;
+}
 
 export const closePositionAction: Action = {
   name: "CLOSE_POSITION",
@@ -39,7 +43,11 @@ export const closePositionAction: Action = {
     ],
   ],
   schema: closePositionSchema,
-  handler: async (_agent, input, { apiKey }) => {
+  handler: async (
+    _agent: unknown,
+    input: ClosePositionInput,
+    { apiKey }: ClosePositionContext
+  ) => {
     const response = await fetch(`${RANGER_SOR_API_BASE}/v1/close_position`, {
       method: "POST",
       headers: {
