@@ -6,14 +6,14 @@ icon: 'server'
 
 # MCP Adapter
 
-The `@solana-agent-kit/util-mcp` adapter provides a framework for creating a Model Context Protocol (MCP) server to handle protocol operations on the Solana blockchain using the Solana Agent Kit.
+The `@solana-agent-kit/adapter-mcp` adapter provides a framework for creating a Model Context Protocol (MCP) server to handle protocol operations on the Solana blockchain using the Solana Agent Kit.
 
 ## Installation
 
 Install the adapter alongside the core Solana Agent Kit and your desired plugins:
 
 ```bash
-npm install solana-agent-kit @solana-agent-kit/util-mcp @solana-agent-kit/plugin-token dotenv
+npm install solana-agent-kit @solana-agent-kit/adapter-mcp @solana-agent-kit/plugin-token dotenv
 ```
 
 ## Features
@@ -44,7 +44,7 @@ npm init -y
 Install the required dependencies:
 
 ```bash
-npm install solana-agent-kit @solana-agent-kit/util-mcp @solana-agent-kit/plugin-token dotenv
+npm install solana-agent-kit @solana-agent-kit/adapter-mcp @solana-agent-kit/plugin-token dotenv
 ```
 
 Create a `.env` file in your project root:
@@ -59,7 +59,7 @@ Create an `index.js` file with the following code:
 
 ```javascript
 import { SolanaAgentKit, KeypairWallet } from "solana-agent-kit";
-import { startMcpServer } from '@solana-agent-kit/util-mcp';
+import { startMcpServer } from '@solana-agent-kit/adapter-mcp';
 import TokenPlugin from '@solana-agent-kit/plugin-token';
 import * as dotenv from "dotenv";
 
