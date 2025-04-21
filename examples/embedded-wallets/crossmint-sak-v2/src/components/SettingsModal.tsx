@@ -325,28 +325,38 @@ export function SettingsModal() {
 
   // Desktop Dialog Component
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {TriggerButton}
-      </DialogTrigger>
-      <DialogContent className="max-w-4xl p-0 h-[50vh] overflow-hidden bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl transition-all duration-300 ease-in-out scale-100 data-[state=closed]:scale-95 data-[state=open]:scale-100">
-        <DialogHeader className="border-b border-gray-200 dark:border-gray-700 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-xl font-bold">Settings</DialogTitle>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              <Icon name="close-circle-linear" className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-            </Button>
+    <>
+      {TriggerButton}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px] flex items-center justify-center"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsOpen(false);
+            }
+          }}
+        >
+          <div 
+            className="bg-white dark:bg-gray-900 rounded-lg shadow-2xl w-[90vw] max-w-4xl h-[70vh] flex flex-col border border-gray-200 dark:border-gray-700 animate-in fade-in-0 zoom-in-95"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="border-b border-gray-200 dark:border-gray-700 px-4 py-3 flex items-center justify-between">
+              <h2 className="text-xl font-bold">Settings</h2>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                <Icon name="close-circle-linear" className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              </Button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <SettingsContent />
+            </div>
           </div>
-        </DialogHeader>
-        <div className="h-full overflow-hidden">
-          <SettingsContent />
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 } 
