@@ -28,7 +28,7 @@ export async function getAssetsByOwner(
     showNativeBalance: false,
     showInscription: false,
   },
-  sortOptions?: SortOptions
+  sortOptions?: SortOptions,
 ): Promise<any> {
   try {
     const apiKey = agent.config?.HELIUS_API_KEY;
@@ -59,7 +59,7 @@ export async function getAssetsByOwner(
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch: ${response.status} - ${response.statusText}`
+        `Failed to fetch: ${response.status} - ${response.statusText}`,
       );
     }
 
