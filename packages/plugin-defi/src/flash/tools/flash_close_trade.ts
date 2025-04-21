@@ -19,7 +19,7 @@ import {
  * @param params Trade parameters
  * @returns Transaction signature
  */
-export async function flashCloseTrade(
+export async function  lashCloseTrade(
   agent: SolanaAgentKit,
   params: FlashCloseTradeParams,
 ): Promise<string> {

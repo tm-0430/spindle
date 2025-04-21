@@ -1,11 +1,17 @@
 import type { SolanaAgentKit } from "solana-agent-kit";
-// import { signOrSendTX } from "solana-agent-kit";
-// import { PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { signOrSendTX } from "solana-agent-kit";
+import {
+  TransactionInstruction,
+  TransactionMessage,
+  VersionedTransaction,
+} from "@solana/web3.js";
+import base64js from "base64-js";
+import { RANGER_SOR_API_BASE } from "../index";
 
-// TODO: Uncomment and import actual dependencies when implementing logic
+// TODO: Import or implement actual Ranger instruction builders
 
 /**
- * Scaffold: Open perp trade on Ranger
+ * Open perp trade on Ranger
  */
 export async function openPerpTradeRanger({
   agent,
@@ -25,13 +31,13 @@ export async function openPerpTradeRanger({
   slippage?: number;
 }) {
   // TODO: Build transaction instructions for opening a perp trade on Ranger
-  // const instructions: TransactionInstruction[] = [];
-  // return signOrSendTX(agent, instructions);
-  throw new Error("Not implemented: openPerpTradeRanger");
+  const instructions: TransactionInstruction[] = [];
+  // instructions.push(...buildOpenPerpTradeInstructions(...));
+  return signOrSendTX(agent, instructions);
 }
 
 /**
- * Scaffold: Close perp trade on Ranger
+ * Close perp trade on Ranger
  */
 export async function closePerpTradeRanger({
   agent,
@@ -47,13 +53,13 @@ export async function closePerpTradeRanger({
   slippage?: number;
 }) {
   // TODO: Build transaction instructions for closing a perp trade on Ranger
-  // const instructions: TransactionInstruction[] = [];
-  // return signOrSendTX(agent, instructions);
-  throw new Error("Not implemented: closePerpTradeRanger");
+  const instructions: TransactionInstruction[] = [];
+  // instructions.push(...buildClosePerpTradeInstructions(...));
+  return signOrSendTX(agent, instructions);
 }
 
 /**
- * Scaffold: Increase perp position on Ranger
+ * Increase perp position on Ranger
  */
 export async function increasePerpPositionRanger({
   agent,
@@ -63,6 +69,8 @@ export async function increasePerpPositionRanger({
   collateral,
   leverage,
   slippage,
+  apiKey,
+  ...rest
 }: {
   agent: SolanaAgentKit;
   symbol: string;
@@ -71,15 +79,45 @@ export async function increasePerpPositionRanger({
   collateral: number;
   leverage?: number;
   slippage?: number;
+  apiKey: string;
+  [key: string]: any;
 }) {
-  // TODO: Build transaction instructions for increasing a perp position on Ranger
-  // const instructions: TransactionInstruction[] = [];
-  // return signOrSendTX(agent, instructions);
-  throw new Error("Not implemented: increasePerpPositionRanger");
+  const body = {
+    fee_payer: agent.wallet.publicKey.toBase58(),
+    symbol,
+    side,
+    size,
+    collateral,
+    size_denomination: symbol,
+    collateral_denomination: "USDC",
+    adjustment_type: "Increase",
+    slippage_bps: slippage,
+    ...rest,
+  };
+  const response = await fetch(`${RANGER_SOR_API_BASE}/v1/increase_position`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+    },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(`Increase position request failed: ${error.message}`);
+  }
+  const data = await response.json();
+  const messageBase64 = data.message;
+  const messageBytes = base64js.toByteArray(messageBase64);
+  const transactionMessage = TransactionMessage.deserialize(messageBytes);
+  const transaction = new VersionedTransaction(transactionMessage);
+  const { blockhash } = await agent.connection.getLatestBlockhash();
+  transaction.message.recentBlockhash = blockhash;
+  return signOrSendTX(agent, transaction);
 }
 
 /**
- * Scaffold: Decrease perp position on Ranger
+ * Decrease perp position on Ranger
  */
 export async function decreasePerpPositionRanger({
   agent,
@@ -95,13 +133,13 @@ export async function decreasePerpPositionRanger({
   slippage?: number;
 }) {
   // TODO: Build transaction instructions for decreasing a perp position on Ranger
-  // const instructions: TransactionInstruction[] = [];
-  // return signOrSendTX(agent, instructions);
-  throw new Error("Not implemented: decreasePerpPositionRanger");
+  const instructions: TransactionInstruction[] = [];
+  // instructions.push(...buildDecreasePerpPositionInstructions(...));
+  return signOrSendTX(agent, instructions);
 }
 
 /**
- * Scaffold: Withdraw balance from Ranger
+ * Withdraw balance from Ranger
  */
 export async function withdrawBalanceRanger({
   agent,
@@ -113,13 +151,13 @@ export async function withdrawBalanceRanger({
   amount: number;
 }) {
   // TODO: Build transaction instructions for withdrawing balance from Ranger
-  // const instructions: TransactionInstruction[] = [];
-  // return signOrSendTX(agent, instructions);
-  throw new Error("Not implemented: withdrawBalanceRanger");
+  const instructions: TransactionInstruction[] = [];
+  // instructions.push(...buildWithdrawBalanceInstructions(...));
+  return signOrSendTX(agent, instructions);
 }
 
 /**
- * Scaffold: Withdraw collateral from Ranger
+ * Withdraw collateral from Ranger
  */
 export async function withdrawCollateralRanger({
   agent,
@@ -133,7 +171,7 @@ export async function withdrawCollateralRanger({
   collateral: number;
 }) {
   // TODO: Build transaction instructions for withdrawing collateral from Ranger
-  // const instructions: TransactionInstruction[] = [];
-  // return signOrSendTX(agent, instructions);
-  throw new Error("Not implemented: withdrawCollateralRanger");
+  const instructions: TransactionInstruction[] = [];
+  // instructions.push(...buildWithdrawCollateralInstructions(...));
+  return signOrSendTX(agent, instructions);
 }

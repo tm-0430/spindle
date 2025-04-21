@@ -1,6 +1,8 @@
 import { z } from "zod";
 import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
+import { TransactionMessage, VersionedTransaction } from "@solana/web3.js";
+import base64js from "base64-js";
 
 export const withdrawBalanceSchema = z.object({
   fee_payer: z.string(),
@@ -32,7 +34,7 @@ export const withdrawBalanceAction: Action = {
           adjustment_type: "WithdrawBalanceDrift",
         },
         output: {
-          message: "...",
+          signature: "...",
           meta: { venue: "Drift", amount: 100.0, symbol: "USDC" },
         },
         explanation: "Withdraw 100 USDC from Drift.",
@@ -57,6 +59,17 @@ export const withdrawBalanceAction: Action = {
       const error = await response.json();
       throw new Error(`Withdraw balance request failed: ${error.message}`);
     }
-    return response.json();
+    const data = await response.json();
+    const messageBase64 = data.message;
+    const messageBytes = base64js.toByteArray(messageBase64);
+    const transactionMessage = TransactionMessage.deserialize(messageBytes);
+    const transaction = new VersionedTransaction(transactionMessage);
+    const { blockhash } = await agent.connection.getLatestBlockhash();
+    transaction.message.recentBlockhash = blockhash;
+    const signature = await agent.wallet.signAndSendTransaction(
+      transaction,
+      agent.connection
+    );
+    return { signature, meta: data.meta };
   },
 };
