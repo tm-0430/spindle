@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action } from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
 
 export const increasePositionSchema = z.object({
@@ -47,7 +47,7 @@ export const increasePositionAction: Action = {
   ],
   schema: increasePositionSchema,
   handler: async (
-    _agent: unknown,
+    agent: SolanaAgentKit,
     input: IncreasePositionInput,
     { apiKey }: IncreasePositionContext
   ) => {

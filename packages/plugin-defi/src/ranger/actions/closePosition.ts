@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action } from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
 
 export const closePositionSchema = z.object({
@@ -44,7 +44,7 @@ export const closePositionAction: Action = {
   ],
   schema: closePositionSchema,
   handler: async (
-    _agent: unknown,
+    agent: SolanaAgentKit,
     input: ClosePositionInput,
     { apiKey }: ClosePositionContext
   ) => {

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import type { Action } from "solana-agent-kit";
 import { RANGER_DATA_API_BASE } from "../index";
+import { SolanaAgentKit } from "solana-agent-kit";
 
 export const getTradeHistorySchema = z.object({
   public_key: z.string(),
@@ -30,7 +31,7 @@ export const getTradeHistoryAction: Action = {
     ]
   ],
   schema: getTradeHistorySchema,
-  handler: async (_agent: unknown, input: GetTradeHistoryInput, { apiKey }: GetTradeHistoryContext) => {
+  handler: async (agent: SolanaAgentKit, input: GetTradeHistoryInput, { apiKey }: GetTradeHistoryContext) => {
     const params = new URLSearchParams();
     params.set("public_key", input.public_key);
     if (input.platforms) input.platforms.forEach((p: string) => params.append("platforms", p));

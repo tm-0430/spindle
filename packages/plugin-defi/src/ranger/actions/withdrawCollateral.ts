@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action } from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { RANGER_SOR_API_BASE } from "../index";
 
 export const withdrawCollateralSchema = z.object({
@@ -45,7 +45,7 @@ export const withdrawCollateralAction: Action = {
   ],
   schema: withdrawCollateralSchema,
   handler: async (
-    _agent: unknown,
+    agent: SolanaAgentKit,
     input: WithdrawCollateralInput,
     { apiKey }: WithdrawCollateralContext
   ) => {

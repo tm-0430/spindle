@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action } from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { RANGER_DATA_API_BASE } from "../index";
 
 export const getFundingRateArbsSchema = z.object({
@@ -32,7 +32,7 @@ export const getFundingRateArbsAction: Action = {
   ],
   schema: getFundingRateArbsSchema,
   handler: async (
-    _agent: unknown,
+    agent: SolanaAgentKit,
     input: GetFundingRateArbsInput,
     { apiKey }: GetFundingRateArbsContext
   ) => {

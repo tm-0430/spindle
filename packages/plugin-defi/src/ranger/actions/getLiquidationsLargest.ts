@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action } from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 import { RANGER_DATA_API_BASE } from "../index";
 
 export const getLiquidationsLargestSchema = z.object({
@@ -33,7 +33,7 @@ export const getLiquidationsLargestAction: Action = {
   ],
   schema: getLiquidationsLargestSchema,
   handler: async (
-    _agent: unknown,
+    agent: SolanaAgentKit,
     input: GetLiquidationsLargestInput,
     { apiKey }: GetLiquidationsLargestContext
   ) => {

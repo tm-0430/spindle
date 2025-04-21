@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Action } from "solana-agent-kit";
+import type { Action, SolanaAgentKit } from "solana-agent-kit";
 
 export const getPositionsSchema = z.object({
   public_key: z.string().describe("User's Solana wallet address."),
@@ -44,7 +44,7 @@ export const getPositionsAction: Action = {
   ],
   schema: getPositionsSchema,
   handler: async (
-    _agent: unknown,
+    agent: SolanaAgentKit,
     input: GetPositionsInput,
     {
       apiKey,
