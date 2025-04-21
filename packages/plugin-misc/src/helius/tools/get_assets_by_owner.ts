@@ -21,14 +21,9 @@ export async function getAssetsByOwner(
   limit: number,
   page = 1,
   displayOptions: DisplayOptions = {
-    showFungible: false,
-    showUnverifiedCollections: false,
-    showCollectionMetadata: false,
-    showGrandTotal: false,
-    showNativeBalance: false,
-    showInscription: false,
+    showFungible: true,
   },
-  sortOptions?: SortOptions,
+  sortOptions?: SortOptions
 ): Promise<any> {
   try {
     const apiKey = agent.config?.HELIUS_API_KEY;
@@ -59,7 +54,7 @@ export async function getAssetsByOwner(
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch: ${response.status} - ${response.statusText}`,
+        `Failed to fetch: ${response.status} - ${response.statusText}`
       );
     }
 
