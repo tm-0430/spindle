@@ -1,7 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "solana-agent-kit";
-import { SortOptions } from "../types";
-import { DisplayOptions } from "../types";
+import type { DisplayOptions, SortOptions } from "../types";
 
 /**
  * Fetch assets by owner using the Helius Digital Asset Standard (DAS) API
@@ -23,7 +22,7 @@ export async function getAssetsByOwner(
   displayOptions: DisplayOptions = {
     showFungible: true,
   },
-  sortOptions?: SortOptions
+  sortOptions?: SortOptions,
 ): Promise<any> {
   try {
     const apiKey = agent.config?.HELIUS_API_KEY;
@@ -54,7 +53,7 @@ export async function getAssetsByOwner(
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch: ${response.status} - ${response.statusText}`
+        `Failed to fetch: ${response.status} - ${response.statusText}`,
       );
     }
 
