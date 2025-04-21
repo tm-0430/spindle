@@ -69,13 +69,13 @@ const agent = new SolanaAgentKit(wallet, RPC_URL, {})
 
 ### Creating your own plugins
 
-You can create your own plugins by implementing the `Plugin` interface. The `Plugin` interface is a simple interface that defines the methods and actions a plugin implements. You can use the `createPlugin` function to create a plugin that implements the `Plugin` interface.
+You can create your own plugins by implementing the `Plugin` interface. The `Plugin` interface is a simple interface that defines the methods and actions a plugin implements. You can use the `Plugin` interface to create a plugin.
 
 ```ts
-import { createPlugin } from 'solana-agent-kit'
+import { type Plugin } from 'solana-agent-kit'
 import { z } from 'zod'
 
-const MyPlugin = createPlugin({
+const MyPlugin: Plugin = {
   name: 'MyPlugin',
   methods: {
     // agent must be defined if you plan to use the agent, agent.wallet, or agent.connection within you method
@@ -104,14 +104,21 @@ const MyPlugin = createPlugin({
       }),
       handler: async (agent) => {
         // Your action logic here
-        const { myArg } = agent.input
         // Call a method defined in the plugin
         const result = await MyPlugin.methods.myMethod(myArg)
         return result
       }
     }
   ],
-})
+  initialize: function (agent) {
+    // Initialize all methods with the agent instance
+    Object.entries(this.methods).forEach(([methodName, method]) => {
+      if (typeof method === "function") {
+        this.methods[methodName] = method.bind(null, agent);
+      }
+    });
+  }
+}
 
 export default MyPlugin
 ```
