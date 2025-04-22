@@ -1,5 +1,17 @@
 # Ranger Finance Plugin for Solana Agent Kit
 
+<div align="center">
+  </br>
+  <p>
+    <a href="https://www.ranger.finance" target="_blank">
+      <img height="300" src="https://pbs.twimg.com/profile_banners/1764920763360899072/1711621031/1500x500" />
+    </a>
+  </p>
+  <p>
+    <strong>bifrost</strong>
+  </p>
+</div>
+
 This package provides a plugin implementation for the **Solana Agent Kit**, enabling seamless interaction with the [Ranger Finance API](https://www.ranger.finance/). It allows Solana agents or plugins to access Ranger's Smart Order Router (SOR) and Data API functionalities for DeFi trading and analytics.
 
 ## Features
