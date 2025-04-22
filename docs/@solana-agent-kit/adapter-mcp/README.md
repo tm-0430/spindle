@@ -101,14 +101,14 @@ pnpm init
 Then install the solana-agent-kit, desired plugins and the mcp utility
 
 ```bash
-pnpm add solana-agent-kit @solana-agent-kit/plugin-token @solana-agent-kit/util-mcp dotenv
+pnpm add solana-agent-kit @solana-agent-kit/plugin-token @solana-agent-kit/adapter-mcp dotenv
 ```
 
 #### Usage
 
 ```js
 import { SolanaAgentKit, KeypairWallet } from "solana-agent-kit";
-import  { startMcpServer } from '@solana-agent-kit/util-mcp'
+import  { startMcpServer } from '@solana-agent-kit/adapter-mcp'
 import TokenPlugin from '@solana-agent-kit/plugin-token'
 import * as dotenv from "dotenv";
 
