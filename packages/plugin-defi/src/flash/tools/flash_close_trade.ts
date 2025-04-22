@@ -57,7 +57,7 @@ export async function flashCloseTrade(
     // Initialize pool configuration and perpClient
     const poolConfig = PoolConfig.fromIdsByName(
       marketData.pool,
-      "mainnet-beta"
+      "mainnet-beta",
     );
     const perpClient = createPerpClient(agent);
 
@@ -68,7 +68,7 @@ export async function flashCloseTrade(
       false, // isEntry = false for closing position
       slippageBpsBN,
       targetPrice.price,
-      sideEnum
+      sideEnum,
     );
 
     // Get NFT trading account info
@@ -76,7 +76,7 @@ export async function flashCloseTrade(
       agent.wallet.publicKey,
       perpClient,
       poolConfig,
-      collateralSymbol
+      collateralSymbol,
     );
 
     if (
@@ -97,7 +97,7 @@ export async function flashCloseTrade(
       get_flash_privilege(agent),
       tradingAccounts.nftTradingAccountPk,
       tradingAccounts.nftReferralAccountPK,
-      tradingAccounts.nftOwnerRebateTokenAccountPk
+      tradingAccounts.nftOwnerRebateTokenAccountPk,
     );
 
     const computeBudgetIx = ComputeBudgetProgram.setComputeUnitLimit({
@@ -110,7 +110,7 @@ export async function flashCloseTrade(
         additionalSigners: additionalSigners,
         alts: perpClient.addressLookupTables,
         prioritizationFee: 5000000,
-      }
+      },
     );
   } catch (error) {
     throw new Error(`Flash trade close failed: ${error}`);
