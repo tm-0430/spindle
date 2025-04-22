@@ -131,7 +131,9 @@
                   "docs/v2/integrations/defi-integration/allora",
                   "docs/v2/integrations/defi-integration/switchboard",
                   "docs/v2/integrations/defi-integration/okx",
-                  "docs/v2/integrations/defi-integration/wormhole"
+                  "docs/v2/integrations/defi-integration/wormhole",
+                  "docs/v2/integrations/defi-integration/sanctum",
+                  "docs/v2/integrations/defi-integration/ranger"
                 ]
               },
               {
