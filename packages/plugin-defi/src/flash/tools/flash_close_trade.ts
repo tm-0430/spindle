@@ -21,7 +21,7 @@ import {
  */
 export async function flashCloseTrade(
   agent: SolanaAgentKit,
-  params: FlashCloseTradeParams
+  params: FlashCloseTradeParams,
 ): Promise<string> {
   try {
     const { token, side } = params;
