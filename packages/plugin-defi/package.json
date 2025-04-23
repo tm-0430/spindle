@@ -8,7 +8,9 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -32,7 +34,7 @@
   },
   "homepage": "https://github.com/sendaifun/solana-agent-kit/tree/v2/packages/plugin-defi",
   "dependencies": {
-    "@cks-systems/manifest-sdk": "^0.1.78",
+    "@cks-systems/manifest-sdk": "^0.2.3",
     "@coral-xyz/anchor": "^0.29.0",
     "@drift-labs/sdk": "2.108.0-beta.6",
     "@drift-labs/vaults-sdk": "^0.3.4",
