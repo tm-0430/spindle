@@ -60,9 +60,6 @@ This plugin provides a set of miscellaneous tools and actions for interacting wi
 ## Switchboard
 - `simulate_switchboard_feed` - Simulate a switchboard feed.
 
-## Tiplink
-- `create_TipLink` - Create a tiplink.
-
 ## Example Usage
 
 ### Register a Domain
