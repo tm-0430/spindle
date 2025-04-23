@@ -454,9 +454,6 @@ importers:
       '@switchboard-xyz/common':
         specifier: ^2.5.17
         version: 2.5.17(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@tiplink/api':
-        specifier: ^0.3.1
-        version: 0.3.1(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(sodium-native@3.4.1)(utf-8-validate@5.0.10)
       bs58:
         specifier: ^6.0.0
         version: 6.0.0
@@ -5909,9 +5906,6 @@ packages:
   '@thumbmarkjs/thumbmarkjs@0.16.0':
     resolution: {integrity: sha512-NKyqCvP6DZKlRf6aGfnKS6Kntn2gnuBxa/ztstjy+oo1t23EHzQ54shtli0yV5WAtygmK1tti/uL2C2p/kW3HQ==}
 
-  '@tiplink/api@0.3.1':
-    resolution: {integrity: sha512-HjnXethjKOHTYT0IP1BewlMS7wZJ+hsoDgRa6jA1cNvxvwQjE1WHOyvOUPpAi+DJDw4P4/omFtyHr7dwLfnB/g==}
-
   '@triton-one/yellowstone-grpc@1.3.0':
     resolution: {integrity: sha512-tuwHtoYzvqnahsMrecfNNkQceCYwgiY0qKS8RwqtaxvDEgjm0E+0bXwKz2eUD3ZFYifomJmRKDmSBx9yQzAeMQ==}
     engines: {node: '>=20.18.0'}
@@ -6837,10 +6831,6 @@ packages:
   better-path-resolve@1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
     engines: {node: '>=4'}
-
-  big-integer@1.6.52:
-    resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
-    engines: {node: '>=0.6'}
 
   big.js@6.2.2:
     resolution: {integrity: sha512-y/ie+Faknx7sZA5MfGA2xKlu0GDv8RWrXGsmlteyJQ2lvoKv9GBK/fpRMc2qlSoBAgNxrixICFCBefIq8WCQpQ==}
@@ -9234,9 +9224,6 @@ packages:
     resolution: {integrity: sha512-p3EcsicXjit7SaskXHs1hA91QxgTw46Fv6EFKKGS5DRFLD8yKnohjF3hxoju94b/OcMZoQukzpPpBE9uLVKzgQ==}
     engines: {node: '>= 0.4'}
 
-  is-typedarray@1.0.0:
-    resolution: {integrity: sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==}
-
   is-unicode-supported@0.1.0:
     resolution: {integrity: sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==}
     engines: {node: '>=10'}
@@ -9581,18 +9568,6 @@ packages:
 
   libphonenumber-js@1.12.7:
     resolution: {integrity: sha512-0nYZSNj/QEikyhcM5RZFXGlCB/mr4PVamnT1C2sKBnDDTYndrvbybYjvg+PMqAndQHlLbwQ3socolnL3WWTUFA==}
-
-  libsodium-sumo@0.7.15:
-    resolution: {integrity: sha512-5tPmqPmq8T8Nikpm1Nqj0hBHvsLFCXvdhBFV7SGOitQPZAA6jso8XoL0r4L7vmfKXr486fiQInvErHtEvizFMw==}
-
-  libsodium-wrappers-sumo@0.7.15:
-    resolution: {integrity: sha512-aSWY8wKDZh5TC7rMvEdTHoyppVq/1dTSAeAR7H6pzd6QRT3vQWcT5pGwCotLcpPEOLXX6VvqihSPkpEhYAjANA==}
-
-  libsodium-wrappers@0.7.15:
-    resolution: {integrity: sha512-E4anqJQwcfiC6+Yrl01C1m8p99wEhLmJSs0VQqST66SbQXXBoaJY0pF4BNjRYa/sOQAxx6lXAaAFIlx+15tXJQ==}
-
-  libsodium@0.7.15:
-    resolution: {integrity: sha512-sZwRknt/tUpE2AwzHq3jEyUU5uvIZHtSssktXq7owd++3CSgn8RGrv6UZJJBpP7+iBghBqe7Z06/2M31rI2NKw==}
 
   lighthouse-logger@1.4.2:
     resolution: {integrity: sha512-gPWxznF6TKmUHrOQjlVo2UbaL2EJ71mb2CCeRs/2qBpi4L/g4LUVc9+3lKQ6DTUZwJswfM7ainGrLO1+fOqa2g==}
@@ -10991,9 +10966,6 @@ packages:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
 
-  poly1305-js@0.4.4:
-    resolution: {integrity: sha512-5B6/S+vg5AOr66wJDkh5LOpU/F3EKANDy4VXKsNZLXea1uCy6CiOWOZ3VhcC0nYdhE7vJUMcLxqcVlrv2g/+Rg==}
-
   pony-cause@2.1.11:
     resolution: {integrity: sha512-M7LhCsdNbNgiLYiP4WjsfLUuFmCfnjdF6jKe2R9NKl4WFN+HZPGHJZ9lnLP7f9ZnKe3U9nuWD0szirmj+migUg==}
     engines: {node: '>=12.0.0'}
@@ -11969,14 +11941,6 @@ packages:
     resolution: {integrity: sha512-/GbIKmo8ioc+NIWIhwdecY0ge+qVBSMdgxGygevmdHj24bsfgtCmcUUcQ5ZzcylGFHsN3k4HB4Cgkl96KVnuew==}
     engines: {node: '>=10.0.0'}
 
-  sodium-native@3.4.1:
-    resolution: {integrity: sha512-PaNN/roiFWzVVTL6OqjzYct38NSXewdl2wz8SRB51Br/MLIJPrbM3XexhVWkq7D3UWMysfrhKVf1v1phZq6MeQ==}
-
-  sodium-plus@0.9.0:
-    resolution: {integrity: sha512-WWKxrd81qDL7C1A10yxNmZ135yovEZuIRnZ/BIf/FcajYBupbKbPdgzwlusPHLVxkMDDamcarq9PxxRBUSqpCw==}
-    peerDependencies:
-      sodium-native: ^3.2.0
-
   solana-agent-kit@2.0.2:
     resolution: {integrity: sha512-Y9s5Ciwfz+8IvODClhHPhkO1oljvw0JXi0Rjhv1rSOmlYaeIjerLsE8zW9nSyb6k+fHR8pM4k5GBndP5Fkrkuw==}
     engines: {node: '>=22.0.0', pnpm: '>=8.0.0'}
@@ -12704,9 +12668,6 @@ packages:
     resolution: {integrity: sha512-gd0sGezQYCbWSbkZr75mln4YBidWUN60+devscpLF5mtRDUpiaTvKpBNrdaCvel1NdR2k6vclXybU5fBd2i+nw==}
     engines: {node: '>= 0.6'}
 
-  typedarray-to-buffer@3.1.5:
-    resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
-
   typedoc-plugin-markdown@4.6.2:
     resolution: {integrity: sha512-JVCIoK7FDN3t3PSLkwDyrBFyjtDznqDCJotP9evxhLyb6bEZTqhAGB0tPy1RmgHuY2WoAONMrsWs8LfLsD+A6A==}
     engines: {node: '>= 18'}
@@ -13422,9 +13383,6 @@ packages:
   xmlhttprequest-ssl@2.1.2:
     resolution: {integrity: sha512-TEU+nJVUUnA4CYJFLvK5X9AOeH4KvDvhIfm0vV1GaQRtchnG0hgK5p8hw/xjv8cunWYCsiPCSDzObPyhEwq3KQ==}
     engines: {node: '>=0.4.0'}
-
-  xsalsa20@1.2.0:
-    resolution: {integrity: sha512-FIr/DEeoHfj7ftfylnoFt3rAIRoWXpx2AoDfrT2qD2wtp7Dp+COajvs/Icb7uHqRW9m60f5iXZwdsJJO3kvb7w==}
 
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
@@ -14897,7 +14855,7 @@ snapshots:
     dependencies:
       '@coral-xyz/anchor-errors': 0.30.1
       '@coral-xyz/borsh': 0.30.1(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.7.2
       '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       bn.js: 5.2.1
       bs58: 4.0.1
@@ -21719,26 +21677,6 @@ snapshots:
 
   '@thumbmarkjs/thumbmarkjs@0.16.0': {}
 
-  '@tiplink/api@0.3.1(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(sodium-native@3.4.1)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@coral-xyz/anchor': 0.29.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      '@solana/spl-token': 0.3.11(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@4.9.5)(utf-8-validate@5.0.10)
-      '@solana/web3.js': 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
-      bs58: 5.0.0
-      libsodium: 0.7.15
-      libsodium-wrappers-sumo: 0.7.15
-      nanoid: 3.3.8
-      sodium-plus: 0.9.0(sodium-native@3.4.1)
-      tweetnacl: 1.0.3
-      tweetnacl-util: 0.15.1
-      typescript: 4.9.5
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - fastestsmallesttextencoderdecoder
-      - sodium-native
-      - utf-8-validate
-
   '@triton-one/yellowstone-grpc@1.3.0':
     dependencies:
       '@grpc/grpc-js': 1.12.5
@@ -23454,8 +23392,6 @@ snapshots:
   better-path-resolve@1.0.0:
     dependencies:
       is-windows: 1.0.2
-
-  big-integer@1.6.52: {}
 
   big.js@6.2.2: {}
 
@@ -26189,8 +26125,6 @@ snapshots:
     dependencies:
       which-typed-array: 1.1.18
 
-  is-typedarray@1.0.0: {}
-
   is-unicode-supported@0.1.0: {}
 
   is-url-superb@4.0.0: {}
@@ -26612,18 +26546,6 @@ snapshots:
       type-check: 0.4.0
 
   libphonenumber-js@1.12.7: {}
-
-  libsodium-sumo@0.7.15: {}
-
-  libsodium-wrappers-sumo@0.7.15:
-    dependencies:
-      libsodium-sumo: 0.7.15
-
-  libsodium-wrappers@0.7.15:
-    dependencies:
-      libsodium: 0.7.15
-
-  libsodium@0.7.15: {}
 
   lighthouse-logger@1.4.2:
     dependencies:
@@ -28478,10 +28400,6 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  poly1305-js@0.4.4:
-    dependencies:
-      big-integer: 1.6.52
-
   pony-cause@2.1.11: {}
 
   poseidon-lite@0.2.1: {}
@@ -29729,19 +29647,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  sodium-native@3.4.1:
-    dependencies:
-      node-gyp-build: 4.8.4
-
-  sodium-plus@0.9.0(sodium-native@3.4.1):
-    dependencies:
-      buffer: 5.7.1
-      libsodium-wrappers: 0.7.15
-      poly1305-js: 0.4.4
-      sodium-native: 3.4.1
-      typedarray-to-buffer: 3.1.5
-      xsalsa20: 1.2.0
-
   solana-agent-kit@2.0.2(bufferutil@4.0.9)(encoding@0.1.13)(openai@4.93.0(encoding@0.1.13)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.24.1))(react@19.0.0)(utf-8-validate@5.0.10):
     dependencies:
       '@langchain/core': 0.3.44(openai@4.93.0(encoding@0.1.13)(ws@7.5.10(bufferutil@4.0.9)(utf-8-validate@5.0.10))(zod@3.24.1))
@@ -30516,10 +30421,6 @@ snapshots:
       media-typer: 1.1.0
       mime-types: 3.0.0
 
-  typedarray-to-buffer@3.1.5:
-    dependencies:
-      is-typedarray: 1.0.0
-
   typedoc-plugin-markdown@4.6.2(typedoc@0.28.2(typescript@5.7.2)):
     dependencies:
       typedoc: 0.28.2(typescript@5.7.2)
@@ -31288,8 +31189,6 @@ snapshots:
       utf-8-validate: 5.0.10
 
   xmlhttprequest-ssl@2.1.2: {}
-
-  xsalsa20@1.2.0: {}
 
   xtend@4.0.2: {}
 
