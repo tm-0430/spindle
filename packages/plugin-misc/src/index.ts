@@ -41,9 +41,6 @@ import transferFromMultisigTreasuryAction from "./squads/actions/transferFromMul
 // switchboard
 import simulateFeedAction from "./switchboard/actions/simulateFeed";
 
-// tiplink
-import createTiplinkAction from "./tiplink/actions/createTiplinks";
-
 // coingecko
 import getCoingeckoLatestPoolsAction from "./coingecko/actions/getCoingeckoLatestPools";
 import getCoingeckoTokenInfoAction from "./coingecko/actions/getCoingeckoTokenInfo";
@@ -130,7 +127,6 @@ import {
   multisig_transfer_from_treasury,
 } from "./squads/tools";
 import { simulate_switchboard_feed } from "./switchboard/tools";
-import { create_TipLink } from "./tiplink/tools";
 
 // Define and export the plugin
 const MiscPlugin = {
@@ -165,7 +161,6 @@ const MiscPlugin = {
     multisig_reject_proposal,
     multisig_transfer_from_treasury,
     simulate_switchboard_feed,
-    create_TipLink,
     getCoingeckoTokenInfo: getTokenInfo,
     getCoingeckoTopGainers: getTopGainers,
     getCoingeckoLatestPools: getLatestPools,
@@ -212,7 +207,6 @@ const MiscPlugin = {
     createMultisigProposalAction,
     approveMultisigProposalAction,
     simulateFeedAction,
-    createTiplinkAction,
     getCoingeckoTokenInfoAction,
     getCoingeckoTopGainersAction,
     getCoingeckoLatestPoolsAction,
