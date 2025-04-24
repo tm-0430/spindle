@@ -53,6 +53,17 @@ This plugin provides a comprehensive suite of tools and actions to interact with
 - **`orcaCreateCLMM`**: Create a CLMM on Orca.
 - **`orcaOpenCenteredPositionWithLiquidity`**: Open a centered position with liquidity on Orca.
 
+### Ranger
+- **`openPerpTradeRanger`**: Open a new perpetual trading position.
+- **`closePerpTradeRanger`**: Close an existing perpetual trading position.
+- **`increasePerpPositionRanger`**: Increase an existing perpetual position.
+- **`decreasePerpPositionRanger`**: Decrease an existing perpetual position.
+- **`withdrawBalanceRanger`**: Withdraw available balance from Ranger.
+- **`withdrawCollateralRanger`**: Withdraw collateral from an existing position.
+- **`getPositions`**: Get all positions for a specific wallet.
+- **`getQuote`**: Get a quote for opening or modifying a position.
+- **`getTradeHistory`**: Get the trade history for a specific wallet.
+
 ### Raydium
 - **`raydiumCreateAmmV4`**: Create an AMM v4 on Raydium.
 - **`raydiumCreateClmm`**: Create a CLMM on Raydium.
