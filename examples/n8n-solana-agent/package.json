@@ -60,7 +60,7 @@
     "@types/node": "^18.0.0",
     "bs58": "^6.0.0",
     "n8n-workflow": "1.82.0",
-    "solana-agent-kit": "2.0.2"
+    "solana-agent-kit": "2.0.3"
   },
   "peerDependencies": {
     "n8n-core": "1.82.0",

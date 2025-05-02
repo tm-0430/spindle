@@ -1,6 +1,6 @@
 {
   "name": "@solana-agent-kit/plugin-misc",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -51,6 +51,6 @@
   },
   "peerDependencies": {
     "@solana/web3.js": "^1.98.0",
-    "solana-agent-kit": "2.0.2"
+    "solana-agent-kit": "2.0.3"
   }
 }

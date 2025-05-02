@@ -45,7 +45,7 @@
     "react-dom": "18.3.0",
     "react-international-phone": "^4.3.0",
     "react-markdown": "^10.1.0",
-    "solana-agent-kit": "2.0.2",
+    "solana-agent-kit": "2.0.3",
     "sonner": "^1.7.4",
     "tweetnacl": "^1.0.3",
     "typescript": "5.1.3"
