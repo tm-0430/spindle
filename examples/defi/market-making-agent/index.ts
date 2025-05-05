@@ -13,6 +13,7 @@ import {
 } from "solana-agent-kit";
 import { Keypair } from "@solana/web3.js";
 import TokenPlugin from "@solana-agent-kit/plugin-token";
+import DefiPlugin from "@solana-agent-kit/plugin-defi";
 
 dotenv.config();
 
@@ -69,7 +70,9 @@ async function initializeAgent() {
       keypairWallet,
       process.env.RPC_URL as string,
       {},
-    ).use(TokenPlugin);
+    )
+      .use(TokenPlugin)
+      .use(DefiPlugin);
 
     const tools = createLangchainTools(solanaAgent, solanaAgent.actions);
 
