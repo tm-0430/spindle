@@ -4,6 +4,7 @@ import { generateSigner } from "@metaplex-foundation/umi";
 import {
   fromWeb3JsPublicKey,
   toWeb3JsInstruction,
+  toWeb3JsKeypair,
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
 import { PublicKey, Transaction } from "@solana/web3.js";
@@ -59,6 +60,7 @@ export async function mintCollectionNFT(
     const { blockhash } = await agent.connection.getLatestBlockhash();
     tx.recentBlockhash = blockhash;
     tx.feePayer = agent.wallet.publicKey;
+    tx.partialSign(toWeb3JsKeypair(assetSigner));
 
     const sigOrTx = await signOrSendTX(agent, tx);
 
