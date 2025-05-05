@@ -91,6 +91,7 @@ export async function signOrSendTX(
   feeTier?: keyof typeof feeTiers,
 ): Promise<
   | string
+  | string[]
   | Transaction
   | VersionedTransaction
   | Transaction[]
@@ -107,17 +108,20 @@ export async function signOrSendTX(
       );
     }
 
+    const txSigs: string[] = [];
     for (const tx of instructionsOrTransaction) {
       if (agent.wallet.signAndSendTransaction) {
         const { signature } = await agent.wallet.signAndSendTransaction(
           tx as Transaction,
         );
-        return signature;
+        txSigs.push(signature);
       }
       throw new Error(
         "Wallet does not support signAndSendTransaction please implement it manually or use the signOnly option",
       );
     }
+
+    return txSigs;
   }
 
   if (

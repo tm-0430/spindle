@@ -2,6 +2,7 @@ import { createCollection, ruleSet } from "@metaplex-foundation/mpl-core";
 import { generateSigner, publicKey } from "@metaplex-foundation/umi";
 import {
   toWeb3JsInstruction,
+  toWeb3JsKeypair,
   toWeb3JsPublicKey,
 } from "@metaplex-foundation/umi-web3js-adapters";
 import { Transaction } from "@solana/web3.js";
@@ -58,6 +59,7 @@ export async function deploy_collection(
     const { blockhash } = await agent.connection.getLatestBlockhash();
     tx.recentBlockhash = blockhash;
     tx.feePayer = agent.wallet.publicKey;
+    tx.partialSign(toWeb3JsKeypair(collectionSigner));
 
     const sigOrTx = await signOrSendTX(agent, tx);
 
