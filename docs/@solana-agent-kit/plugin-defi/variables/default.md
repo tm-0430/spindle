@@ -1340,7 +1340,7 @@ You can minimize price impact for buyers in a few ways:
 3. Set the maximum price closer to the initial price
 
 ### Note for experts:
-The Wrhirlpool program initializes the Whirlpool with the in a specific order. This might not be
+The Whirlpool program initializes the Whirlpool in a specific order. This might not be
 the order you expect, so the function checks the order and adjusts the inverts the prices. This means that
 on-chain the Whirlpool might be configured as USDC/SHARK instead of SHARK/USDC, and the on-chain price will
 be 1/`initialPrice`. This will not affect the price of the token as you intended it to be.
@@ -1462,7 +1462,7 @@ is calculated automatically.
 ## Parameters
 - `agent`: The `SolanaAgentKit` instance representing the wallet and connection details.
 - `whirlpoolAddress`: The address of the Orca Whirlpool where the position will be opened.
-- `priceOffsetBps`: The basis point (bps) offset (on one side) from the current price fo the pool. For example,
+- `priceOffsetBps`: The basis point (bps) offset (on one side) from the current price of the pool. For example,
   500 bps (5%) creates a range from 95% to 105% of the current pool price.
 - `inputTokenMint`: The mint address of the token being deposited (e.g., USDC or another token).
 - `inputAmount`: The amount of the input token to deposit, specified as a `Decimal` value.
@@ -1895,7 +1895,7 @@ priority fee for the transaction
 
 `Promise`\<`string` \| `Transaction` \| `VersionedTransaction` \| `Transaction`[] \| `VersionedTransaction`[]\>
 
-tranasction signature
+transaction signature
 
 #### methods.sanctumSwapLST()
 
