@@ -14,34 +14,25 @@ export async function luloWithdraw(
   amount: number,
 ) {
   try {
-    if (!agent.config?.FLEXLEND_API_KEY) {
-      throw new Error("Lulo API key not found in agent configuration");
-    }
-
     const response = await fetch(
-      `https://api.flexlend.fi/generate/account/withdraw?priorityFee=50000`,
+      `https://lulo.dial.to/api/actions/withdraw/${mintAddress}/${amount}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-wallet-pubkey": agent.wallet.publicKey.toBase58(),
-          "x-api-key": agent.config?.FLEXLEND_API_KEY,
         },
         body: JSON.stringify({
-          owner: agent.wallet.publicKey.toBase58(),
-          mintAddress: mintAddress,
-          depositAmount: amount,
+          account: agent.wallet.publicKey.toBase58(),
         }),
       },
     );
 
-    const {
-      data: { transactionMeta },
-    } = await response.json();
+
+    const data = await response.json();
 
     // Deserialize the transaction
     const luloTxn = VersionedTransaction.deserialize(
-      Buffer.from(transactionMeta[0].transaction, "base64"),
+      Buffer.from(data.transaction, "base64"),
     );
 
     // Get a recent blockhash and set it
