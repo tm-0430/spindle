@@ -45,7 +45,7 @@ export const sanctumRemoveLiquidityAction: Action = {
         message:
           typeof result === "string"
             ? "Liquidity removed successfully"
-            : "Liquidity removal transaction generated and signed succesfully. Please send it to the network.",
+            : "Liquidity removal transaction generated and signed successfully. Please send it to the network.",
         transaction: result,
       };
     } catch (error: any) {
