@@ -76,7 +76,7 @@
     "react-native-svg-transformer": "^1.5.0",
     "react-native-webview": "^13.13.5",
     "react-redux": "^9.2.0",
-    "solana-agent-kit": "2.0.2",
+    "solana-agent-kit": "2.0.3",
     "stream-browserify": "^3.0.0",
     "tailwind-merge": "^3.2.0",
     "text-encoding": "^0.7.0",
