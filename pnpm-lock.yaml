@@ -26,6 +26,9 @@ importers:
       '@rollup/plugin-typescript':
         specifier: ^12.1.2
         version: 12.1.2(rollup@4.36.0)(tslib@2.8.1)(typescript@5.7.2)
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/node':
         specifier: ^22.10.2
         version: 22.10.7
@@ -35,6 +38,15 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^8.18.2
         version: 8.19.0(eslint@8.57.1)(typescript@5.7.2)
+      ai:
+        specifier: ^4.1.5
+        version: 4.1.5(react@19.0.0)(zod@3.24.1)
+      axios:
+        specifier: ^1.9.0
+        version: 1.9.0
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       eslint:
         specifier: ^8.56.0
         version: 8.57.1
@@ -77,6 +89,31 @@ importers:
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
+
+  examples/defi/okx-dex-starter:
+    dependencies:
+      '@ai-sdk/openai':
+        specifier: 1.1.3
+        version: 1.1.3(zod@3.24.1)
+      '@solana-agent-kit/plugin-defi':
+        specifier: workspace:*
+        version: link:../../../packages/plugin-defi
+      ai:
+        specifier: 4.1.5
+        version: 4.1.5(react@19.0.0)(zod@3.24.1)
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.7
+      solana-agent-kit:
+        specifier: workspace:*
+        version: link:../../../packages/core
+    devDependencies:
+      tsx:
+        specifier: ^4.7.1
+        version: 4.19.3
+      typescript:
+        specifier: ^5.3.3
+        version: 5.7.3
 
   packages/adapter-mcp:
     dependencies:
@@ -194,7 +231,7 @@ importers:
         version: 0.13.13(@coral-xyz/anchor@0.29.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(@orca-so/common-sdk@0.6.5-beta.3(@solana/spl-token@0.4.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.6.3)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(decimal.js@10.5.0))(@solana/spl-token@0.4.9(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.6.3)(utf-8-validate@5.0.10))(@solana/web3.js@1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10))(decimal.js@10.5.0)
       '@pythnetwork/hermes-client':
         specifier: ^1.3.1
-        version: 1.3.1(axios@1.8.4)
+        version: 1.3.1(axios@1.9.0)
       '@raydium-io/raydium-sdk-v2':
         specifier: 0.1.106-alpha
         version: 0.1.106-alpha(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.6.3)(utf-8-validate@5.0.10)
@@ -296,7 +333,7 @@ importers:
         version: 0.0.7(@types/node@22.10.7)(arweave@1.15.5)(bufferutil@4.0.9)(encoding@0.1.13)(fastestsmallesttextencoderdecoder@1.0.22)(typescript@5.7.3)(utf-8-validate@5.0.10)
       '@aptos-labs/aptos-client':
         specifier: ^1.1.0
-        version: 1.1.0(axios@1.8.4)(got@11.8.6)
+        version: 1.1.0(axios@1.9.0)(got@11.8.6)
       '@coral-xyz/anchor':
         specifier: ^0.30.1
         version: 0.30.1(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
@@ -496,6 +533,12 @@ packages:
   '@adraffy/ens-normalize@1.10.1':
     resolution: {integrity: sha512-96Z2IP3mYmF1Xg2cDm8f1gWGf/HUVedQ3FMifV4kG/PQ4yEP51xDtRAEfhVNt5f/uzpNkZHwWQuUcu6D6K+Ekw==}
 
+  '@ai-sdk/openai@1.1.3':
+    resolution: {integrity: sha512-U+LqNAyB5/4KmOrU1U8NEQMLlLTzKhuVkpKo8xvlpz662TnOBxyGjGnf8Kbqw7VXyeHg0tpuHincolOuvnpynA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+
   '@ai-sdk/openai@1.3.20':
     resolution: {integrity: sha512-/DflUy7ROG9k6n6YTXMBFPbujBKnbGY58f3CwvicLvDar9nDAloVnUWd3LUoOxpSVnX8vtQ7ngxF52SLWO6RwQ==}
     engines: {node: '>=18'}
@@ -504,6 +547,15 @@ packages:
 
   '@ai-sdk/provider-utils@2.1.2':
     resolution: {integrity: sha512-ezpQT6kzy/2O4yyn/2YigMqynBYjZIOam3/EMNVzju+Ogj+Z+pf27c/Th78ce0A2ltgrXx6xN14sal/HHZNOOw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
+
+  '@ai-sdk/provider-utils@2.1.3':
+    resolution: {integrity: sha512-NamxUnRCnG7aSnYhnhX5in5KZtwIIrafURABuAmrV3mGT5YZPzqfsXdnsXY0GbzDgbl+A7R1IPxrA4at2fU/XQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -2459,6 +2511,7 @@ packages:
   '@switchboard-xyz/on-demand@1.2.42':
     resolution: {integrity: sha512-Q2qMpBM95RIDhGWA5vqRrAySRYncWKa7QWpAwLaIu5xPZMlSqNo12+lX30fUnqTWVeIXey/rp/3n6yOJLBsjjA==}
     engines: {node: '>= 18'}
+    deprecated: deprecated in favor of 2.x.x
 
   '@szmarczak/http-timer@4.0.6':
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
@@ -2500,6 +2553,9 @@ packages:
 
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
+
+  '@types/crypto-js@4.2.2':
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
 
   '@types/decimal.js@7.4.3':
     resolution: {integrity: sha512-7MpxcJPHqQ637FCZwJLtJMaDZkcD/iyUxj0m8A+m06slFeqRiK9QtgEyuocWNRbEtCrOZOEbZPTSSR88hMZVsg==}
@@ -2849,6 +2905,9 @@ packages:
 
   axios@1.8.4:
     resolution: {integrity: sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==}
+
+  axios@1.9.0:
+    resolution: {integrity: sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==}
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -6250,6 +6309,12 @@ snapshots:
 
   '@adraffy/ens-normalize@1.10.1': {}
 
+  '@ai-sdk/openai@1.1.3(zod@3.24.1)':
+    dependencies:
+      '@ai-sdk/provider': 1.0.6
+      '@ai-sdk/provider-utils': 2.1.3(zod@3.24.1)
+      zod: 3.24.1
+
   '@ai-sdk/openai@1.3.20(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
@@ -6257,6 +6322,15 @@ snapshots:
       zod: 3.24.1
 
   '@ai-sdk/provider-utils@2.1.2(zod@3.24.1)':
+    dependencies:
+      '@ai-sdk/provider': 1.0.6
+      eventsource-parser: 3.0.0
+      nanoid: 3.3.8
+      secure-json-parse: 2.7.0
+    optionalDependencies:
+      zod: 3.24.1
+
+  '@ai-sdk/provider-utils@2.1.3(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.6
       eventsource-parser: 3.0.0
@@ -6301,7 +6375,7 @@ snapshots:
   '@alloralabs/allora-sdk@0.1.0':
     dependencies:
       '@types/node': 22.10.7
-      typescript: 5.7.2
+      typescript: 5.7.3
 
   '@aptos-labs/aptos-cli@1.0.2':
     dependencies:
@@ -6314,9 +6388,9 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@aptos-labs/aptos-client@1.1.0(axios@1.8.4)(got@11.8.6)':
+  '@aptos-labs/aptos-client@1.1.0(axios@1.9.0)(got@11.8.6)':
     dependencies:
-      axios: 1.8.4
+      axios: 1.9.0
       got: 11.8.6
 
   '@aptos-labs/ts-sdk@1.33.2':
@@ -8571,9 +8645,9 @@ snapshots:
       - encoding
       - utf-8-validate
 
-  '@pythnetwork/hermes-client@1.3.1(axios@1.8.4)':
+  '@pythnetwork/hermes-client@1.3.1(axios@1.9.0)':
     dependencies:
-      '@zodios/core': 10.9.6(axios@1.8.4)(zod@3.24.1)
+      '@zodios/core': 10.9.6(axios@1.9.0)(zod@3.24.1)
       eventsource: 2.0.2
       zod: 3.24.1
     transitivePeerDependencies:
@@ -9815,6 +9889,8 @@ snapshots:
     dependencies:
       '@types/node': 22.10.7
 
+  '@types/crypto-js@4.2.2': {}
+
   '@types/decimal.js@7.4.3':
     dependencies:
       decimal.js: 10.5.0
@@ -10002,9 +10078,9 @@ snapshots:
     dependencies:
       '@wallet-standard/base': 1.1.0
 
-  '@zodios/core@10.9.6(axios@1.8.4)(zod@3.24.1)':
+  '@zodios/core@10.9.6(axios@1.9.0)(zod@3.24.1)':
     dependencies:
-      axios: 1.8.4
+      axios: 1.9.0
       zod: 3.24.1
 
   JSONStream@1.3.5:
@@ -10303,6 +10379,14 @@ snapshots:
   axios@1.8.4(debug@4.4.0):
     dependencies:
       follow-redirects: 1.15.9(debug@4.4.0)
+      form-data: 4.0.1
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.9.0:
+    dependencies:
+      follow-redirects: 1.15.9
       form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
