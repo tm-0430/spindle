@@ -112,7 +112,7 @@ Output:
 ✓ Agent initialized with OKX plugin
 
 
-You: swap 0.01 SOL to USDC with 0.5% slippage
+You: Swap 0.01 SOL to USDC with 0.5% slippage
 
 Executing swap from sol to usdc...
 

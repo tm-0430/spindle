@@ -20,7 +20,6 @@ export async function getOkxDexQuote(
   slippage: string = "0.5"
 ): Promise<any> {
   try {
-    console.log(`\nGetting quote for swap from ${fromTokenAddress} to ${toTokenAddress}...`);
     
     // Build API request
     const timestamp = new Date().toISOString();

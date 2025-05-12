@@ -44,9 +44,7 @@ export async function getOkxSwap(
   execute: boolean = false
 ): Promise<any> {
   try {
-    if (execute) {
-      console.log(`\nExecuting swap from ${fromTokenAddress} to ${toTokenAddress}...`);
-    }
+    if (execute) {    }
     
     // Build API request
     const timestamp = new Date().toISOString();
@@ -184,8 +182,6 @@ export async function executeSwapTransaction(
       blockhash,
       lastValidBlockHeight
     });
-    
-    console.log(`Transaction sent successfully: https://web3.okx.com/explorer/solana/tx/${signature}`);
     return signature;
   } catch (error: any) {
     console.error("Error executing transaction:", error);

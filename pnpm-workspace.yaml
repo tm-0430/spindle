@@ -3,4 +3,4 @@ packages:
   - "test"
   # exclude packages that are inside test directories
   # - "!**/test/**"
-  - "**/examples/defi/okx-dex-starter/**"
+  - "!**/examples/**"

@@ -155,20 +155,15 @@ const OkxDexSwapAction: Action = {
         // For SOL, multiply by 1e9 and ensure we have a whole number
         const lamports = amount * 1e9;
         baseUnits = Math.round(lamports).toString();
-        console.log(`Converting ${amount} SOL to ${baseUnits} lamports`);
       } else if (STABLECOINS.includes(fromTokenAddress)) {
         // For stablecoins, use 6 decimals
         const tokenUnits = amount * 1e6;
         baseUnits = Math.round(tokenUnits).toString();
-        console.log(`Converting ${amount} ${fromToken} to ${baseUnits} base units (6 decimals)`);
       } else {
         // For all other tokens, use 18 decimals
         const tokenUnits = amount * 1e18;
         baseUnits = Math.round(tokenUnits).toString();
-        console.log(`Converting ${amount} ${fromToken} to ${baseUnits} base units (18 decimals)`);
       }
-
-      console.log(`\n${execute ? 'Executing' : 'Getting quote for'} swap from ${fromTokenAddress} to ${toTokenAddress}...`);
 
       // Import and use the tool
       const { getOkxSwap, executeSwapTransaction } = await import('../tools');
