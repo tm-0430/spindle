@@ -12,7 +12,7 @@ import crypto from "crypto-js";
  * @param slippage Slippage tolerance (default: 0.5%)
  * @returns Quote response
  */
-export async function okx_dex_quote(
+export async function getOkxDexQuote(
   agent: SolanaAgentKit,
   fromTokenAddress: string,
   toTokenAddress: string,
@@ -124,4 +124,4 @@ function getOkxHeaders(
 /**
  * Export the tool
  */
-export * from "./okx_dex_quote";
+export * from "./getOkxDexQuote";

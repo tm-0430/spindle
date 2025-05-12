@@ -1,1 +1,2 @@
-export * from "./okx_dex_quote";
+export * from "./getOkxDexQuote";
+export * from "./getOkxSwap";
