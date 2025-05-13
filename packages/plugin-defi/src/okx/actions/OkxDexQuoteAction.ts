@@ -62,8 +62,6 @@ const OkxDexQuoteAction: Action = {
         baseUnits = (amount * 1e6).toString(); // Most tokens have 6 decimals
       }
 
-      console.log(`\nGetting quote for swap from ${fromToken} to ${toToken}...`);
-
       // Import and use the tool
       const { getOkxDexQuote } = await import('../tools');
       return await getOkxDexQuote(
