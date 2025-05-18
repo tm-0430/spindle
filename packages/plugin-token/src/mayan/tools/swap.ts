@@ -105,6 +105,7 @@ async function swapSolana(
     dstAddr,
     null,
     agent.wallet.signTransaction,
+    // @ts-expect-error - false type mismatch
     agent.connection,
     [],
     { skipPreflight: true },

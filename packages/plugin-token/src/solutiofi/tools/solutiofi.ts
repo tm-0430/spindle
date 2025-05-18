@@ -44,6 +44,7 @@ export async function closeAccounts(agent: SolanaAgentKit, mints: string[]) {
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         transaction.message.recentBlockhash = blockhash;
+        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
@@ -76,6 +77,7 @@ export async function burnTokens(agent: SolanaAgentKit, mints: string[]) {
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         transaction.message.recentBlockhash = blockhash;
+        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
@@ -115,6 +117,7 @@ export async function mergeTokens(
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         txn.transaction.message.recentBlockhash = blockhash;
+        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
@@ -154,6 +157,7 @@ export async function spreadToken(
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         txn.transaction.message.recentBlockhash = blockhash;
+        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
