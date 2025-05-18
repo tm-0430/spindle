@@ -27,7 +27,7 @@ export async function trade(
   inputMint: PublicKey = TOKENS.USDC,
   // @deprecated use dynamicSlippage instead
   _slippageBps: number = DEFAULT_OPTIONS.SLIPPAGE_BPS,
-) {
+): Promise<Awaited<ReturnType<typeof signOrSendTX>>> {
   try {
     // Check if input token is native SOL
     const isNativeSol = inputMint.equals(TOKENS.SOL);

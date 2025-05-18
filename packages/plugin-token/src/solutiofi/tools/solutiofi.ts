@@ -32,7 +32,10 @@ async function initClient(agent: SolanaAgentKit) {
  * @param agent SolanaAgentKit instance
  * @param mints Array of mint addresses to close
  */
-export async function closeAccounts(agent: SolanaAgentKit, mints: string[]) {
+export async function closeAccounts(
+  agent: SolanaAgentKit,
+  mints: string[],
+): Promise<Awaited<ReturnType<typeof signOrSendTX>>[]> {
   try {
     const client = await initClient(agent);
     const signaturesOrTxs: Awaited<ReturnType<typeof signOrSendTX>>[] = [];
@@ -44,7 +47,6 @@ export async function closeAccounts(agent: SolanaAgentKit, mints: string[]) {
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         transaction.message.recentBlockhash = blockhash;
-        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
@@ -64,7 +66,10 @@ export async function closeAccounts(agent: SolanaAgentKit, mints: string[]) {
  * @param mints Array of mint addresses for the tokens to burn
  * @returns Array of versioned transactions
  */
-export async function burnTokens(agent: SolanaAgentKit, mints: string[]) {
+export async function burnTokens(
+  agent: SolanaAgentKit,
+  mints: string[],
+): Promise<Awaited<ReturnType<typeof signOrSendTX>>[]> {
   try {
     const client = await initClient(agent);
     const signaturesOrTxs: Awaited<ReturnType<typeof signOrSendTX>>[] = [];
@@ -77,7 +82,6 @@ export async function burnTokens(agent: SolanaAgentKit, mints: string[]) {
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         transaction.message.recentBlockhash = blockhash;
-        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
@@ -102,7 +106,7 @@ export async function mergeTokens(
   inputAssets: InputAssetStruct[],
   outputMint: string,
   priorityFee: PriorityFee,
-) {
+): Promise<Awaited<ReturnType<typeof signOrSendTX>>[]> {
   try {
     const client = await initClient(agent);
     const signaturesOrTxs: Awaited<ReturnType<typeof signOrSendTX>>[] = [];
@@ -117,7 +121,6 @@ export async function mergeTokens(
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         txn.transaction.message.recentBlockhash = blockhash;
-        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {
@@ -142,7 +145,7 @@ export async function spreadToken(
   inputAsset: InputAssetStruct,
   targetTokens: TargetTokenStruct[],
   priorityFee: PriorityFee,
-) {
+): Promise<Awaited<ReturnType<typeof signOrSendTX>>[]> {
   try {
     const client = await initClient(agent);
     const signaturesOrTxs: Awaited<ReturnType<typeof signOrSendTX>>[] = [];
@@ -157,7 +160,6 @@ export async function spreadToken(
       try {
         const { blockhash } = await agent.connection.getLatestBlockhash();
         txn.transaction.message.recentBlockhash = blockhash;
-        // @ts-expect-error - false type mismatch
         const signatureOrTx = await signOrSendTX(agent, txn.transaction);
         signaturesOrTxs.push(signatureOrTx);
       } catch (_error) {

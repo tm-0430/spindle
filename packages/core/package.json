@@ -62,7 +62,7 @@
   "dependencies": {
     "@langchain/core": "^0.3.44",
     "@solana/spl-token": "^0.4.13",
-    "@solana/web3.js": "^1.98.0",
+    "@solana/web3.js": "^1.98.2",
     "ai": "^4.1.5",
     "bs58": "^6.0.0",
     "rpc-websockets": "^10.0.0",
