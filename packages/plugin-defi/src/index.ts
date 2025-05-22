@@ -38,6 +38,12 @@ import {
 } from "./manifest/tools";
 
 // Import OKX actions
+import getTokensAction from "./okx/actions/getTokens";
+import getSwapDataAction from "./okx/actions/getSwapData";
+import getQuoteAction from "./okx/actions/getQuote";
+import getLiquidityAction from "./okx/actions/getLiquidity";
+import getChainDataAction from "./okx/actions/getChainData";
+import executeSwapAction from "./okx/actions/executeSwap";
 
 // Import Debridge tools & actions
 import checkDebridgeTransactionStatusAction from "./debridge/actions/checkTransactionStatus";
@@ -194,6 +200,14 @@ import {
 } from "./sanctum/tools";
 
 // Import OKX tools
+import {
+  getTokens,
+  getSwapData,
+  getQuote,
+  getLiquidity,
+  getChainData,
+  executeSwap,
+} from "./okx/tools";
 
 // Define and export the plugin
 const DefiPlugin = {
@@ -302,6 +316,12 @@ const DefiPlugin = {
     sanctumRemoveLiquidity,
 
     // OKX methods
+    getTokens,
+    getSwapData,
+    getQuote,
+    getLiquidity,
+    getChainData,
+    executeSwap,
   },
 
   // Combine all actions
@@ -395,6 +415,12 @@ const DefiPlugin = {
     sanctumSwapLSTAction,
 
     // OKX actions
+    getTokensAction,
+    getSwapDataAction,
+    getQuoteAction,
+    getLiquidityAction,
+    getChainDataAction,
+    executeSwapAction,
   ],
 
   // Initialize function
