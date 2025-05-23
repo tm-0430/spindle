@@ -90,31 +90,6 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
-  examples/defi/okx-dex-starter:
-    dependencies:
-      '@ai-sdk/openai':
-        specifier: 1.1.3
-        version: 1.1.3(zod@3.24.1)
-      '@solana-agent-kit/plugin-defi':
-        specifier: workspace:*
-        version: link:../../../packages/plugin-defi
-      ai:
-        specifier: 4.1.5
-        version: 4.1.5(react@19.0.0)(zod@3.24.1)
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.7
-      solana-agent-kit:
-        specifier: workspace:*
-        version: link:../../../packages/core
-    devDependencies:
-      tsx:
-        specifier: ^4.7.1
-        version: 4.19.3
-      typescript:
-        specifier: ^5.3.3
-        version: 5.7.3
-
   packages/adapter-mcp:
     dependencies:
       '@modelcontextprotocol/sdk':
@@ -533,12 +508,6 @@ packages:
   '@adraffy/ens-normalize@1.10.1':
     resolution: {integrity: sha512-96Z2IP3mYmF1Xg2cDm8f1gWGf/HUVedQ3FMifV4kG/PQ4yEP51xDtRAEfhVNt5f/uzpNkZHwWQuUcu6D6K+Ekw==}
 
-  '@ai-sdk/openai@1.1.3':
-    resolution: {integrity: sha512-U+LqNAyB5/4KmOrU1U8NEQMLlLTzKhuVkpKo8xvlpz662TnOBxyGjGnf8Kbqw7VXyeHg0tpuHincolOuvnpynA==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      zod: ^3.0.0
-
   '@ai-sdk/openai@1.3.20':
     resolution: {integrity: sha512-/DflUy7ROG9k6n6YTXMBFPbujBKnbGY58f3CwvicLvDar9nDAloVnUWd3LUoOxpSVnX8vtQ7ngxF52SLWO6RwQ==}
     engines: {node: '>=18'}
@@ -547,15 +516,6 @@ packages:
 
   '@ai-sdk/provider-utils@2.1.2':
     resolution: {integrity: sha512-ezpQT6kzy/2O4yyn/2YigMqynBYjZIOam3/EMNVzju+Ogj+Z+pf27c/Th78ce0A2ltgrXx6xN14sal/HHZNOOw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      zod: ^3.0.0
-    peerDependenciesMeta:
-      zod:
-        optional: true
-
-  '@ai-sdk/provider-utils@2.1.3':
-    resolution: {integrity: sha512-NamxUnRCnG7aSnYhnhX5in5KZtwIIrafURABuAmrV3mGT5YZPzqfsXdnsXY0GbzDgbl+A7R1IPxrA4at2fU/XQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -6309,12 +6269,6 @@ snapshots:
 
   '@adraffy/ens-normalize@1.10.1': {}
 
-  '@ai-sdk/openai@1.1.3(zod@3.24.1)':
-    dependencies:
-      '@ai-sdk/provider': 1.0.6
-      '@ai-sdk/provider-utils': 2.1.3(zod@3.24.1)
-      zod: 3.24.1
-
   '@ai-sdk/openai@1.3.20(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.1.3
@@ -6322,15 +6276,6 @@ snapshots:
       zod: 3.24.1
 
   '@ai-sdk/provider-utils@2.1.2(zod@3.24.1)':
-    dependencies:
-      '@ai-sdk/provider': 1.0.6
-      eventsource-parser: 3.0.0
-      nanoid: 3.3.8
-      secure-json-parse: 2.7.0
-    optionalDependencies:
-      zod: 3.24.1
-
-  '@ai-sdk/provider-utils@2.1.3(zod@3.24.1)':
     dependencies:
       '@ai-sdk/provider': 1.0.6
       eventsource-parser: 3.0.0
