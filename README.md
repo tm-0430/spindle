@@ -4,8 +4,8 @@
 
 ![SAKCover2](https://github.com/user-attachments/assets/a6072421-8958-4cee-934a-a10ea32ae75e)
 
-![NPM Downloads](https://img.shields.io/npm/dm/solana-agent-kit?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/sendaifun/solana-agent-kit?style=for-the-badge)
+[![NPM Downloads](https://img.shields.io/npm/dm/solana-agent-kit?style=for-the-badge)](https://www.npmjs.com/package/solana-agent-kit)
+[![GitHub forks](https://img.shields.io/github/forks/sendaifun/solana-agent-kit?style=for-the-badge)](https://github.com/sendaifun/solana-agent-kit/network/members)
 [![GitHub License](https://img.shields.io/github/license/sendaifun/solana-agent-kit?style=for-the-badge)](https://github.com/sendaifun/solana-agent-kit/blob/v2/LICENSE)
 </div>
 
