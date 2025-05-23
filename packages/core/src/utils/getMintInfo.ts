@@ -33,8 +33,7 @@ export async function getMintInfo(
     }
 
     throw new Error(
-      //@ts-expect-error - e is of type error
-      `Failed to fetch mint info for token ${mint}: ${e.message}`,
+      `Failed to fetch mint info for token ${mint}: ${e instanceof Error ? e.message : "Unknown error"}`,
     );
   }
 }
