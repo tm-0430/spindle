@@ -6,8 +6,7 @@
 
 ![NPM Downloads](https://img.shields.io/npm/dm/solana-agent-kit?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/sendaifun/solana-agent-kit?style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/sendaifun/solana-agent-kit?style=for-the-badge)
-
+[![GitHub License](https://img.shields.io/github/license/sendaifun/solana-agent-kit?style=for-the-badge)](https://github.com/sendaifun/solana-agent-kit/blob/v2/LICENSE)
 </div>
 
 An open-source toolkit for connecting AI agents to Solana protocols. Now, any agent, using any model can autonomously perform 60+ Solana actions:
