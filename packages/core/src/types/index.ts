@@ -32,6 +32,7 @@ export interface Config {
   OKX_SECRET_KEY?: string;
   OKX_API_PASSPHRASE?: string;
   OKX_PROJECT_ID?: string;
+  OTHER_API_KEYS?: Record<string, string>;
 }
 
 export interface PumpFunTokenOptions {
