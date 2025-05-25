@@ -906,3 +906,7 @@ Solana Network : EKHTbXpsm6YDgJzMkFxNU1LNXeWcUW7Ezf8mjUNQQ4Pa
 ## Security
 
 This toolkit handles transaction generation, signing and sending, using provided wallets. Always ensure you're using it in a secure environment and never share your private keys.
+
+## Attributions
+
+System prompt logic adapted from Coinbase AgentKit (Apache 2.0)
