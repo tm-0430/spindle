@@ -85,7 +85,7 @@ bot.command("start", async (ctx) => {
   }
 
   ctx.reply(
-    `Your wallet has been created successfully! Your address is: \`${wallet.address}\``,
+    `Your wallet has been created successfully\\! Your address is: \`${wallet.address}\``,
     { parse_mode: "MarkdownV2" }
   );
 });
