@@ -144,7 +144,9 @@ bot.command("delete", async (ctx) => {
 
 // Handle messages
 bot.on("message:text", async (ctx) => {
-  ctx.replyWithChatAction("typing");
+  const typingMessage = await ctx.reply("_Typing\\.\\.\\._", {
+    parse_mode: "MarkdownV2",
+  });
   const text = ctx.message.text;
   const userId = ctx.from?.id;
   const messageId = `${ctx.chatId}-${ctx.message.message_id}`;
@@ -156,6 +158,7 @@ bot.on("message:text", async (ctx) => {
 
   if (userRes.error) {
     console.error("Failed to fetch user from database:", userRes.error);
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply("Failed to fetch your wallet. Please run /start again.");
     return;
   }
@@ -163,11 +166,13 @@ bot.on("message:text", async (ctx) => {
   const user = userRes.value[0];
 
   if (!user) {
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply("Please run /start to create your wallet first.");
     return;
   }
 
   if (!text || text.trim() === "") {
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply("Please send a valid message.");
     return;
   }
@@ -175,6 +180,7 @@ bot.on("message:text", async (ctx) => {
   const agentKitRes = await tryAsync(() => initAgentKit(user.walletId));
   if (agentKitRes.error) {
     console.error("Failed to initialize agent kit:", agentKitRes.error.message);
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply(
       "Failed to initialize your wallet. Please try resending your message or running /start."
     );
@@ -191,6 +197,7 @@ bot.on("message:text", async (ctx) => {
       "Failed to fetch messages from database:",
       messagesRes.error.message
     );
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply("Failed to fetch previous messages. Please try again later.");
     return;
   }
@@ -223,6 +230,7 @@ bot.on("message:text", async (ctx) => {
 
   if (response.error) {
     console.error("Error generating response:", response.error.message);
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply("Failed to generate a response. Please try again later.");
     return;
   }
@@ -259,10 +267,12 @@ bot.on("message:text", async (ctx) => {
       "Failed to save message to database:",
       insertRes.error.message
     );
+    ctx.deleteMessages([typingMessage.message_id]);
     ctx.reply("Failed to save the response. Please try again later.");
     return;
   }
 
+  ctx.deleteMessages([typingMessage.message_id]);
   ctx.reply(generatedText, { parse_mode: "Markdown" });
   return;
 });
