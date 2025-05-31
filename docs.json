@@ -69,6 +69,12 @@
             ]
           },
           {
+            "group": "Using LLMs",
+            "pages": [
+              "docs/v2/using-llms/overview"
+            ]
+          },
+          {
             "group": "Examples",
             "root": "docs/v2/examples/examples-intro",
             "pages": [
