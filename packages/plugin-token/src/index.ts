@@ -31,7 +31,7 @@ import mayanSwapAction from "./mayan/actions/swap";
 
 // pumpfun
 import launchPumpfunTokenAction from "./pumpfun/actions/launchPumpfunToken";
-
+import claimCreatorFeeAction from "./pumpfun/actions/claimCreatorFeeAction";
 // pyth
 import pythFetchPriceAction from "./pyth/actions/pythFetchPrice";
 
@@ -60,7 +60,8 @@ import {
 } from "./jupiter/tools";
 import { sendCompressedAirdrop } from "./lightprotocol/tools";
 import { swap } from "./mayan/tools";
-import { launchPumpFunToken } from "./pumpfun/tools";
+import launchPumpFunToken  from "./pumpfun/tools/launchPumpfunToken";
+import claimCreatorFee from "./pumpfun/tools/claimCreatorFee";
 import { fetchPythPrice, fetchPythPriceFeedID } from "./pyth/tools";
 import { fetchTokenDetailedReport, fetchTokenReportSummary } from "./rugcheck";
 import {
@@ -106,6 +107,7 @@ const TokenPlugin = {
     transfer,
     swap,
     launchPumpFunToken,
+    claimCreatorFee,
     fetchPythPrice,
     fetchPythPriceFeedID,
     fetchTokenDetailedReport,
@@ -136,6 +138,7 @@ const TokenPlugin = {
     transferAction,
     mayanSwapAction,
     launchPumpfunTokenAction,
+    claimCreatorFeeAction,
     pythFetchPriceAction,
     rugcheckAction,
     burnTokensUsingSolutiofiAction,

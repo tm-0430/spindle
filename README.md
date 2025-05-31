@@ -109,7 +109,7 @@ You can view the full documentation of the kit at [docs.sendai.fun](https://docs
 
 ## Why We Built V2 and Why Upgrade?
 
-The Solana Agent Kit V2 is a major upgrade from V1, to learn why check out our [migration guide](./MIGRATING)
+The Solana Agent Kit V2 is a major upgrade from V1, to learn why check out our [migration guide](./MIGRATING.md)
 
 ## 📦 Core Installation
 
@@ -906,3 +906,7 @@ Solana Network : EKHTbXpsm6YDgJzMkFxNU1LNXeWcUW7Ezf8mjUNQQ4Pa
 ## Security
 
 This toolkit handles transaction generation, signing and sending, using provided wallets. Always ensure you're using it in a secure environment and never share your private keys.
+
+## Attributions
+
+System prompt logic adapted from Coinbase AgentKit (Apache 2.0)
