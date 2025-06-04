@@ -49,6 +49,7 @@
     "@tensor-oss/tensorswap-sdk": "^4.5.0",
     "@types/bn.js": "^5.1.6",
     "bn.js": "^5.2.1",
+    "redaxios": "^0.5.1",
     "rpc-websockets": "^10.0.0",
     "solana-agent-kit": "workspace:*",
     "zod": "^3.24.1"
