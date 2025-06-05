@@ -2,7 +2,7 @@ import { PublicKey } from "@solana/web3.js";
 import BN from "bn.js";
 import type { Action } from "solana-agent-kit";
 import { z } from "zod";
-import { raydiumCreateAmmV4 } from "../raydium_create_ammV4";
+import { raydiumCreateAmmV4 } from "../tools/raydium_create_ammV4";
 
 const raydiumCreateAmmV4Action: Action = {
   name: "RAYDIUM_CREATE_AMM_V4",
