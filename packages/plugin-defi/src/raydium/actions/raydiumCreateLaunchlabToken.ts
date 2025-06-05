@@ -1,7 +1,7 @@
 import { TxVersion } from "@raydium-io/raydium-sdk-v2";
 import { Action } from "solana-agent-kit";
 import { z } from "zod";
-import { raydiumCreateLaunchlabToken } from "../raydium_create_launchlab_token";
+import { raydiumCreateLaunchlabToken } from "../tools/raydium_create_launchlab_token";
 import BN from "bn.js";
 
 const raydiumCreateLaunchlabTokenAction: Action = {
