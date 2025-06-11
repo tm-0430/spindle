@@ -75,7 +75,7 @@ const raydiumCreateAmmV4Action: Action = {
 
       return {
         status: "success",
-        transactoin: txId,
+        transaction: txId,
         message: "Successfully created Raydium AMM V4 pool",
       };
     } catch (error: any) {
