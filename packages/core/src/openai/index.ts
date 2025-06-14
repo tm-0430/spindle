@@ -2,6 +2,7 @@ import { SolanaAgentKit } from "@/agent";
 import { Action } from "@/types/action";
 import { executeAction } from "@/utils/actionExecutor";
 import { Tool as OpenAITool, tool } from "@openai/agents";
+import { zodToOpenAITool } from "./utils";
 
 export function createOpenAITools(
   solanaAgentKit: SolanaAgentKit,
@@ -22,7 +23,11 @@ export function createOpenAITools(
         description: action.description,
         execute: async (params: Record<string, unknown>) =>
           await executeAction(action, solanaAgentKit, params),
-        parameters: action.schema,
+        parameters: zodToOpenAITool(
+          action.schema,
+          action.name,
+          action.description,
+        ).function.parameters,
       }),
     );
   }
