@@ -61,6 +61,7 @@
   "packageManager": "pnpm@9.15.3",
   "dependencies": {
     "@langchain/core": "^0.3.44",
+    "@openai/agents": "^0.0.7",
     "@solana/spl-token": "^0.4.13",
     "@solana/web3.js": "^1.98.2",
     "ai": "^4.1.5",
