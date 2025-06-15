@@ -1,6 +1,6 @@
 import { SolanaAgentKit } from "@/agent";
 import { Action } from "@/types/action";
-import { executeAction } from "@/utils/actionExecutor";
+import { executeAction } from "../utils/actionExecutor"
 import { Tool as OpenAITool, tool } from "@openai/agents";
 import { zodToOpenAITool } from "./utils";
 
