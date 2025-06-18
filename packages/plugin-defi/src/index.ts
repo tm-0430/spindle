@@ -99,7 +99,7 @@ import createVaultAction from "./drift/actions/createVault";
 import depositIntoDriftVaultAction from "./drift/actions/depositIntoVault";
 import depositToDriftUserAccountAction from "./drift/actions/depositToDriftUserAccount";
 import deriveDriftVaultAddressAction from "./drift/actions/deriveVaultAddress";
-import doesUserHaveDriftAcccountAction from "./drift/actions/doesUserHaveDriftAccount";
+import doesUserHaveDriftAccountAction from "./drift/actions/doesUserHaveDriftAccount";
 import driftUserAccountInfoAction from "./drift/actions/driftUserAccountInfo";
 import entryQuoteOfDriftPerpTradeAction from "./drift/actions/entryQuoteOfPerpTrade";
 import getDriftLendAndBorrowAPYAction from "./drift/actions/getLendAndBorrowAPY";
@@ -381,7 +381,7 @@ const DefiPlugin = {
     depositIntoDriftVaultAction,
     depositToDriftUserAccountAction,
     deriveDriftVaultAddressAction,
-    doesUserHaveDriftAcccountAction,
+    doesUserHaveDriftAccountAction,
     driftUserAccountInfoAction,
     entryQuoteOfDriftPerpTradeAction,
     getDriftLendAndBorrowAPYAction,
