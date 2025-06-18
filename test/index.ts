@@ -47,8 +47,8 @@ async function main() {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   })
     // Load all plugins
-    // .use(TokenPlugin)
-    .use(NFTPlugin)
+    .use(TokenPlugin)
+    // .use(NFTPlugin)
     .use(DefiPlugin)
     .use(MiscPlugin)
     .use(BlinksPlugin);
