@@ -1,3 +1,4 @@
+![Banner (3)](https://github.com/user-attachments/assets/8d4e4262-eebb-405e-8905-d71289ca245e)
 # 🧠 spindle-agent-kit
 
 **Autonomous AI Agents for Physical Prototyping — powered by Spindle**
